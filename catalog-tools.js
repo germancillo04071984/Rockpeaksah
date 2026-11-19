@@ -34,7 +34,8 @@
  }
  function get(kind,id,fallback){
   const valid=goodId(id);
-  return valid&&kinds.includes(kind)?data[kind][valid]??fallback??"ID "+valid:fallback??"Sin identificar";
+  if(valid&&kinds.includes(kind)&&Object.prototype.hasOwnProperty.call(data[kind],valid))return data[kind][valid];
+  return arguments.length>=3?fallback:(valid?"ID "+valid:"Sin identificar");
  }
  const isTranslated=(kind,id)=>Boolean(goodId(id)&&data[kind]?.[goodId(id)]);
  const learned=id=>Boolean(goodId(id)&&known.includes(goodId(id)));
