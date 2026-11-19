@@ -71,7 +71,8 @@ try{
  await page.locator("#recipe-audit").click();
  const recipeDownload=await recipeDownloadEvent;
  assert.equal(recipeDownload.suggestedFilename(),"rockpeaks-auditoria-recetas.csv");
- const recipeCsv=fs.readFileSync(await recipeDownload.path(),"utf8");
+ const recipeFile=await Promise.race([recipeDownload.path(),new Promise((_,reject)=>setTimeout(()=>reject(Error("La descarga de recetas no terminó en 10 segundos")),10000))]);
+ const recipeCsv=fs.readFileSync(recipeFile,"utf8");
  assert.match(recipeCsv,/profesion/);
  assert.match(await page.locator("#recipe-download").getAttribute("href"),/^blob:/);
  await page.locator('[data-view="business"]').click();
@@ -82,7 +83,8 @@ try{
  await page.locator("#biz-csv").click();
  const businessDownload=await businessDownloadEvent;
  assert.equal(businessDownload.suggestedFilename(),"rockpeaks-operaciones.csv");
- const businessCsv=fs.readFileSync(await businessDownload.path(),"utf8");
+ const businessFile=await Promise.race([businessDownload.path(),new Promise((_,reject)=>setTimeout(()=>reject(Error("La descarga de negocio no terminó en 10 segundos")),10000))]);
+ const businessCsv=fs.readFileSync(businessFile,"utf8");
  assert.match(businessCsv,/Prueba controlada/);
  assert.match(await page.locator("#biz-download").getAttribute("href"),/^blob:/);
  assert.equal(errors.length,0,"Unhandled browser errors: "+errors.join("; "));
