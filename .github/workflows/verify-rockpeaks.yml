@@ -24,3 +24,5 @@ jobs:
         env:
           ROCKPEAKS_LIVE: '1'
         run: node --test tests/rockpeaks.test.mjs
+      - name: Probe Spanish client data SDK
+        run: node tools/probe-sdk.mjs
