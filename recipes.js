@@ -1,12 +1,12 @@
 "use strict";
 (async function(){
-const root=document.createElement("section");root.className="card";root.innerHTML='<h2>📚 Catálogo de recetas de WoW Forever</h2><p class="muted">Cocina, alquimia y peletería. Datos del corpus público de profesiones; una receta en los archivos no garantiza que Rockpeaks pueda aprenderla. La cobertura y los nombres dependen de la fuente.</p><p><button id="recipe-load">Cargar catálogo completo disponible</button> <button id="recipe-stop" disabled>Detener</button> <button id="recipe-audit" disabled>Exportar auditoría CSV</button> <button id="recipe-share" disabled>Compartir CSV (iPhone)</button> <button id="recipe-copy" disabled>Copiar CSV</button> <a id="recipe-download" hidden download="rockpeaks-auditoria-recetas.csv">Guardar CSV</a></p><p id="recipe-export-status" role="status"></p><textarea id="recipe-csv-text" aria-label="Contenido del CSV" readonly hidden rows="6" style="width:100%;box-sizing:border-box"></textarea><p id="recipe-status" aria-live="polite">Sin cargar</p><div class="row"><label>Profesión<select id="recipe-prof"><option value="all">Todas las tres</option><option value="cooking">Cocina</option><option value="alchemy">Alquimia</option><option value="leatherworking">Peletería</option></select></label><label>Buscar<input id="recipe-search" placeholder="Receta, ingrediente o ID"></label><label>Mostrar<select id="recipe-scope"><option value="all">Todas</option><option value="complete">Estructura completa</option><option value="spanish">Nombres en español verificados</option><option value="starred">Mis favoritas</option></select></label><label>Ordenar<select id="recipe-order"><option value="name">Nombre</option><option value="id">ID de receta</option><option value="complete">Completas primero</option></select></label></div><p id="recipe-count"></p><div id="recipe-results"></div><div id="recipe-plan" class="card" hidden><h3 id="recipe-plan-title">Planificador</h3><p id="recipe-plan-info"></p><label>Fabricaciones <input id="recipe-batches" type="number" min="1" step="1" value="1"></label><div id="recipe-materials"></div><p><label>Raciones / unidades obtenidas por fabricación <input id="recipe-output" type="number" min="1" step="1" value="1"></label></p><div class="row"><label>Venta por unidad (cobres)<input id="recipe-sale" type="number" min="0" step="1" value="0"></label><label>Otros gastos por fabricación (cobres)<input id="recipe-other" type="number" min="0" step="1" value="0"></label></div><p><label>Comisión subasta (%) <input id="recipe-commission" type="number" min="0" max="100" step=".1" value="0"></label></p><p id="recipe-profit" aria-live="polite"></p><div id="recipe-maxbuy" aria-live="polite"></div><p><label>Nombre del producto fabricado <input id="recipe-output-name" placeholder="Confirma el nombre del producto"></label></p><button id="recipe-confirm-craft">Confirmar fabricación real y mover inventario</button><small>Los precios de materiales se introducen manualmente o se toman del mercado solo cuando coinciden los ID. Un ingrediente sin precio no equivale a coste cero.</small></div><p><button id="recipe-more" hidden>Mostrar más</button></p><small>El catálogo no modifica tu contabilidad ni inventario. Revisa cantidades y disponibilidad antes de fabricar. Los precios de mercado pueden faltar.</small>';
+const root=document.createElement("section");root.className="card";root.innerHTML='<h2>📚 Catálogo de recetas de WoW Forever</h2><p class="muted">Cocina, alquimia y peletería. Datos del corpus público de profesiones; una receta en los archivos no garantiza que Rockpeaks pueda aprenderla. La cobertura y los nombres dependen de la fuente.</p><p><button id="recipe-load">Cargar catálogo completo disponible</button> <button id="recipe-stop" disabled>Detener</button> <button id="recipe-audit" disabled>Exportar auditoría CSV</button> <button id="recipe-share" disabled>Compartir CSV (iPhone)</button> <button id="recipe-copy" disabled>Copiar CSV</button> <a id="recipe-download" hidden download="rockpeaks-auditoria-recetas.csv">Guardar CSV</a></p><p id="recipe-export-status" role="status"></p><textarea id="recipe-csv-text" aria-label="Contenido del CSV" readonly hidden rows="6" style="width:100%;box-sizing:border-box"></textarea><p id="recipe-status" aria-live="polite">Sin cargar</p><p id="recipe-translation" class="muted" aria-live="polite">Nombres de ingredientes: pendientes de consulta.</p><div class="row"><label>Profesión<select id="recipe-prof"><option value="all">Todas las tres</option><option value="cooking">Cocina</option><option value="alchemy">Alquimia</option><option value="leatherworking">Peletería</option></select></label><label>Buscar<input id="recipe-search" placeholder="Receta, ingrediente o ID"></label><label>Mostrar<select id="recipe-scope"><option value="all">Todas</option><option value="complete">Estructura completa</option><option value="spanish">Nombres en español verificados</option><option value="starred">Mis favoritas</option></select></label><label>Ordenar<select id="recipe-order"><option value="name">Nombre</option><option value="id">ID de receta</option><option value="complete">Completas primero</option></select></label></div><p id="recipe-count"></p><div id="recipe-results"></div><div id="recipe-plan" class="card" hidden><h3 id="recipe-plan-title">Planificador</h3><p id="recipe-plan-info"></p><label>Fabricaciones <input id="recipe-batches" type="number" min="1" step="1" value="1"></label><div id="recipe-materials"></div><p><label>Raciones / unidades obtenidas por fabricación <input id="recipe-output" type="number" min="1" step="1" value="1"></label></p><div class="row"><label>Venta por unidad (cobres)<input id="recipe-sale" type="number" min="0" step="1" value="0"></label><label>Otros gastos por fabricación (cobres)<input id="recipe-other" type="number" min="0" step="1" value="0"></label></div><p><label>Comisión subasta (%) <input id="recipe-commission" type="number" min="0" max="100" step=".1" value="0"></label></p><p id="recipe-profit" aria-live="polite"></p><div id="recipe-maxbuy" aria-live="polite"></div><p><label>Nombre del producto fabricado <input id="recipe-output-name" placeholder="Confirma el nombre del producto"></label></p><button id="recipe-confirm-craft">Confirmar fabricación real y mover inventario</button><small>Los precios de materiales se introducen manualmente o se toman del mercado solo cuando coinciden los ID. Un ingrediente sin precio no equivale a coste cero.</small></div><p><button id="recipe-more" hidden>Mostrar más</button></p><small>El catálogo no modifica tu contabilidad ni inventario. Revisa cantidades y disponibilidad antes de fabricar. Los precios de mercado pueden faltar.</small>';
 document.getElementById("panel-recipes")?.append(root);
 if(!root.isConnected)return;
 const e=id=>document.getElementById(id);
 let records=[],visible=0,loading=false,stop=false,mod=null,coverage="",dataset="";
 const csvCell=x=>{let v=String(x??"");if(/^[\s]*[=+@-]/.test(v))v="'"+v;return '"'+v.replaceAll('"','""')+'"'};
-const recipeAudit=()=>records.map(r=>{const ing=ingredients(r),out=r.product||r.output||r.createdItem||{};return [r._prof,r.id??r.spellId??"",title(r),r.nameLocale??"no informado",usable(r)?"estructura completa":"incompleta",out.name||out.item?.name||(isPositiveInt(out.item)?"ID "+out.item:""),out.count??out.quantity??r.outputCount??"",ing.map(x=>(x.itemId??x.item?.id??x.id??"")+":"+(x.count??x.quantity??x.amount??x.requiredCount??"")).join(";"),dataset]});
+const recipeAudit=()=>records.map(r=>{const ing=ingredients(r),out=r.product||r.output||r.createdItem||{};return [r._prof,r.id??r.spellId??"",title(r),r.nameLocale??"no informado",usable(r)?"estructura completa":"incompleta",out.name||out.item?.name||(isPositiveInt(out.item)?"ID "+out.item:""),out.count??out.quantity??r.outputCount??"",ing.map(x=>(x.itemId??x.item?.id??x.id??"")+":"+(x.count??x.quantity??x.amount??x.requiredCount??"")).join(";"),line(ing),dataset]});
 const isPositiveInt=x=>x!==null&&x!==undefined&&x!==""&&Number.isSafeInteger(Number(x))&&Number(x)>0;
 const usable=r=>{const ing=ingredients(r),out=r.product||r.output||r.createdItem||{},yieldValue=out.count??out.quantity??r.outputCount;return ing.length>0&&ing.every(x=>x&&typeof x==="object"&&!Array.isArray(x)&&isPositiveInt(x.count??x.quantity??x.amount??x.requiredCount)&&(typeof(x.name||x.item?.name||x.itemName)==="string"||isPositiveInt(x.itemId??x.item?.id??x.id)))&&isPositiveInt(yieldValue)&&(typeof(out.name||out.item?.name)==="string"||isPositiveInt(out.item)||isPositiveInt(out.item?.id))};
 const norm=s=>String(s??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
@@ -21,7 +21,58 @@ const ingredients=r=>arr(r.reagents||r.ingredients||r.materials||r.requiredItems
  if(Array.isArray(reagent))return {itemId:reagent[0],count:reagent[1]};
  return reagent??{};
 });
-function line(ing){return arr(ing).map(x=>{if(typeof x==="string")return x;const name=x.name||x.item?.name||x.itemName||("ID "+(x.itemId??x.item?.id??x.id??"?"));const qty=x.count??x.quantity??x.amount??x.requiredCount;return (qty!=null?qty+" × ":"")+name}).join(" · ")}
+// Nombres contrastados en el cliente de WoW Forever. Los demás proceden de Items.getMany(esES).
+const ingredientNames=new Map([[6358,"Bocanegra graso"],[3371,"Vial vacío"]]);
+const ingredientId=x=>Number(x?.itemId??x?.item?.id??x?.id);
+function ingredientName(x){
+ if(typeof x==="string")return x;
+ const id=ingredientId(x);
+ return ingredientNames.get(id)||x.name||x.item?.name||x.itemName||
+  (Number.isSafeInteger(id)&&id>0?"Ingrediente sin traducir (ID "+id+")":"Ingrediente sin identificar");
+}
+function line(ing){return arr(ing).map(x=>{if(typeof x==="string")return x;const qty=x.count??x.quantity??x.amount??x.requiredCount;return (qty!=null?qty+" × ":"")+ingredientName(x)}).join(" · ")}
+function refreshNames(){
+ render(false,false);
+ if(planned){
+  ingredients(planned).forEach((x,i)=>{
+   const heading=document.getElementById("recipe-ingredient-name-"+i);
+   if(heading)heading.textContent=ingredientName(x);
+  });
+  calc();
+ }
+}
+async function translateIngredients(){
+ const ids=[...new Set(records.flatMap(r=>ingredients(r).map(ingredientId)).filter(x=>Number.isSafeInteger(x)&&x>0))];
+ let known=ids.filter(id=>ingredientNames.has(id)).length,processed=known,errors=0;
+ if(!ids.length){e("recipe-translation").textContent="No hay ingredientes identificables en los registros.";return}
+ if(!mod?.Items||typeof mod.Items.getMany!=="function"){
+  e("recipe-translation").textContent="El proveedor no permite consultar nombres de ingredientes. "+known+"/"+ids.length+" nombres en español disponibles.";
+  return;
+ }
+ const unresolved=ids.filter(id=>!ingredientNames.has(id));
+ e("recipe-translation").textContent="Buscando nombres españoles: "+known+"/"+ids.length+" materiales distintos…";
+ for(let i=0;i<unresolved.length;i+=50){
+  if(stop)break;
+  const batch=unresolved.slice(i,i+50);
+  try{
+   const response=await mod.Items.getMany(batch,{locale:"esES"});
+   for(const item of response.data||[]){
+    const id=Number(item?.id);
+    if(item?.nameLocale==="esES"&&typeof item.name==="string"&&item.name.trim()&&Number.isSafeInteger(id)&&id>0)
+     ingredientNames.set(id,item.name.trim());
+   }
+  }catch(err){errors++}
+  processed+=batch.length;
+  known=ids.filter(id=>ingredientNames.has(id)).length;
+  if(i===0||i%500===0||i+50>=unresolved.length){
+   e("recipe-translation").textContent="Nombres españoles: "+known+"/"+ids.length+" · IDs revisados: "+processed+"/"+ids.length+(errors?" · lotes fallidos: "+errors:"");
+   refreshNames();
+  }
+ }
+ known=ids.filter(id=>ingredientNames.has(id)).length;
+ e("recipe-translation").textContent="Ingredientes con nombre español: "+known+"/"+ids.length+" · sin traducción verificada: "+(ids.length-known)+(errors?" · errores de consulta: "+errors:"")+(stop?" · revisión interrumpida":"");
+ refreshNames();
+}
 function filtered(){
  const prof=e("recipe-prof").value,q=norm(e("recipe-search").value.trim()),scope=e("recipe-scope").value;
  const found=records.filter(r=>(prof==="all"||r._prof===prof)
@@ -36,9 +87,9 @@ function filtered(){
   title(a).localeCompare(title(b),"es",{sensitivity:"base"}));
  return found;
 }
-function render(reset=true){if(reset)visible=0;const matches=filtered();visible=Math.min(matches.length,visible+40);const out=e("recipe-results");out.replaceChildren();matches.slice(0,visible).forEach(r=>{const d=document.createElement("div");d.style.borderTop="1px solid #475569";d.style.padding="12px 0";const h=document.createElement("strong");h.textContent=title(r)+(r.nameLocale==="esES"?" [español]":" [idioma no verificado]")+" · "+({cooking:"Cocina",alchemy:"Alquimia",leatherworking:"Peletería"}[r._prof]||"Sin clasificar");d.append(h);const p=document.createElement("p");p.className="muted";const ings=ingredients(r);p.textContent="ID "+(r.id??"sin identificar")+" · "+(ings.length?line(ings):"Ingredientes no disponibles en este registro");d.append(p);const output=r.product||r.output||r.createdItem;const o=document.createElement("small");o.textContent=output?"Producto: "+(output.name||output.item?.name||output.itemId||output.id||"sin nombre")+" · Cantidad: "+(output.count??output.quantity??r.outputCount??"no indicada"):"Producto/cantidad: no confirmados";d.append(o);const btn=document.createElement("button");btn.textContent=usable(r)?"Calcular fabricación":"Revisar receta incompleta";btn.onclick=()=>plan(r);d.append(document.createElement("p"),btn);const key=recipeKey(r);if(key){const star=document.createElement("button");star.type="button";star.textContent=starredRecipes.includes(key)?"★ Favorita":"☆ Marcar favorita";star.setAttribute("aria-label","Marcar o quitar receta favorita");star.onclick=()=>{starredRecipes=starredRecipes.includes(key)?starredRecipes.filter(x=>x!==key):[...starredRecipes,key];try{localStorage.setItem("rockpeaks-recipe-stars-v1",JSON.stringify(starredRecipes))}catch{e("recipe-status").textContent="No se pudieron guardar favoritos en este navegador."}render()};d.append(star)}out.append(d)});e("recipe-count").textContent=matches.length+" recetas coincidentes · "+records.length+" clasificadas · "+records.filter(usable).length+" con estructura completa (sin contrastar con el juego)";e("recipe-more").hidden=visible>=matches.length}
+function render(reset=true,extend=true){if(reset)visible=0;const matches=filtered();visible=Math.min(matches.length,visible+(extend?40:0));const out=e("recipe-results");out.replaceChildren();matches.slice(0,visible).forEach(r=>{const d=document.createElement("div");d.style.borderTop="1px solid #475569";d.style.padding="12px 0";const h=document.createElement("strong");h.textContent=title(r)+(r.nameLocale==="esES"?" [español]":" [idioma no verificado]")+" · "+({cooking:"Cocina",alchemy:"Alquimia",leatherworking:"Peletería"}[r._prof]||"Sin clasificar");d.append(h);const p=document.createElement("p");p.className="muted";const ings=ingredients(r);p.textContent="ID "+(r.id??"sin identificar")+" · "+(ings.length?line(ings):"Ingredientes no disponibles en este registro");d.append(p);const output=r.product||r.output||r.createdItem;const o=document.createElement("small");o.textContent=output?"Producto: "+(output.name||output.item?.name||output.itemId||output.id||"sin nombre")+" · Cantidad: "+(output.count??output.quantity??r.outputCount??"no indicada"):"Producto/cantidad: no confirmados";d.append(o);const btn=document.createElement("button");btn.textContent=usable(r)?"Calcular fabricación":"Revisar receta incompleta";btn.onclick=()=>plan(r);d.append(document.createElement("p"),btn);const key=recipeKey(r);if(key){const star=document.createElement("button");star.type="button";star.textContent=starredRecipes.includes(key)?"★ Favorita":"☆ Marcar favorita";star.setAttribute("aria-label","Marcar o quitar receta favorita");star.onclick=()=>{starredRecipes=starredRecipes.includes(key)?starredRecipes.filter(x=>x!==key):[...starredRecipes,key];try{localStorage.setItem("rockpeaks-recipe-stars-v1",JSON.stringify(starredRecipes))}catch{e("recipe-status").textContent="No se pudieron guardar favoritos en este navegador."}render()};d.append(star)}out.append(d)});e("recipe-count").textContent=matches.length+" recetas coincidentes · "+records.length+" clasificadas · "+records.filter(usable).length+" con estructura completa (sin contrastar con el juego)";e("recipe-more").hidden=visible>=matches.length}
 function auditCsv(){
- const rows=[["profesion","id_receta","nombre","idioma_nombre","estado_estructura","producto","cantidad_resultado","ingredientes_id_cantidad","dataset"],...recipeAudit()];
+ const rows=[["profesion","id_receta","nombre","idioma_nombre","estado_estructura","producto","cantidad_resultado","ingredientes_id_cantidad","ingredientes_nombres","dataset"],...recipeAudit()];
  return "\uFEFF"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n");
 }
 const auditName="rockpeaks-auditoria-recetas.csv";
@@ -107,11 +158,14 @@ function plan(r){
  const box=e("recipe-materials");box.replaceChildren();
  raw.forEach((x,i)=>{
   const id=x.itemId??x.item?.id??x.id,qty=x.count??x.quantity??x.amount??x.requiredCount;
-  const name=x.name||x.item?.name||x.itemName||("ID "+(id??"?"));
-  const row=document.createElement("p");row.className="row";
-  const label=document.createElement("label");label.textContent=name+" · unidades por fabricación";
+  const row=document.createElement("div");row.className="recipe-ingredient";
+  const heading=document.createElement("div");heading.className="recipe-ingredient-heading";
+  const nameEl=document.createElement("strong");nameEl.id="recipe-ingredient-name-"+i;nameEl.textContent=ingredientName(x);
+  const ref=document.createElement("small");ref.textContent=Number.isSafeInteger(Number(id))&&Number(id)>0?"ID "+id:"Identificador no disponible";
+  heading.append(nameEl,ref);row.append(heading);
+  const label=document.createElement("label");label.textContent="Cantidad";
   const q=document.createElement("input");q.type="number";q.min="1";q.step="1";q.id="recipe-qty-"+i;q.value=Number.isInteger(Number(qty))&&Number(qty)>0?qty:"";q.placeholder="Cantidad pendiente";label.append(q);
-  const price=document.createElement("label");const m=marketPrice(id);price.textContent="Precio unitario en cobres"+(m!=null?" (mínimo anunciado)":" (pendiente)");
+  const price=document.createElement("label");const m=marketPrice(id);price.textContent="Precio por unidad (c)"+(m!=null?" · subasta":" · pendiente");
   const inp=document.createElement("input");inp.type="number";inp.min="0";inp.step="1";inp.id="recipe-price-"+i;inp.value=m==null?"":m;inp.placeholder="Precio desconocido";price.append(inp);row.append(label,price);box.append(row);
  });
  ["recipe-batches","recipe-output","recipe-sale","recipe-other","recipe-commission"].forEach(id=>e(id).oninput=calc);
@@ -134,7 +188,7 @@ function calc(){
  const heading=document.createElement("h4");heading.textContent="Precio máximo de compra por ingrediente";maxBox.append(heading);
  const note=document.createElement("small");note.textContent="Umbral de equilibrio por unidad, manteniendo los precios de los demás ingredientes. Un valor negativo significa que ni obteniéndolo gratis se evita la pérdida. Requiere conocer el precio de todos los demás materiales.";maxBox.append(note);
  raw.forEach((x,i)=>{
-  const q=e("recipe-qty-"+i).value===""?NaN:Number(e("recipe-qty-"+i).value),name=x.name||x.item?.name||x.itemName||("ID "+(x.itemId??x.item?.id??x.id??"?"));
+  const q=e("recipe-qty-"+i).value===""?NaN:Number(e("recipe-qty-"+i).value),name=ingredientName(x);
   const p=document.createElement("p");
   const others=raw.some((_,j)=>j!==i&&(e("recipe-qty-"+j).value===""||e("recipe-price-"+j).value===""||!Number.isSafeInteger(Number(e("recipe-qty-"+j).value))||Number(e("recipe-qty-"+j).value)<=0||!Number.isSafeInteger(Number(e("recipe-price-"+j).value))||Number(e("recipe-price-"+j).value)<0));
   if(!Number.isSafeInteger(q)||q<=0||others){p.textContent=name+": pendiente (faltan cantidades o precios de otros materiales).";maxBox.append(p);return}
@@ -154,7 +208,7 @@ e("recipe-confirm-craft").onclick=()=>{
  if(!ing.length||!Number.isSafeInteger(batches)||batches<=0||!Number.isSafeInteger(yieldCount)||yieldCount<=0||!outputName){alert("Faltan ingredientes, cantidades o producto. No se registrará nada.");return}
  const materials=[];
  for(let i=0;i<ing.length;i++){
-  const x=ing[i],qty=e("recipe-qty-"+i).value===""?NaN:Number(e("recipe-qty-"+i).value),name=String(x.name||x.item?.name||x.itemName||("ID "+(x.itemId??x.item?.id??x.id??"?"))).trim();
+  const x=ing[i],qty=e("recipe-qty-"+i).value===""?NaN:Number(e("recipe-qty-"+i).value),name=String(ingredientName(x)).trim();
   if(!Number.isSafeInteger(qty)||qty<=0||!name||name==="ID ?"){alert("Falta identificar un ingrediente o su cantidad.");return}
   materials.push({name,qty});
  }
@@ -162,7 +216,7 @@ e("recipe-confirm-craft").onclick=()=>{
 };
 
 e("recipe-load").onclick=async()=>{
- if(loading)return;loading=true;stop=false;records=[];visible=0;prepareAudit();e("recipe-audit").disabled=true;e("recipe-share").disabled=true;e("recipe-copy").disabled=true;e("recipe-load").disabled=true;e("recipe-stop").disabled=false;e("recipe-status").textContent="Conectando con Warcraft Forever…";
+ if(loading)return;loading=true;stop=false;records=[];visible=0;e("recipe-translation").textContent="Pendiente de cargar ingredientes…";prepareAudit();e("recipe-audit").disabled=true;e("recipe-share").disabled=true;e("recipe-copy").disabled=true;e("recipe-load").disabled=true;e("recipe-stop").disabled=false;e("recipe-status").textContent="Conectando con Warcraft Forever…";
  try{
   mod=mod||await import("https://warcraftforever.com/data/latest.mjs");
   if(!mod?.Recipes||typeof mod.Recipes.search!=="function")throw Error("La fuente no ofrece la interfaz de búsqueda esperada");
@@ -186,6 +240,7 @@ e("recipe-load").onclick=async()=>{
    cursor=next;
    if(pages>200)throw Error("Límite de seguridad alcanzado");
   }while(cursor);
+  if(!stop)await translateIngredients();
   e("recipe-status").textContent=(stop?"Carga interrumpida; catálogo parcial.":"Lectura terminada, cobertura aún no verificada contra el juego.")+" "+records.length+" recetas clasificadas · "+records.filter(usable).length+" con estructura completa · "+spanish+" nombres esES · "+fallback+" nombres en otro idioma · "+unnamed+" sin nombre · "+unclassified+" fuera de las tres profesiones o sin clasificar · "+duplicates+" duplicadas omitidas. Versión fijada: "+pinnedDataset+" · Cobertura: "+(coverage||"no informada");
  }catch(err){e("recipe-status").textContent="Carga incompleta o fallida: "+err.message+". No se considerará un catálogo completo.";render()}
  finally{prepareAudit();loading=false;e("recipe-load").disabled=false;e("recipe-stop").disabled=true;e("recipe-audit").disabled=records.length===0;e("recipe-share").disabled=records.length===0;e("recipe-copy").disabled=records.length===0}
