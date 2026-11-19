@@ -26,6 +26,8 @@ jobs:
         run: node --test tests/rockpeaks.test.mjs
       - name: Probe Spanish client data SDK
         run: node tools/probe-sdk.mjs
+      - name: Compare client and auction-house recipe identities
+        run: node tools/audit-recipe-matches.mjs
 
   mobile-webkit:
     runs-on: ubuntu-latest
