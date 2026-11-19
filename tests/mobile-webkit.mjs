@@ -57,7 +57,7 @@ try{
  await page.locator("#catalog-translate").click();
  await page.locator("#catalog-translate:not([disabled])").waitFor({timeout:25000});
  const translationStatus=await page.locator("#catalog-status").innerText();
- assert.match(translationStatus,/Recetas 1\/1/);
+ assert.match(translationStatus,/Recetas 0\/1/); // Fixture has no structural recipe match; do not assign a colliding spell name.
  assert.match(translationStatus,/productos\/materiales 3\/3/);
  await page.locator("#recipe-load").click();
  await page.locator("#recipe-load:not([disabled])").waitFor({timeout:30000});
