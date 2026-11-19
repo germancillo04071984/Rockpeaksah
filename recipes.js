@@ -22,7 +22,7 @@ function plan(r){
  const raw=ingredients(r);const out=r.product||r.output||r.createdItem||{};
  const knownYield=out.count??out.quantity??r.outputCount;
  e("recipe-output-name").value=typeof out.name==="string"?out.name:"";
- e("recipe-output").value=Number.isInteger(Number(knownYield))&&Number(knownYield)>0?knownYield:1;
+ e("recipe-output").value=knownYield!=null&&Number.isInteger(Number(knownYield))&&Number(knownYield)>0?knownYield:"";
  e("recipe-plan-info").textContent=raw.length?"Revisa ingredientes y cantidades. Los valores sin confirmar se marcarán como pendientes.":"La fuente no proporciona ingredientes verificables: cálculo bloqueado.";
  const box=e("recipe-materials");box.replaceChildren();
  raw.forEach((x,i)=>{
@@ -40,7 +40,7 @@ function plan(r){
 }
 function calc(){
  if(!planned)return;
- const raw=ingredients(planned),b=Number(e("recipe-batches").value),y=Number(e("recipe-output").value),sale=Number(e("recipe-sale").value),other=Number(e("recipe-other").value),fee=Number(e("recipe-commission").value);
+ const raw=ingredients(planned),b=e("recipe-batches").value===""?NaN:Number(e("recipe-batches").value),y=e("recipe-output").value===""?NaN:Number(e("recipe-output").value),sale=Number(e("recipe-sale").value),other=Number(e("recipe-other").value),fee=Number(e("recipe-commission").value);
  let cost=0,missing=0,invalid=false;
  raw.forEach((x,i)=>{const q=e("recipe-qty-"+i).value,p=e("recipe-price-"+i).value;if(q===""||p===""){missing++;return}const a=Number(q),v=Number(p);if(!Number.isSafeInteger(a)||a<=0||!Number.isSafeInteger(v)||v<0){invalid=true;return}cost+=a*v});
  const msg=e("recipe-profit");
@@ -54,12 +54,12 @@ function calc(){
 
 e("recipe-confirm-craft").onclick=()=>{
  if(!planned)return;
- const batches=Number(e("recipe-batches").value),yieldCount=Number(e("recipe-output").value),outputName=e("recipe-output-name").value.trim();
+ const batches=e("recipe-batches").value===""?NaN:Number(e("recipe-batches").value),yieldCount=e("recipe-output").value===""?NaN:Number(e("recipe-output").value),outputName=e("recipe-output-name").value.trim();
  const ing=ingredients(planned);
  if(!ing.length||!Number.isSafeInteger(batches)||batches<=0||!Number.isSafeInteger(yieldCount)||yieldCount<=0||!outputName){alert("Faltan ingredientes, cantidades o producto. No se registrará nada.");return}
  const materials=[];
  for(let i=0;i<ing.length;i++){
-  const x=ing[i],qty=Number(e("recipe-qty-"+i).value),name=String(x.name||x.item?.name||x.itemName||("ID "+(x.itemId??x.item?.id??x.id??"?"))).trim();
+  const x=ing[i],qty=e("recipe-qty-"+i).value===""?NaN:Number(e("recipe-qty-"+i).value),name=String(x.name||x.item?.name||x.itemName||("ID "+(x.itemId??x.item?.id??x.id??"?"))).trim();
   if(!Number.isSafeInteger(qty)||qty<=0||!name||name==="ID ?"){alert("Falta identificar un ingrediente o su cantidad.");return}
   materials.push({name,qty});
  }
@@ -76,6 +76,7 @@ e("recipe-load").onclick=async()=>{
    const opts={locale:"esES",limit:100,includeUnknown:true};if(cursor)opts.cursor=cursor;
    const result=await mod.Recipes.search("",opts);
    if(!Array.isArray(result.data))throw Error("La fuente no devolvió una lista de recetas");
+   if(result.data.length===0&&pages===0)throw Error("La fuente devolvió cero recetas; no puede validarse la cobertura");
    coverage=JSON.stringify(result.coverage||{}).slice(0,160);dataset=result.dataset||dataset;
    for(const r of result.data){const cat=category(r);if(cat)records.push({...r,_prof:cat});else unclassified++}
    pages++;e("recipe-status").textContent="Páginas: "+pages+" · recetas clasificadas: "+records.length+" · pendientes de clasificar: "+unclassified;
@@ -86,7 +87,7 @@ e("recipe-load").onclick=async()=>{
    cursor=next;
    if(pages>200)throw Error("Límite de seguridad alcanzado");
   }while(cursor);
-  e("recipe-status").textContent=(stop?"Carga interrumpida; catálogo parcial.":"Lectura terminada.")+" "+records.length+" recetas clasificadas · "+unclassified+" sin profesión identificable. Fuente: "+(dataset||"versión actual")+" · Cobertura: "+(coverage||"no informada");
+  e("recipe-status").textContent=(stop?"Carga interrumpida; catálogo parcial.":"Lectura terminada, cobertura aún no verificada contra el juego.")+" "+records.length+" recetas clasificadas · "+unclassified+" sin profesión identificable. Fuente: "+(dataset||"versión actual")+" · Cobertura: "+(coverage||"no informada");
  }catch(err){e("recipe-status").textContent="Carga incompleta o fallida: "+err.message+". No se considerará un catálogo completo.";render()}
  finally{loading=false;e("recipe-load").disabled=false;e("recipe-stop").disabled=true}
 };
