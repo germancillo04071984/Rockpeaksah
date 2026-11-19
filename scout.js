@@ -11,7 +11,7 @@
  '<label>Presupuesto (oros)<input id="scout-budget" type="number" inputmode="decimal" step=".01" min="0" placeholder="Sin límite"></label></div>'+
  '<div class="row"><label>Buscar receta o ingrediente<input id="scout-query" placeholder="Nombre o ID"></label>'+
  '<label id="scout-fee-label">Comisión subasta (%)<input id="scout-fee" type="number" min="0" max="100" step=".5" value="5"></label></div>'+
- '<label class="scout-check"><input id="scout-positive" type="checkbox" checked> Mostrar solo beneficio positivo</label></div>'+
+ '<label class="scout-check"><input id="scout-positive" type="checkbox" checked> Mostrar solo beneficio positivo</label><label class="scout-check"><input id="scout-known" type="checkbox"> Solo recetas que he confirmado aprender</label></div>'+
  '<p id="scout-count" class="muted"></p><div id="scout-results"></div><p><button id="scout-more" hidden>Mostrar más</button></p>'+
  '<small>Origen: auctionhouse.tk.gg. La demanda refleja ventas inferidas, no operaciones garantizadas. No se incluyen depósitos de subasta, desplazamientos ni tiempo de venta. Verifica los precios NPC y que Rockpeaks puede fabricar la receta.</small>';
  host.append(panel);
@@ -25,6 +25,7 @@
  };
  const names=new Map([[6358,"Bocanegra graso"],[3371,"Vial vacío"],[3685,"Huevo de raptor"],[5504,"Carne de almeja ácida"]]),tried=new Set();
  const displayName=(id,original)=>{
+  const translated=window.RockpeaksCatalog?.get("items",id,null);if(translated)return translated;
   if(names.has(Number(id)))return names.get(Number(id));
   if(typeof translationsById!=="undefined"&&translationsById?.has(Number(id)))return translationsById.get(Number(id));
   return original||"ID "+id;
@@ -55,6 +56,7 @@
   const budgetStr=e("scout-budget").value.trim(),budget=budgetStr===""?null:Number(budgetStr)*10000;
   if(budget!==null&&(!Number.isFinite(budget)||budget<0))return [];
   const rows=analysis.records.filter(r=>(prof==="all"||r.prof===prof)&&
+   (!e("scout-known").checked||window.RockpeaksCatalog?.learned(r.id))&&
    (!e("scout-positive").checked||r.profit>0)&&(budget===null||r.cost<=budget)&&
    (!q||norm([r.name,r.id,r.productId,r.productName,displayName(r.productId,r.productName),
      ...r.materials.flatMap(x=>[x.id,x.name,displayName(x.id,x.name)])].join(" ")).includes(q)));
@@ -78,7 +80,20 @@
    const head=document.createElement("div");head.className="scout-top";
    head.append(child("strong",displayName(r.productId,r.productName),"scout-name"),
     child("strong",(r.profit>=0?"+":"")+coins(r.profit),"scout-profit"));item.append(head);
-   item.append(child("small",r.profession+" · "+r.name+" · receta #"+r.id+" · producto #"+r.productId,"muted"));
+   const recipeName=window.RockpeaksCatalog?.get("recipes",r.id,r.name)??r.name;
+   const learned=Boolean(window.RockpeaksCatalog?.learned(r.id));
+   item.append(child("small",r.profession+" · "+recipeName+" · receta #"+r.id+" · producto #"+r.productId+
+    (learned?" · ✓ Aprendida (confirmada por ti)":" · Aprendizaje no confirmado"),"muted"));
+   if(window.RockpeaksCatalog){
+    const knownButton=document.createElement("button");knownButton.type="button";
+    knownButton.textContent=learned?"✓ Ya la aprendí":"Marcar como aprendida";
+    knownButton.className="scout-learned";
+    knownButton.onclick=()=>{
+     const ok=window.RockpeaksCatalog.setLearned(r.id,!window.RockpeaksCatalog.learned(r.id));
+     if(!ok)e("scout-status").textContent="No se pudo guardar en este navegador.";
+     render();
+    };item.append(knownButton);
+   }
    item.append(child("p","Materiales "+coins(r.cost)+" · Ingreso neto "+coins(r.revenue)+" · "+r.yieldCount+" unidades"+
     (r.roi===null?"":" · Rentabilidad "+r.roi.toFixed(1)+"%"),"scout-stats"));
    if(r.channel==="ah"){
@@ -145,6 +160,8 @@
    if(!Array.isArray(recipes?.recipes)||!recipes?.items||!Array.isArray(market?.items)||!Array.isArray(market?.f))
     throw Error("La respuesta no tiene el formato esperado.");
    recipesData=recipes;marketData=market;loadedAt=Date.now();
+   window.rockpeaksCatalogRaw=recipes;
+   window.dispatchEvent(new CustomEvent("rockpeaks:catalog-ready"));
    e("scout-controls").hidden=false;recalc();
    e("scout-status").textContent="Análisis listo. Fuentes externas: mercado horario y catálogo de recetas.";
    e("scout-load").textContent="Volver a analizar";
@@ -154,7 +171,9 @@
  }
  e("scout-load").onclick=load;
  ["scout-channel","scout-fee"].forEach(id=>e(id).addEventListener("change",recalc));
- ["scout-prof","scout-sort","scout-budget","scout-query","scout-positive"].forEach(id=>
+ ["scout-prof","scout-sort","scout-budget","scout-query","scout-positive","scout-known"].forEach(id=>
   e(id).addEventListener("input",()=>{visible=20;render()}));
  e("scout-more").onclick=()=>{visible+=20;render()};
+ window.addEventListener("rockpeaks:translation-change",()=>{if(analysis)render()});
+ window.addEventListener("rockpeaks:learned-change",()=>{if(analysis)render()});
 })();
