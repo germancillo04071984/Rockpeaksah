@@ -56,5 +56,26 @@ e("stock-add").onclick=()=>{
  db.stock.push({id:Date.now()+"-"+Math.random(),date:new Date().toLocaleDateString("sv-SE"),name,kind,qty});
  save();render();
 };
+
+window.addEventListener("rockpeaks:craft",event=>{
+ const d=event.detail||{},materials=d.materials,output=d.output,batches=d.batches;
+ if(!Array.isArray(materials)||!materials.length||!output||!Number.isSafeInteger(batches)||batches<=0)return alert("Fabricación inválida.");
+ if(!materials.every(m=>typeof m.name==="string"&&m.name.trim()&&Number.isSafeInteger(m.qty)&&m.qty>0))return alert("Hay ingredientes incompletos.");
+ if(typeof output.name!=="string"||!output.name.trim()||!Number.isSafeInteger(output.qty)||output.qty<=0)return alert("Falta el producto fabricado o su cantidad.");
+ const sign={compra:1,recoleccion:1,fabricacion:1,consumo:-1,venta:-1,ajuste:1};
+ const balances=new Map();
+ db.stock.forEach(x=>balances.set(x.name,(balances.get(x.name)||0)+(sign[x.kind]||0)*x.qty));
+ const needs=new Map();
+ materials.forEach(m=>needs.set(m.name,(needs.get(m.name)||0)+m.qty*batches));
+ const shortages=[...needs].filter(([name,qty])=>(balances.get(name)||0)<qty);
+ if(shortages.length){alert("Inventario insuficiente o no registrado: "+shortages.map(([n,q])=>n+" (necesitas "+q+", constan "+(balances.get(n)||0)+")").join("; "));return}
+ const desc=[...needs].map(([n,q])=>q+" × "+n).join("; ");
+ if(!confirm("¿Confirmas fabricación REAL de "+(output.qty*batches)+" × "+output.name+" consumiendo "+desc+"? No se registrará ninguna venta."))return;
+ const stamp=new Date().toISOString(),batchId="craft-"+stamp+"-"+Math.random().toString(36).slice(2);
+ const entries=[...[...needs].map(([name,qty])=>({id:batchId+"-"+Math.random(),batchId,date:stamp.slice(0,10),name,kind:"consumo",qty})),{id:batchId+"-output",batchId,date:stamp.slice(0,10),name:output.name,kind:"fabricacion",qty:output.qty*batches}];
+ db.stock.push(...entries);
+ try{save();render();alert("Fabricación registrada en inventario. No se ha registrado una venta ni un beneficio.")}catch(err){db.stock.splice(-entries.length);alert("No se pudo guardar: "+err.message)}
+});
+
 calculate();render();
 })();
