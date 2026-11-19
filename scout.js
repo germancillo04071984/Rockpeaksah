@@ -80,9 +80,14 @@
    const head=document.createElement("div");head.className="scout-top";
    head.append(child("strong",displayName(r.productId,r.productName),"scout-name"),
     child("strong",(r.profit>=0?"+":"")+coins(r.profit),"scout-profit"));item.append(head);
-   const recipeName=window.RockpeaksCatalog?.get("recipes",r.id,r.name)??r.name;
+   const spanishRecipe=Boolean(window.RockpeaksCatalog?.isTranslated("recipes",r.id));
+   const translatedProduct=Boolean(window.RockpeaksCatalog?.isTranslated("items",r.productId));
+   const recipeName=spanishRecipe?window.RockpeaksCatalog.get("recipes",r.id,r.name):
+    translatedProduct?"Fabricar: "+window.RockpeaksCatalog.get("items",r.productId,r.productName):r.name;
+   const recipeLanguage=spanishRecipe?"receta en español verificada":
+    translatedProduct?"nombre del producto en español; receta pendiente de traducir":"nombre original sin traducir";
    const learned=Boolean(window.RockpeaksCatalog?.learned(r.id));
-   item.append(child("small",r.profession+" · "+recipeName+" · receta #"+r.id+" · producto #"+r.productId+
+   item.append(child("small",r.profession+" · "+recipeName+" ("+recipeLanguage+") · receta #"+r.id+" · producto #"+r.productId+
     (learned?" · ✓ Aprendida (confirmada por ti)":" · Aprendizaje no confirmado"),"muted"));
    if(window.RockpeaksCatalog){
     const knownButton=document.createElement("button");knownButton.type="button";
