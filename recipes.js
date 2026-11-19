@@ -1,7 +1,8 @@
 "use strict";
 (async function(){
-const root=document.createElement("section");root.className="card";root.innerHTML='<h2>📚 Catálogo de recetas de WoW Forever</h2><p class="muted">Cocina, alquimia y peletería. Datos del corpus público de profesiones; una receta en los archivos no garantiza que Rockpeaks pueda aprenderla. La cobertura y los nombres dependen de la fuente.</p><p><button id="recipe-load">Cargar catálogo completo disponible</button> <button id="recipe-stop" disabled>Detener</button> <button id="recipe-audit" disabled>Exportar auditoría CSV</button> <button id="recipe-share" disabled>Compartir CSV (iPhone)</button> <button id="recipe-copy" disabled>Copiar CSV</button> <button id="recipe-diagnostic">Diagnosticar exportación</button></p><p id="recipe-status" aria-live="polite">Sin cargar</p><div class="row"><label>Profesión<select id="recipe-prof"><option value="all">Todas las tres</option><option value="cooking">Cocina</option><option value="alchemy">Alquimia</option><option value="leatherworking">Peletería</option></select></label><label>Buscar<input id="recipe-search" placeholder="Receta, ingrediente o ID"></label></div><p id="recipe-count"></p><div id="recipe-results"></div><div id="recipe-plan" class="card" hidden><h3 id="recipe-plan-title">Planificador</h3><p id="recipe-plan-info"></p><label>Fabricaciones <input id="recipe-batches" type="number" min="1" step="1" value="1"></label><div id="recipe-materials"></div><p><label>Raciones / unidades obtenidas por fabricación <input id="recipe-output" type="number" min="1" step="1" value="1"></label></p><div class="row"><label>Venta por unidad (cobres)<input id="recipe-sale" type="number" min="0" step="1" value="0"></label><label>Otros gastos por fabricación (cobres)<input id="recipe-other" type="number" min="0" step="1" value="0"></label></div><p><label>Comisión subasta (%) <input id="recipe-commission" type="number" min="0" max="100" step=".1" value="0"></label></p><p id="recipe-profit" aria-live="polite"></p><div id="recipe-maxbuy" aria-live="polite"></div><p><label>Nombre del producto fabricado <input id="recipe-output-name" placeholder="Confirma el nombre del producto"></label></p><button id="recipe-confirm-craft">Confirmar fabricación real y mover inventario</button><small>Los precios de materiales se introducen manualmente o se toman del mercado solo cuando coinciden los ID. Un ingrediente sin precio no equivale a coste cero.</small></div><p><button id="recipe-more" hidden>Mostrar más</button></p><small>El catálogo no modifica tu contabilidad ni inventario. Revisa cantidades y disponibilidad antes de fabricar. Los precios de mercado pueden faltar.</small>';
-document.querySelector("main").append(root);
+const root=document.createElement("section");root.className="card";root.innerHTML='<h2>📚 Catálogo de recetas de WoW Forever</h2><p class="muted">Cocina, alquimia y peletería. Datos del corpus público de profesiones; una receta en los archivos no garantiza que Rockpeaks pueda aprenderla. La cobertura y los nombres dependen de la fuente.</p><p><button id="recipe-load">Cargar catálogo completo disponible</button> <button id="recipe-stop" disabled>Detener</button> <button id="recipe-audit" disabled>Exportar auditoría CSV</button> <button id="recipe-share" disabled>Compartir CSV (iPhone)</button> <button id="recipe-copy" disabled>Copiar CSV</button> <a id="recipe-download" hidden download="rockpeaks-auditoria-recetas.csv">Guardar CSV</a></p><p id="recipe-export-status" role="status"></p><textarea id="recipe-csv-text" aria-label="Contenido del CSV" readonly hidden rows="6" style="width:100%;box-sizing:border-box"></textarea><p id="recipe-status" aria-live="polite">Sin cargar</p><div class="row"><label>Profesión<select id="recipe-prof"><option value="all">Todas las tres</option><option value="cooking">Cocina</option><option value="alchemy">Alquimia</option><option value="leatherworking">Peletería</option></select></label><label>Buscar<input id="recipe-search" placeholder="Receta, ingrediente o ID"></label></div><p id="recipe-count"></p><div id="recipe-results"></div><div id="recipe-plan" class="card" hidden><h3 id="recipe-plan-title">Planificador</h3><p id="recipe-plan-info"></p><label>Fabricaciones <input id="recipe-batches" type="number" min="1" step="1" value="1"></label><div id="recipe-materials"></div><p><label>Raciones / unidades obtenidas por fabricación <input id="recipe-output" type="number" min="1" step="1" value="1"></label></p><div class="row"><label>Venta por unidad (cobres)<input id="recipe-sale" type="number" min="0" step="1" value="0"></label><label>Otros gastos por fabricación (cobres)<input id="recipe-other" type="number" min="0" step="1" value="0"></label></div><p><label>Comisión subasta (%) <input id="recipe-commission" type="number" min="0" max="100" step=".1" value="0"></label></p><p id="recipe-profit" aria-live="polite"></p><div id="recipe-maxbuy" aria-live="polite"></div><p><label>Nombre del producto fabricado <input id="recipe-output-name" placeholder="Confirma el nombre del producto"></label></p><button id="recipe-confirm-craft">Confirmar fabricación real y mover inventario</button><small>Los precios de materiales se introducen manualmente o se toman del mercado solo cuando coinciden los ID. Un ingrediente sin precio no equivale a coste cero.</small></div><p><button id="recipe-more" hidden>Mostrar más</button></p><small>El catálogo no modifica tu contabilidad ni inventario. Revisa cantidades y disponibilidad antes de fabricar. Los precios de mercado pueden faltar.</small>';
+document.getElementById("panel-recipes")?.append(root);
+if(!root.isConnected)return;
 const e=id=>document.getElementById(id);
 let records=[],visible=0,loading=false,stop=false,mod=null,coverage="",dataset="";
 const csvCell=x=>'"'+String(x??"").replaceAll('"','""')+'"';
@@ -20,30 +21,56 @@ function auditCsv(){
  const rows=[["profesion","id_receta","nombre","idioma_nombre","estado_estructura","producto","cantidad_resultado","ingredientes_id_cantidad","dataset"],...recipeAudit()];
  return "\uFEFF"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n");
 }
-function auditFile(){return new File([auditCsv()],"rockpeaks-auditoria-recetas.csv",{type:"text/csv;charset=utf-8"});}
+const auditName="rockpeaks-auditoria-recetas.csv";
+let auditText="",auditUrl="",shareFile=null;
+
+function prepareAudit(){
+ const link=e("recipe-download"),preview=e("recipe-csv-text");
+ if(auditUrl)URL.revokeObjectURL(auditUrl);
+ auditText="";auditUrl="";shareFile=null;
+ link.removeAttribute("href");
+ link.hidden=true;preview.hidden=true;preview.value="";
+ e("recipe-export-status").textContent="";
+ if(!records.length)return;
+ auditText=auditCsv();
+ const options={type:"text/csv"};
+ const blob=new Blob([auditText],options);
+ auditUrl=URL.createObjectURL(blob);
+ link.href=auditUrl;
+ if(typeof File==="function")shareFile=new File([blob],auditName,options);
+}
+function offerDownload(message){
+ e("recipe-download").hidden=false;
+ e("recipe-export-status").textContent=message;
+}
 e("recipe-audit").onclick=()=>{
- try{
- const blob=new Blob([auditCsv()],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
- a.href=url;a.download="rockpeaks-auditoria-recetas.csv";a.textContent="Descargar auditoría CSV";a.style.display="none";document.body.append(a);a.click();
- e("recipe-status").textContent="Descarga solicitada. Si el iPhone no la guarda, pulsa «Compartir CSV (iPhone)» y selecciona «Guardar en Archivos».";
- setTimeout(()=>{a.remove();URL.revokeObjectURL(url)},60000);
- }catch(err){e("recipe-status").textContent="No se pudo iniciar la descarga: "+err.message}
+ if(!auditUrl)return;
+ offerDownload("Se ha solicitado la descarga. Puedes volver a pulsar «Guardar CSV».");
+ e("recipe-download").click();
 };
 e("recipe-share").onclick=async()=>{
- e("recipe-status").textContent="Botón Compartir pulsado. Preparando archivo…";
+ if(!auditUrl)return;
  try{
- const file=auditFile();
- if(!navigator.share||!navigator.canShare||!navigator.canShare({files:[file]})){
- e("recipe-status").textContent="Este navegador no permite compartir archivos. Prueba «Exportar auditoría CSV» o «Copiar CSV».";return;
+  if(shareFile&&navigator.share&&navigator.canShare?.({files:[shareFile]})){
+   await navigator.share({files:[shareFile]});
+   e("recipe-export-status").textContent="Se ha compartido el CSV.";
+   return;
+  }
+  offerDownload("Este navegador no ofrece compartir el archivo. Pulsa «Guardar CSV».");
+ }catch(err){
+  offerDownload(err.name==="AbortError"?"Compartir cancelado.":"No se pudo compartir. Pulsa «Guardar CSV».");
  }
- await navigator.share({files:[file],title:"Auditoría de recetas Rockpeaks"});
- e("recipe-status").textContent="Archivo entregado al menú Compartir. Selecciona «Guardar en Archivos» para conservarlo.";
- }catch(err){if(err.name!=="AbortError")e("recipe-status").textContent="No se pudo compartir: "+err.message}
 };
-e("recipe-diagnostic").onclick=()=>{const n=records.length;const details="Diagnóstico: "+n+" recetas clasificadas · compartir "+(typeof navigator.share==="function"?"disponible":"no disponible")+" · compartir archivos "+(typeof navigator.canShare==="function"?"detectado":"no detectado")+" · protocolo "+location.protocol+" · versión exportación 2.";e("recipe-status").textContent=details;alert(details)};
 e("recipe-copy").onclick=async()=>{
- try{await navigator.clipboard.writeText(auditCsv());e("recipe-status").textContent="CSV copiado. Pégalo en un archivo de texto y guárdalo como .csv."}
- catch(err){e("recipe-status").textContent="No se pudo copiar el CSV: "+err.message}
+ if(!auditText)return;
+ try{
+  await navigator.clipboard.writeText(auditText);
+  e("recipe-export-status").textContent="CSV copiado.";
+ }catch{
+  const preview=e("recipe-csv-text");
+  preview.value=auditText;preview.hidden=false;preview.focus();preview.select();
+  offerDownload("Puedes copiar el texto seleccionado o pulsar «Guardar CSV».");
+ }
 };
 e("recipe-prof").onchange=()=>render();e("recipe-search").oninput=()=>render();e("recipe-more").onclick=()=>render(false);e("recipe-stop").onclick=()=>{stop=true;e("recipe-status").textContent="Deteniendo tras la página actual…"};
 
@@ -115,7 +142,7 @@ e("recipe-confirm-craft").onclick=()=>{
 };
 
 e("recipe-load").onclick=async()=>{
- if(loading)return;loading=true;stop=false;records=[];visible=0;e("recipe-audit").disabled=true;e("recipe-share").disabled=true;e("recipe-copy").disabled=true;e("recipe-load").disabled=true;e("recipe-stop").disabled=false;e("recipe-status").textContent="Conectando con Warcraft Forever…";
+ if(loading)return;loading=true;stop=false;records=[];visible=0;prepareAudit();e("recipe-audit").disabled=true;e("recipe-share").disabled=true;e("recipe-copy").disabled=true;e("recipe-load").disabled=true;e("recipe-stop").disabled=false;e("recipe-status").textContent="Conectando con Warcraft Forever…";
  try{
   mod=mod||await import("https://warcraftforever.com/data/latest.mjs");
   if(!mod?.Recipes||typeof mod.Recipes.search!=="function")throw Error("La fuente no ofrece la interfaz de búsqueda esperada");
@@ -141,6 +168,6 @@ e("recipe-load").onclick=async()=>{
   }while(cursor);
   e("recipe-status").textContent=(stop?"Carga interrumpida; catálogo parcial.":"Lectura terminada, cobertura aún no verificada contra el juego.")+" "+records.length+" recetas clasificadas · "+records.filter(usable).length+" con estructura completa · "+spanish+" nombres esES · "+fallback+" nombres en otro idioma · "+unnamed+" sin nombre · "+unclassified+" sin profesión identificable · "+duplicates+" duplicadas omitidas. Versión fijada: "+pinnedDataset+" · Cobertura: "+(coverage||"no informada");
  }catch(err){e("recipe-status").textContent="Carga incompleta o fallida: "+err.message+". No se considerará un catálogo completo.";render()}
- finally{loading=false;e("recipe-load").disabled=false;e("recipe-stop").disabled=true;e("recipe-audit").disabled=records.length===0;e("recipe-share").disabled=records.length===0;e("recipe-copy").disabled=records.length===0}
+ finally{prepareAudit();loading=false;e("recipe-load").disabled=false;e("recipe-stop").disabled=true;e("recipe-audit").disabled=records.length===0;e("recipe-share").disabled=records.length===0;e("recipe-copy").disabled=records.length===0}
 };
 })();
