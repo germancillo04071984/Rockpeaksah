@@ -21,8 +21,8 @@
   const metric=(id,name)=>{const row=listed.get(id),idx=fields.get(name);return row&&idx!==undefined?row.o?.[idx]??null:null};
   const ask=id=>pos(metric(id,"ask"));
   const item=id=>catalog.items[id]||listed.get(id)||{};
-  const buy=id=>pos(catalog.vendor?.[id])??pos(item(id).buy);
-  const sell=id=>pos(item(id).sell);
+  const buy=id=>pos(catalog.vendor?.[id])??pos(catalog.items[id]?.buy)??pos(listed.get(id)?.buy);
+  const sell=id=>pos(catalog.items[id]?.sell)??pos(listed.get(id)?.sell);
   for(const r of catalog.recipes){
    const prof=profession(r?.prof);if(!prof)continue;
    stats.total++;stats.professions[prof]++;
