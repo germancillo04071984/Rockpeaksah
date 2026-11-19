@@ -3,7 +3,8 @@
 const BASE="https://auctionhouse.tk.gg",MARKET="eu-2-113",el=id=>document.getElementById(id);
 let items=[],fields=[],selected=null,hours=24,requestId=0;
 const translations=new Map([["raptor egg","Huevo de raptor"],["tangy clam meat","Carne de almeja ácida"]]);
-function displayName(it){return translations.get(String(it.name||"").toLowerCase())||it.name||"#"+it.id}
+const translationsById=new Map([[3685,"Huevo de raptor"]]);
+function displayName(it){return translationsById.get(Number(it.id))||translations.get(String(it.name||"").trim().toLowerCase())||it.name||"#"+it.id}
 let favs=[];try{favs=JSON.parse(localStorage.getItem("rockpeaks-favorites")||"[]")}catch{}if(!Array.isArray(favs))favs=[];
 function money(x){if(x==null||!Number.isFinite(Number(x)))return "—";let n=Math.max(0,Math.round(Number(x))),g=Math.floor(n/10000),s=Math.floor(n%10000/100),c=n%100;return [g?g+"o":null,s?s+"p":null,c+"c"].filter(Boolean).join(" ")}
 function val(it,key){let k=fields.indexOf(key);return k<0?null:it.o?.[k]??null}
