@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import {validatedNames} from "./recipe-match.mjs";
 import os from "node:os";
 import path from "node:path";
 import {pathToFileURL} from "node:url";
@@ -78,9 +79,37 @@ async function transfer(kind,ids,method){
  console.log("COMPLETED",kind,JSON.stringify({total:ids.length,translated,englishFallback:english,missing,dataset}));
 }
 await transfer("items",itemIds,sdk.Items);
-await transfer("recipes",recipeIds,sdk.Recipes);
-if(!Object.keys(output.items).length||!Object.keys(output.recipes).length)
- throw Error("El SDK no devolvió nombres verificados en español de ambas categorías.");
+// Recipe IDs differ between Blizzard's profession API and the client's spell/recipe corpus.
+// Never translate by numeric recipe ID alone: require an exact structural match.
+if(typeof sdk.Recipes?.search!=="function")throw Error("Recipe search not available.");
+const clientRecipes=[];
+let cursor=null,pinned=null,pages=0;
+const seen=new Set();
+do{
+ const options={locale:"esES",limit:100,includeUnknown:true};
+ if(pinned)options.dataset=pinned;
+ if(cursor)options.cursor=cursor;
+ const result=await sdk.Recipes.search("",options);
+ if(!Array.isArray(result.data)||!result.dataset)throw Error("Incomplete recipe corpus response.");
+ if(pinned&&result.dataset!==pinned)throw Error("Recipe dataset switched during paging.");
+ pinned=result.dataset;
+ clientRecipes.push(...result.data);
+ pages++;
+ if(pages>120)throw Error("Exceeded safe recipe pagination limit.");
+ cursor=result.nextCursor||null;
+ if(cursor&&seen.has(cursor))throw Error("Repeated recipe cursor.");
+ if(cursor)seen.add(cursor);
+ if(pages%10===0||!cursor)console.log("RECIPE_PAGES",pages,"records",clientRecipes.length);
+}while(cursor);
+const matched=validatedNames(selected,clientRecipes);
+output.recipes=matched.names;
+output.source.dataset.recipes=pinned;
+output.source.coverage.translatedRecipes=Object.keys(matched.names).length;
+output.source.coverage.matchMethod="Same profession, product item, output count and complete reagent IDs/quantities";
+console.log("MATCHED_RECIPES",JSON.stringify({marketCount:selected.length,clientCount:clientRecipes.length,
+ verifiedMatches:matched.matches.length,sourceSignatures:matched.clientSignatures,conflictingSignatures:matched.conflicts}));
+if(!Object.keys(output.items).length)
+ throw Error("El SDK no devolvió nombres de objetos verificados en español.");
 const ordered={...output,
   items:Object.fromEntries(Object.entries(output.items).sort((a,b)=>Number(a[0])-Number(b[0]))),
   recipes:Object.fromEntries(Object.entries(output.recipes).sort((a,b)=>Number(a[0])-Number(b[0])))
