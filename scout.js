@@ -136,9 +136,11 @@
   }
   busy=true;e("scout-load").disabled=true;e("scout-status").textContent="Consultando recetas y mercado de la Horda (EU PvP)…";
   try{
+   const available=window.rockpeaksMarketSnapshot;
+   const marketPromise=available&&Array.isArray(available.items)&&Array.isArray(available.f)?
+    Promise.resolve(available):fetchData("https://auctionhouse.tk.gg/api/m/eu-2-113");
    const [recipes,market]=await Promise.all([
-    fetchData("https://auctionhouse.tk.gg/api/recipes"),
-    fetchData("https://auctionhouse.tk.gg/api/m/eu-2-113")
+    fetchData("https://auctionhouse.tk.gg/api/recipes"),marketPromise
    ]);
    if(!Array.isArray(recipes?.recipes)||!recipes?.items||!Array.isArray(market?.items)||!Array.isArray(market?.f))
     throw Error("La respuesta no tiene el formato esperado.");
