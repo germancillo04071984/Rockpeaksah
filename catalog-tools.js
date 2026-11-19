@@ -53,7 +53,9 @@
  async function translateAll(input,onProgress){
   if(busy)throw Error("Ya hay una traducción en curso.");
   busy=true;stop=false;
-  const incoming={items:Array.isArray(input?.items)?input.items:[],recipes:Array.isArray(input?.recipes)?input.recipes:[]};
+  // The numeric IDs for API recipes and client spells are not interchangeable.
+  // Server-side build validates recipe identity by materials, product, quantity, profession.
+  const incoming={items:Array.isArray(input?.items)?input.items:[],recipes:[]};
   const targets={items:[],recipes:[]};
   for(const kind of kinds){
    const ids=[...new Set(incoming[kind].map(goodId).filter(Boolean))];
