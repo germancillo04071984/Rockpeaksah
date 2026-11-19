@@ -15,7 +15,8 @@ let starredRecipes=[];
 try{const saved=JSON.parse(localStorage.getItem("rockpeaks-recipe-stars-v1")||"[]");if(Array.isArray(saved))starredRecipes=saved.filter(x=>typeof x==="string")}catch{}
 const professionsById=new Map([[171,"alchemy"],[165,"leatherworking"],[185,"cooking"]]);
 const category=r=>{const prof=professionsById.get(Number(r.profession));if(prof)return prof;const raw=[r.profession,r.professionName,r.skillLine,r.skillLineName,r.category,r.profession?.name,r.skill?.name,r.skill?.profession].filter(Boolean).map(v=>typeof v==="object"?JSON.stringify(v):String(v)).join(" ").toLowerCase();if(/leatherworking|peleter|cuero|leatherwork/.test(raw))return"leatherworking";if(/alchemy|alquimia/.test(raw))return"alchemy";if(/cooking|cocina/.test(raw))return"cooking";return null};
-const title=r=>r.name||r.spellName||r.recipeName||r.product?.name||"Receta #"+(r.id??"?");
+const originalTitle=r=>r.name||r.spellName||r.recipeName||r.product?.name||"Receta #"+(r.id??"?");
+const title=r=>window.RockpeaksCatalog?.get("recipes",r.id??r.spellId,originalTitle(r))??originalTitle(r);
 const arr=x=>Array.isArray(x)?x:[];
 const ingredients=r=>arr(r.reagents||r.ingredients||r.materials||r.requiredItems).map(reagent=>{
  if(Array.isArray(reagent))return {itemId:reagent[0],count:reagent[1]};
@@ -27,7 +28,7 @@ const ingredientId=x=>Number(x?.itemId??x?.item?.id??x?.id);
 function ingredientName(x){
  if(typeof x==="string")return x;
  const id=ingredientId(x);
- return ingredientNames.get(id)||x.name||x.item?.name||x.itemName||
+ return window.RockpeaksCatalog?.get("items",id,null)||ingredientNames.get(id)||x.name||x.item?.name||x.itemName||
   (Number.isSafeInteger(id)&&id>0?"Ingrediente sin traducir (ID "+id+")":"Ingrediente sin identificar");
 }
 function line(ing){return arr(ing).map(x=>{if(typeof x==="string")return x;const qty=x.count??x.quantity??x.amount??x.requiredCount;return (qty!=null?qty+" × ":"")+ingredientName(x)}).join(" · ")}
@@ -79,7 +80,7 @@ function filtered(){
   &&(scope!=="complete"||usable(r))
   &&(scope!=="spanish"||r.nameLocale==="esES")
   &&(scope!=="starred"||(recipeKey(r)&&starredRecipes.includes(recipeKey(r))))
-  &&(!q||norm([title(r),r.id??r.spellId,line(ingredients(r))].join(" ")).includes(q)));
+  &&(!q||norm([title(r),originalTitle(r),r.id??r.spellId,line(ingredients(r))].join(" ")).includes(q)));
  const order=e("recipe-order").value;
  found.sort((a,b)=>order==="id"?
   (Number(a.id??a.spellId)||Infinity)-(Number(b.id??b.spellId)||Infinity):
@@ -87,7 +88,7 @@ function filtered(){
   title(a).localeCompare(title(b),"es",{sensitivity:"base"}));
  return found;
 }
-function render(reset=true,extend=true){if(reset)visible=0;const matches=filtered();visible=Math.min(matches.length,visible+(extend?40:0));const out=e("recipe-results");out.replaceChildren();matches.slice(0,visible).forEach(r=>{const d=document.createElement("div");d.style.borderTop="1px solid #475569";d.style.padding="12px 0";const h=document.createElement("strong");h.textContent=title(r)+(r.nameLocale==="esES"?" [español]":" [idioma no verificado]")+" · "+({cooking:"Cocina",alchemy:"Alquimia",leatherworking:"Peletería"}[r._prof]||"Sin clasificar");d.append(h);const p=document.createElement("p");p.className="muted";const ings=ingredients(r);p.textContent="ID "+(r.id??"sin identificar")+" · "+(ings.length?line(ings):"Ingredientes no disponibles en este registro");d.append(p);const output=r.product||r.output||r.createdItem;const o=document.createElement("small");o.textContent=output?"Producto: "+(output.name||output.item?.name||output.itemId||output.id||"sin nombre")+" · Cantidad: "+(output.count??output.quantity??r.outputCount??"no indicada"):"Producto/cantidad: no confirmados";d.append(o);
+function render(reset=true,extend=true){if(reset)visible=0;const matches=filtered();visible=Math.min(matches.length,visible+(extend?40:0));const out=e("recipe-results");out.replaceChildren();matches.slice(0,visible).forEach(r=>{const d=document.createElement("div");d.style.borderTop="1px solid #475569";d.style.padding="12px 0";const h=document.createElement("strong");h.textContent=title(r)+((r.nameLocale==="esES"||window.RockpeaksCatalog?.isTranslated("recipes",r.id??r.spellId))?" [español]":" [idioma no verificado]")+" · "+({cooking:"Cocina",alchemy:"Alquimia",leatherworking:"Peletería"}[r._prof]||"Sin clasificar");d.append(h);const p=document.createElement("p");p.className="muted";const ings=ingredients(r);p.textContent="ID "+(r.id??"sin identificar")+" · "+(ings.length?line(ings):"Ingredientes no disponibles en este registro");d.append(p);const output=r.product||r.output||r.createdItem;const o=document.createElement("small");o.textContent=output?"Producto: "+(output.name||output.item?.name||output.itemId||output.id||"sin nombre")+" · Cantidad: "+(output.count??output.quantity??r.outputCount??"no indicada"):"Producto/cantidad: no confirmados";d.append(o);
  const opp=marketOpportunity(r),summary=document.createElement("p");summary.className="recipe-opportunity";
  if(opp.status==="estimated"){
   summary.textContent="Coste mín. "+gold(opp.cost)+" · Ingreso neto subasta "+gold(opp.revenue)+" · "+(opp.profit>=0?"Beneficio potencial ":"Pérdida potencial ")+gold(opp.profit)+(opp.profit>=0?"":" (negativo)")+" / fabricación";
@@ -95,7 +96,16 @@ function render(reset=true,extend=true){if(reset)visible=0;const matches=filtere
  }else if(opp.status==="cost-pending"){summary.textContent="Beneficio pendiente: faltan precios de materiales."}
  else if(opp.status==="sale-pending"){summary.textContent="Coste mín. "+gold(opp.cost)+" · Beneficio pendiente: falta precio de venta."}
  else {summary.textContent="Beneficio pendiente: receta sin materiales o rendimiento verificables."}
- d.append(summary);const btn=document.createElement("button");btn.textContent=usable(r)?"Calcular fabricación":"Revisar receta incompleta";btn.onclick=()=>plan(r);d.append(document.createElement("p"),btn);const key=recipeKey(r);if(key){const star=document.createElement("button");star.type="button";star.textContent=starredRecipes.includes(key)?"★ Favorita":"☆ Marcar favorita";star.setAttribute("aria-label","Marcar o quitar receta favorita");star.onclick=()=>{starredRecipes=starredRecipes.includes(key)?starredRecipes.filter(x=>x!==key):[...starredRecipes,key];try{localStorage.setItem("rockpeaks-recipe-stars-v1",JSON.stringify(starredRecipes))}catch{e("recipe-status").textContent="No se pudieron guardar favoritos en este navegador."}render()};d.append(star)}out.append(d)});e("recipe-count").textContent=matches.length+" recetas coincidentes · "+records.length+" clasificadas · "+records.filter(usable).length+" con estructura completa (sin contrastar con el juego)";e("recipe-more").hidden=visible>=matches.length}
+ d.append(summary);const btn=document.createElement("button");btn.textContent=usable(r)?"Calcular fabricación":"Revisar receta incompleta";btn.onclick=()=>plan(r);d.append(document.createElement("p"),btn);const key=recipeKey(r);if(key){const star=document.createElement("button");star.type="button";star.textContent=starredRecipes.includes(key)?"★ Favorita":"☆ Marcar favorita";star.setAttribute("aria-label","Marcar o quitar receta favorita");star.onclick=()=>{starredRecipes=starredRecipes.includes(key)?starredRecipes.filter(x=>x!==key):[...starredRecipes,key];try{localStorage.setItem("rockpeaks-recipe-stars-v1",JSON.stringify(starredRecipes))}catch{e("recipe-status").textContent="No se pudieron guardar favoritos en este navegador."}render()};d.append(star);
+ if(window.RockpeaksCatalog){const learned=document.createElement("button");learned.type="button";
+ learned.textContent=window.RockpeaksCatalog.learned(r.id??r.spellId)?"✓ Aprendida":"¿La he aprendido?";
+ learned.setAttribute("aria-label","Confirmar si Rockpeaks aprendió esta receta");
+ learned.onclick=()=>{const id=r.id??r.spellId;const has=window.RockpeaksCatalog.learned(id);
+  const saved=window.RockpeaksCatalog.setLearned(id,!has);
+  if(!saved)e("recipe-status").textContent="No se pudo guardar la confirmación en este dispositivo.";
+  render(false,false)};
+ d.append(learned)}
+ }out.append(d)});e("recipe-count").textContent=matches.length+" recetas coincidentes · "+records.length+" clasificadas · "+records.filter(usable).length+" con estructura completa (sin contrastar con el juego)";e("recipe-more").hidden=visible>=matches.length}
 function auditCsv(){
  const rows=[["profesion","id_receta","nombre","idioma_nombre","estado_estructura","producto","cantidad_resultado","ingredientes_id_cantidad","ingredientes_nombres","dataset"],...recipeAudit()];
  return "\uFEFF"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n");
@@ -154,6 +164,11 @@ e("recipe-copy").onclick=async()=>{
 e("recipe-prof").onchange=()=>render();e("recipe-search").oninput=()=>render();e("recipe-scope").onchange=()=>render();e("recipe-order").onchange=()=>render();e("recipe-more").onclick=()=>render(false);e("recipe-stop").onclick=()=>{stop=true;e("recipe-status").textContent="Deteniendo tras la página actual…"};
 
 let planned=null;
+window.addEventListener("rockpeaks:translation-change",()=>{
+ if(!loading&&records.length){render(false,false);if(planned)refreshNames()}
+});
+window.addEventListener("rockpeaks:learned-change",()=>{if(!loading&&records.length)render(false,false)});
+
 const gold=n=>{if(!Number.isFinite(n))return "—";let v=Math.round(Math.abs(n)),sign=n<0?"−":"";return sign+[Math.floor(v/10000)?" "+Math.floor(v/10000)+"o":"",Math.floor(v%10000/100)?" "+Math.floor(v%10000/100)+"p":"",v%100+"c"].join(" ").trim()};
 function marketPrice(id){
  if(!isPositiveInt(id)||typeof items==="undefined"||!Array.isArray(items)||typeof val!=="function")return null;
