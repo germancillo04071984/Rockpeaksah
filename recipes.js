@@ -13,7 +13,7 @@ const arr=x=>Array.isArray(x)?x:[];
 const ingredients=r=>arr(r.reagents||r.ingredients||r.materials||r.requiredItems);
 function line(ing){return arr(ing).map(x=>{if(typeof x==="string")return x;const name=x.name||x.item?.name||x.itemName||("ID "+(x.itemId??x.id??"?"));const qty=x.count??x.quantity??x.amount??x.requiredCount;return (qty!=null?qty+" × ":"")+name}).join(" · ")}
 function filtered(){const prof=e("recipe-prof").value,q=norm(e("recipe-search").value.trim());return records.filter(r=>(prof==="all"||r._prof===prof)&&(!q||norm([title(r),r.id,line(ingredients(r))].join(" ")).includes(q)))}
-function render(reset=true){if(reset)visible=0;const matches=filtered();visible=Math.min(matches.length,visible+40);const out=e("recipe-results");out.replaceChildren();matches.slice(0,visible).forEach(r=>{const d=document.createElement("div");d.style.borderTop="1px solid #475569";d.style.padding="12px 0";const h=document.createElement("strong");h.textContent=title(r)+" · "+({cooking:"Cocina",alchemy:"Alquimia",leatherworking:"Peletería"}[r._prof]||"Sin clasificar");d.append(h);const p=document.createElement("p");p.className="muted";const ings=ingredients(r);p.textContent="ID "+(r.id??"sin identificar")+" · "+(ings.length?line(ings):"Ingredientes no disponibles en este registro");d.append(p);const output=r.product||r.output||r.createdItem;const o=document.createElement("small");o.textContent=output?"Producto: "+(output.name||output.item?.name||output.itemId||output.id||"sin nombre")+" · Cantidad: "+(output.count??output.quantity??r.outputCount??"no indicada"):"Producto/cantidad: no confirmados";d.append(o);const btn=document.createElement("button");btn.textContent=usable(r)?"Calcular fabricación":"Revisar receta incompleta";btn.onclick=()=>plan(r);d.append(document.createElement("p"),btn);out.append(d)});e("recipe-count").textContent=matches.length+" recetas coincidentes · "+records.length+" clasificadas · "+records.filter(usable).length+" con estructura completa (sin contrastar con el juego)";e("recipe-more").hidden=visible>=matches.length}
+function render(reset=true){if(reset)visible=0;const matches=filtered();visible=Math.min(matches.length,visible+40);const out=e("recipe-results");out.replaceChildren();matches.slice(0,visible).forEach(r=>{const d=document.createElement("div");d.style.borderTop="1px solid #475569";d.style.padding="12px 0";const h=document.createElement("strong");h.textContent=title(r)+(r.nameLocale==="esES"?" [español]":" [idioma no verificado]")+" · "+({cooking:"Cocina",alchemy:"Alquimia",leatherworking:"Peletería"}[r._prof]||"Sin clasificar");d.append(h);const p=document.createElement("p");p.className="muted";const ings=ingredients(r);p.textContent="ID "+(r.id??"sin identificar")+" · "+(ings.length?line(ings):"Ingredientes no disponibles en este registro");d.append(p);const output=r.product||r.output||r.createdItem;const o=document.createElement("small");o.textContent=output?"Producto: "+(output.name||output.item?.name||output.itemId||output.id||"sin nombre")+" · Cantidad: "+(output.count??output.quantity??r.outputCount??"no indicada"):"Producto/cantidad: no confirmados";d.append(o);const btn=document.createElement("button");btn.textContent=usable(r)?"Calcular fabricación":"Revisar receta incompleta";btn.onclick=()=>plan(r);d.append(document.createElement("p"),btn);out.append(d)});e("recipe-count").textContent=matches.length+" recetas coincidentes · "+records.length+" clasificadas · "+records.filter(usable).length+" con estructura completa (sin contrastar con el juego)";e("recipe-more").hidden=visible>=matches.length}
 e("recipe-prof").onchange=()=>render();e("recipe-search").oninput=()=>render();e("recipe-more").onclick=()=>render(false);e("recipe-stop").onclick=()=>{stop=true;e("recipe-status").textContent="Deteniendo tras la página actual…"};
 
 let planned=null;
@@ -90,15 +90,18 @@ e("recipe-load").onclick=async()=>{
  try{
   mod=mod||await import("https://warcraftforever.com/data/latest.mjs");
   if(!mod?.Recipes||typeof mod.Recipes.search!=="function")throw Error("La fuente no ofrece la interfaz de búsqueda esperada");
-  let cursor=null,seen=new Set(),pages=0,unclassified=0,ids=new Set(),duplicates=0;
+  let cursor=null,seen=new Set(),pages=0,unclassified=0,ids=new Set(),duplicates=0,spanish=0,fallback=0,unnamed=0,pinnedDataset=null;
   do{
    if(stop)break;
-   const opts={locale:"esES",limit:100,includeUnknown:true};if(cursor)opts.cursor=cursor;
+   const opts={locale:"esES",limit:100,includeUnknown:true};if(pinnedDataset)opts.dataset=pinnedDataset;if(cursor)opts.cursor=cursor;
    const result=await mod.Recipes.search("",opts);
    if(!Array.isArray(result.data))throw Error("La fuente no devolvió una lista de recetas");
+   if(!result.dataset)throw Error("La fuente no identificó su versión de datos; no se continuará la paginación");
+   if(pinnedDataset&&result.dataset!==pinnedDataset)throw Error("La versión de datos cambió durante la carga");
+   pinnedDataset=result.dataset;
    if(result.data.length===0&&pages===0)throw Error("La fuente devolvió cero recetas; no puede validarse la cobertura");
    coverage=JSON.stringify(result.coverage||{}).slice(0,160);dataset=result.dataset||dataset;
-   for(const r of result.data){if(!r||typeof r!=="object"||Array.isArray(r)){unclassified++;continue}const cat=category(r);if(cat){const k=String(r.id??r.spellId??"")+"|"+cat;if(k!=="|"+cat&&ids.has(k)){duplicates++;continue}if(k!=="|"+cat)ids.add(k);records.push({...r,_prof:cat})}else unclassified++}
+   for(const r of result.data){if(!r||typeof r!=="object"||Array.isArray(r)){unclassified++;continue}if(r.nameLocale==="esES")spanish++;else if(typeof r.name==="string"&&r.name.trim())fallback++;else unnamed++;const cat=category(r);if(cat){const k=String(r.id??r.spellId??"")+"|"+cat;if(k!=="|"+cat&&ids.has(k)){duplicates++;continue}if(k!=="|"+cat)ids.add(k);records.push({...r,_prof:cat})}else unclassified++}
    pages++;e("recipe-status").textContent="Páginas: "+pages+" · recetas clasificadas: "+records.length+" · pendientes de clasificar: "+unclassified;
    render();
    const next=result.nextCursor||null;
@@ -107,7 +110,7 @@ e("recipe-load").onclick=async()=>{
    cursor=next;
    if(pages>200)throw Error("Límite de seguridad alcanzado");
   }while(cursor);
-  e("recipe-status").textContent=(stop?"Carga interrumpida; catálogo parcial.":"Lectura terminada, cobertura aún no verificada contra el juego.")+" "+records.length+" recetas clasificadas · "+records.filter(usable).length+" con estructura completa · "+unclassified+" sin profesión identificable · "+duplicates+" duplicadas omitidas. Fuente: "+(dataset||"versión no indicada")+" · Cobertura: "+(coverage||"no informada");
+  e("recipe-status").textContent=(stop?"Carga interrumpida; catálogo parcial.":"Lectura terminada, cobertura aún no verificada contra el juego.")+" "+records.length+" recetas clasificadas · "+records.filter(usable).length+" con estructura completa · "+spanish+" nombres esES · "+fallback+" nombres en otro idioma · "+unnamed+" sin nombre · "+unclassified+" sin profesión identificable · "+duplicates+" duplicadas omitidas. Versión fijada: "+pinnedDataset+" · Cobertura: "+(coverage||"no informada");
  }catch(err){e("recipe-status").textContent="Carga incompleta o fallida: "+err.message+". No se considerará un catálogo completo.";render()}
  finally{loading=false;e("recipe-load").disabled=false;e("recipe-stop").disabled=true}
 };
