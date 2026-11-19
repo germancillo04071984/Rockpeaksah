@@ -7,6 +7,8 @@
  box.innerHTML='<h2>🌍 Traducción y validación del catálogo</h2>'+
  '<p class="muted">Consulta los nombres oficiales españoles por ID y guarda cada lote traducido en este iPhone. El resto no se inventa. Una receta de los archivos no implica que tu personaje la haya aprendido.</p>'+
  '<p><button id="catalog-translate" type="button">Completar traducciones disponibles</button> <button id="catalog-stop" type="button" disabled>Detener después del lote actual</button></p>'+
+ '<p><button id="catalog-backup" type="button">Guardar copia de recetas aprendidas</button> <a id="catalog-backup-link" hidden download="rockpeaks-recetas-aprendidas.json">Descargar copia</a></p><p><label>Restaurar recetas aprendidas desde copia <input id="catalog-restore" type="file" accept="application/json,.json"></label></p>'+
+ '<p id="catalog-backup-status" role="status" aria-live="polite"></p>'+
  '<p id="catalog-status" role="status" aria-live="polite">Preparado.</p><progress id="catalog-progress" value="0" max="100" style="width:100%" hidden></progress>'+
  '<p id="catalog-stats" class="muted"></p><small>La fuente pública de profesiones puede devolver inglés cuando falta una traducción. Solo se guardan nombres que declara expresamente «esES». Los nombres de recetas se validan por producto, ingredientes y profesión, nunca solo por coincidencia de ID. Para una receta aprendida tendrás que marcarla como tal desde su ficha.</small>';
  host.append(box);
@@ -53,6 +55,34 @@
    return body;
   }finally{clearTimeout(timer)}
  }
+ let lastBackup=null;
+ e("catalog-backup").onclick=async()=>{
+  const backup={schema:1,app:"Industrias Rockpeaks",createdAt:new Date().toISOString(),
+   learned:tool.exportData().learned};
+  const json=JSON.stringify(backup,null,2);
+  if(lastBackup)URL.revokeObjectURL(lastBackup);
+  lastBackup=URL.createObjectURL(new Blob([json],{type:"application/json"}));
+  const a=e("catalog-backup-link");a.href=lastBackup;a.hidden=false;
+  e("catalog-backup-status").textContent="Copia preparada con "+backup.learned.length+
+   " recetas. Pulsa «Descargar copia» y guárdala en Archivos de tu iPhone.";
+ };
+ e("catalog-restore").onchange=async()=>{
+  const file=e("catalog-restore").files?.[0];if(!file)return;
+  try{
+   if(file.size>250000)throw Error("El archivo supera el tamaño permitido.");
+   const raw=JSON.parse(await file.text());
+   if(raw?.schema!==1||raw?.app!=="Industrias Rockpeaks"||!Array.isArray(raw.learned)||
+    raw.learned.length>15000||raw.learned.some(id=>!int(id)))throw Error("Formato de copia no válido.");
+   const ids=[...new Set(raw.learned.map(Number))];
+   const existing=tool.exportData().learned;
+   let added=0;
+   for(const id of ids){if(!existing.includes(id)){if(!tool.setLearned(id,true))throw Error("Sin espacio para guardar.");added++}}
+   e("catalog-backup-status").textContent="Copia restaurada. "+added+
+    " recetas añadidas; se conservaron las recetas que ya tenías marcadas.";
+   describe();
+  }catch(err){e("catalog-backup-status").textContent="No se pudo restaurar: "+err.message}
+  e("catalog-restore").value="";
+ };
  e("catalog-translate").onclick=async()=>{
   if(running)return;
   setBusy(true);e("catalog-progress").hidden=false;e("catalog-progress").value=0;
