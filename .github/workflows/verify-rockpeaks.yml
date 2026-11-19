@@ -1,0 +1,26 @@
+name: Verify Rockpeaks
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout application
+        uses: actions/checkout@v4
+      - name: Prepare Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript and business logic regression tests
+        run: node --test tests/rockpeaks.test.mjs
+      - name: Check live Blizzard-derived market and recipe endpoints
+        env:
+          ROCKPEAKS_LIVE: '1'
+        run: node --test tests/rockpeaks.test.mjs
