@@ -59,15 +59,13 @@ function calc(){
  const totalCost=b*(cost+other),revenue=b*y*sale*(1-fee/100),profit=revenue-totalCost;
  msg.textContent="Coste materiales: "+gold(b*cost)+" · Coste total: "+gold(totalCost)+" · Ingreso neto estimado: "+gold(revenue)+" · Resultado: "+gold(profit)+" ("+(profit>0?"beneficio estimado":profit<0?"pérdida estimada":"equilibrio")+"). No registra una venta ni descuenta inventario.";
 }
- const totalCost=b*(cost+other),revenue=b*y*sale*(1-fee/100),profit=revenue-totalCost;
- msg.textContent="Coste materiales: "+gold(b*cost)+" · Coste total: "+gold(totalCost)+" · Ingreso neto estimado: "+gold(revenue)+" · Resultado: "+gold(profit)+" ("+(profit>0?"beneficio estimado":profit<0?"pérdida estimada":"equilibrio")+"). No registra una venta ni descuenta inventario.";
- 
+
  const heading=document.createElement("h4");heading.textContent="Precio máximo de compra por ingrediente";maxBox.append(heading);
  const note=document.createElement("small");note.textContent="Umbral de equilibrio por unidad, manteniendo los precios de los demás ingredientes. Un valor negativo significa que ni obteniéndolo gratis se evita la pérdida. Requiere conocer el precio de todos los demás materiales.";maxBox.append(note);
  raw.forEach((x,i)=>{
-  const q=Number(e("recipe-qty-"+i).value),name=x.name||x.item?.name||x.itemName||("ID "+(x.itemId??x.id??"?"));
+  const q=e("recipe-qty-"+i).value===""?NaN:Number(e("recipe-qty-"+i).value),name=x.name||x.item?.name||x.itemName||("ID "+(x.itemId??x.id??"?"));
   const p=document.createElement("p");
-  const others=raw.some((_,j)=>j!==i&&(e("recipe-qty-"+j).value===""||e("recipe-price-"+j).value===""));
+  const others=raw.some((_,j)=>j!==i&&(e("recipe-qty-"+j).value===""||e("recipe-price-"+j).value===""||!Number.isSafeInteger(Number(e("recipe-qty-"+j).value))||Number(e("recipe-qty-"+j).value)<=0||!Number.isSafeInteger(Number(e("recipe-price-"+j).value))||Number(e("recipe-price-"+j).value)<0));
   if(!Number.isSafeInteger(q)||q<=0||others){p.textContent=name+": pendiente (faltan cantidades o precios de otros materiales).";maxBox.append(p);return}
   let othersCost=other;
   raw.forEach((_,j)=>{if(j!==i)othersCost+=Number(e("recipe-qty-"+j).value)*Number(e("recipe-price-"+j).value)});
