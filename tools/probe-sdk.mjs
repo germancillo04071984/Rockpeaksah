@@ -1,0 +1,14 @@
+import assert from "node:assert/strict";
+const url="https://warcraftforever.com/data/latest.mjs";
+const response=await fetch(url,{signal:AbortSignal.timeout(30000)});
+assert.equal(response.ok,true,"SDK HTTP "+response.status);
+const code=await response.text();
+console.log("SDK_BYTES",code.length,"FIRST_CHARS",code.slice(0,250).replace(/\s+/g," "));
+const {writeFile}=await import("node:fs/promises");
+await writeFile("/tmp/rockpeaks-wf-data.mjs",code);
+const sdk=await import("file:///tmp/rockpeaks-wf-data.mjs");
+assert.equal(typeof sdk.Items?.getMany,"function");
+assert.equal(typeof sdk.Recipes?.getMany,"function");
+const result=await sdk.Items.getMany([6358,3371,3685],{locale:"esES"});
+assert.ok(Array.isArray(result.data));
+console.log("SPANISH_TEST",JSON.stringify({dataset:result.dataset,coverage:result.coverage,items:result.data.map(x=>({id:x.id,name:x.name,nameLocale:x.nameLocale}))}));
