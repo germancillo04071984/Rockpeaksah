@@ -42,7 +42,7 @@ const page=await ctx.newPage(),errors=[];
 page.on("pageerror",error=>errors.push(error.message));
 try{
  await page.goto("http://127.0.0.1:"+server.address().port+"/#recipes",{waitUntil:"load"});
- await page.locator('#refresh:not([disabled])').waitFor({timeout:20000});
+ await page.waitForFunction(()=>document.getElementById('refresh')?.disabled===false,null,{timeout:20000});
  assert.equal(await page.locator('[data-view="recipes"]').getAttribute("aria-selected"),"true");
  await page.locator("#scout-load").click();
  await page.locator(".scout-opportunity").first().waitFor({timeout:20000});
