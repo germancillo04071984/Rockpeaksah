@@ -1,6 +1,6 @@
 "use strict";
 (function(g){
- const key="rockpeaks-localizations-esES-v1",learnedKey="rockpeaks-learned-recipes-v1";
+ const key="rockpeaks-localizations-esES-v2",learnedKey="rockpeaks-learned-recipes-v1";
  const kinds=["items","recipes"],data={items:{},recipes:{}};
  const goodId=x=>x!==null&&x!==undefined&&x!==""&&Number.isSafeInteger(Number(x))&&Number(x)>0?Number(x):null;
  const goodName=x=>typeof x==="string"&&x.trim().length>0&&x.trim().length<=180&&!/^id\s+\d+$/i.test(x.trim());
@@ -110,12 +110,15 @@
    if(obj?.schema!==1||obj?.locale!=="esES"||!obj?.items||!obj?.recipes)
     throw Error("Formato de traducciones no reconocido.");
    let changes=0;
+   const structureChecked=typeof obj.source?.coverage?.matchMethod==="string"&&
+    obj.source.coverage.matchMethod.includes("profession");
    for(const kind of kinds){
+    if(kind==="recipes"&&!structureChecked)continue;
     for(const [id,name] of Object.entries(obj[kind])){
      if(set(kind,id,name,"esES"))changes++;
     }
    }
-   staticState={status:"loaded",items:Object.keys(obj.items).length,recipes:Object.keys(obj.recipes).length,
+   staticState={status:"loaded",items:Object.keys(obj.items).length,recipes:structureChecked?Object.keys(obj.recipes).length:0,
     source:obj.source?.dataset??null};
    if(changes)persist();
    publish();
