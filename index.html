@@ -3,8 +3,8 @@
 const BASE="https://auctionhouse.tk.gg",MARKET="eu-2-113",el=id=>document.getElementById(id);
 let items=[],fields=[],selected=null,hours=24,requestId=0;
 const translations=new Map([["raptor egg","Huevo de raptor"],["tangy clam meat","Carne de almeja ácida"]]);
-const translationsById=new Map([[3685,"Huevo de raptor"]]);
-const spanishAliases=new Map([[3685,["huevo","huevos","huevo de raptor"]]]);
+const translationsById=new Map([[3685,"Huevo de raptor"],[5504,"Carne de almeja ácida"]]);
+const spanishAliases=new Map([[3685,["huevo","huevos","huevo de raptor"]],[5504,["almeja","carne de almeja","carne de almeja acida","tangy clam meat"]]]);
 function normalize(s){return String(s??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("es").replace(/[^a-z0-9]+/g," ").trim()}
 function matchesQuery(it,q){let terms=[it.id,it.name,displayName(it),...(spanishAliases.get(Number(it.id))||[])];return terms.some(t=>normalize(t).includes(q))}
 function displayName(it){return translationsById.get(Number(it.id))||translations.get(String(it.name||"").trim().toLowerCase())||it.name||"#"+it.id}
