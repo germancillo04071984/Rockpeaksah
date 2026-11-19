@@ -52,6 +52,14 @@ try{
  assert.match(summary,/2p 62c/);
  await page.locator(".scout-learned").first().click();
  assert.ok((await page.locator(".scout-opportunity").first().innerText()).includes("Aprendida"));
+ await page.locator("#catalog-backup").click();
+ assert.match(await page.locator("#catalog-backup-link").getAttribute("href"),/^blob:/);
+ const backupText=await page.evaluate(async()=>await (await fetch(document.getElementById("catalog-backup-link").href)).text());
+ const backup=JSON.parse(backupText);
+ assert.equal(backup.schema,1);
+ assert.ok(backup.learned.includes(718));
+ await page.locator("#catalog-restore").setInputFiles({name:"learned.json",mimeType:"application/json",buffer:Buffer.from(backupText)});
+ assert.match(await page.locator("#catalog-backup-status").innerText(),/Copia restaurada/);
  await page.locator("#scout-known").check();
  assert.equal(await page.locator(".scout-opportunity").count(),1);
  await page.locator("#catalog-translate").click();
