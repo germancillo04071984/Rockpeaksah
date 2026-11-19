@@ -11,7 +11,7 @@
  '<label>Presupuesto (oros)<input id="scout-budget" type="number" inputmode="decimal" step=".01" min="0" placeholder="Sin límite"></label></div>'+
  '<div class="row"><label>Buscar receta o ingrediente<input id="scout-query" placeholder="Nombre o ID"></label>'+
  '<label id="scout-fee-label">Comisión subasta (%)<input id="scout-fee" type="number" min="0" max="100" step=".5" value="5"></label></div>'+
- '<label class="scout-check"><input id="scout-positive" type="checkbox" checked> Mostrar solo beneficio positivo</label><label class="scout-check"><input id="scout-known" type="checkbox"> Solo recetas que he confirmado aprender</label></div>'+
+ '<label class="scout-check"><input id="scout-positive" type="checkbox" checked> Mostrar solo beneficio positivo</label><label class="scout-check"><input id="scout-fresh" type="checkbox" checked> Exigir precios recientes (máximo 6 horas)</label><label class="scout-check"><input id="scout-known" type="checkbox"> Solo recetas que he confirmado aprender</label></div>'+
  '<p id="scout-count" class="muted"></p><div id="scout-results"></div><p><button id="scout-more" hidden>Mostrar más</button></p>'+
  '<small>Origen: auctionhouse.tk.gg. La demanda refleja ventas inferidas, no operaciones garantizadas. No se incluyen depósitos de subasta, desplazamientos ni tiempo de venta. Verifica los precios NPC y que Rockpeaks puede fabricar la receta.</small>';
  host.append(panel);
@@ -50,12 +50,16 @@
   e("scout-fee-label").hidden=e("scout-channel").value==="npc";
   visible=20;render();
  }
+ const snapshotTime=()=>{const n=Number(marketData?.t);return Number.isFinite(n)&&n>0?(n<1e11?n*1000:n):null};
+ const ageHours=()=>{const t=snapshotTime();return t===null?null:Math.max(0,(Date.now()-t)/3600000)};
+ const isStale=()=>ageHours()===null||ageHours()>6;
  function matches(){
   if(!analysis)return [];
   const prof=e("scout-prof").value,q=norm(e("scout-query").value);
   const budgetStr=e("scout-budget").value.trim(),budget=budgetStr===""?null:Number(budgetStr)*10000;
   if(budget!==null&&(!Number.isFinite(budget)||budget<0))return [];
   const rows=analysis.records.filter(r=>(prof==="all"||r.prof===prof)&&
+   (!e("scout-fresh").checked||!isStale())&&
    (!e("scout-known").checked||window.RockpeaksCatalog?.learned(r.id))&&
    (!e("scout-positive").checked||r.profit>0)&&(budget===null||r.cost<=budget)&&
    (!q||norm([r.name,r.id,r.productId,r.productName,displayName(r.productId,r.productName),
@@ -73,8 +77,8 @@
   const stats=analysis.stats;
   e("scout-count").textContent=all.length+" coincidencias · "+stats.valid+" recetas calculables de "+stats.total+
    " · sin datos suficientes: "+(stats.missingMaterials+stats.missingSale+stats.invalid)+
-   " · mercado: "+(marketData.t?new Date(marketData.t).toLocaleString("es-ES"):"sin hora");
-  if(!all.length)out.append(child("p","No hay coincidencias. Prueba sin el filtro de beneficio positivo o aumenta el presupuesto.","muted"));
+   " · mercado: "+(snapshotTime()?new Date(snapshotTime()).toLocaleString("es-ES"):"sin hora")+ (isStale()?" · PRECIOS ANTIGUOS O SIN FECHA: no comprar sin actualizar":"");
+  if(!all.length)out.append(child("p",isStale()&&e("scout-fresh").checked?"Los precios tienen más de 6 horas o carecen de fecha verificable. Actualiza el mercado antes de decidir compras; desactiva el filtro de actualidad solo para consultar estimaciones antiguas.":"No hay coincidencias. Prueba sin el filtro de beneficio positivo o aumenta el presupuesto.","muted"));
   view.forEach(r=>{
    const item=document.createElement("article");item.className="scout-opportunity";item.dataset.outcome=r.profit>0?"profit":r.profit<0?"loss":"even";
    const head=document.createElement("div");head.className="scout-top";
@@ -151,13 +155,14 @@
  }
  async function load(){
   if(busy)return;
-  if(recipesData&&marketData&&Date.now()-loadedAt<3600000){
+  if(recipesData&&marketData&&Date.now()-loadedAt<3600000&&!isStale()){
    recalc();e("scout-status").textContent="Recalculado con la instantánea descargada; sin volver a consultar antes de una hora.";return;
   }
   busy=true;e("scout-load").disabled=true;e("scout-status").textContent="Consultando recetas y mercado de la Horda (EU PvP)…";
   try{
    const available=window.rockpeaksMarketSnapshot;
-   const marketPromise=available&&Array.isArray(available.items)&&Array.isArray(available.f)?
+   const snapshotMs=Number(available?.t);const snapshotAge=Number.isFinite(snapshotMs)&&snapshotMs>0?Date.now()-(snapshotMs<1e11?snapshotMs*1000:snapshotMs):Infinity;
+   const marketPromise=available&&Array.isArray(available.items)&&Array.isArray(available.f)&&snapshotAge>=0&&snapshotAge<3600000?
     Promise.resolve(available):fetchData("https://auctionhouse.tk.gg/api/m/eu-2-113");
    const [recipes,market]=await Promise.all([
     fetchData("https://auctionhouse.tk.gg/api/recipes"),marketPromise
@@ -176,7 +181,7 @@
  }
  e("scout-load").onclick=load;
  ["scout-channel","scout-fee"].forEach(id=>e(id).addEventListener("change",recalc));
- ["scout-prof","scout-sort","scout-budget","scout-query","scout-positive","scout-known"].forEach(id=>
+ ["scout-prof","scout-sort","scout-budget","scout-query","scout-positive","scout-known","scout-fresh"].forEach(id=>
   e(id).addEventListener("input",()=>{visible=20;render()}));
  e("scout-more").onclick=()=>{visible+=20;render()};
  window.addEventListener("rockpeaks:translation-change",()=>{if(analysis)render()});
