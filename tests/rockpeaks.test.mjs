@@ -1,4 +1,5 @@
 import {test} from 'node:test';
+import {validatedNames,signature} from '../tools/recipe-match.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
@@ -96,4 +97,27 @@ test('Live auction and recipe public APIs expose expected structured data',async
  const live=core.scan(recipes,market,{channel:'npc',fee:5});
  assert.ok(live.stats.total>0);
  console.log('LIVE:',JSON.stringify({recipeCount:recipes.recipes.length,marketItems:market.items.length,comparableNPC:live.stats.valid,staleHours:market.t?(Date.now()-market.t)/3600000:null}));
+});
+
+test('Recipe translation is joined by full manufacturing identity, never colliding ID alone',()=>{
+ const market=[{id:3928,prof:"Cooking",item:5474,qty:2,r:[[5467,1],[2678,1]]}];
+ const client=[
+  {id:3928,profession:202,name:"Ardilla mecánica",nameLocale:"esES",product:{item:4401,count:1},reagents:[[4363,1]]},
+  {id:998888,profession:185,name:"Carne de kodo a la brasa",nameLocale:"esES",product:{item:5474,count:2},reagents:[[2678,1],[5467,1]]}
+ ];
+ assert.notEqual(signature(market[0],"market"),signature(client[0],"client"));
+ const matched=validatedNames(market,client);
+ assert.equal(matched.names[3928],"Carne de kodo a la brasa");
+ const notMatched=validatedNames(market,[client[0]]);
+ assert.equal(Object.keys(notMatched.names).length,0);
+});
+test('Published locale dictionary contains only structure-checked names',()=>{
+ const data=JSON.parse(read('locales/esES.json'));
+ assert.equal(data.schema,1);
+ assert.equal(data.locale,"esES");
+ assert.match(data.source?.coverage?.matchMethod||"",/profession.*product.*output count.*reagent/i);
+ assert.equal(data.items[6358],"Bocanegra graso");
+ assert.equal(data.items[3371],"Vial vacío");
+ assert.notEqual(data.recipes[3928],"Ardilla mecánica");
+ assert.ok(Object.keys(data.recipes).length>0);
 });
