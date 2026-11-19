@@ -97,5 +97,31 @@
   }finally{busy=false}
  }
  const exportData=()=>({schema:1,locale:"esES",items:{...data.items},recipes:{...data.recipes},learned:[...known]});
- g.RockpeaksCatalog=Object.freeze({get,isTranslated,set,counts,learned,setLearned,translateAll,stopBatch,exportData});
+ // Static verified dictionary is built in GitHub Actions from Warcraft Forever's esES client records.
+ // Browser-side additions remain possible, and nothing is fabricated for missing IDs.
+ let staticState={status:"pending",items:0,recipes:0,source:null};
+ async function loadPublished(){
+  try{
+   const r=await fetch("./locales/esES.json",{cache:"no-store"});
+   if(!r.ok)throw Error("Diccionario publicado no disponible ("+r.status+")");
+   const obj=await r.json();
+   if(obj?.schema!==1||obj?.locale!=="esES"||!obj?.items||!obj?.recipes)
+    throw Error("Formato de traducciones no reconocido.");
+   let changes=0;
+   for(const kind of kinds){
+    for(const [id,name] of Object.entries(obj[kind])){
+     if(set(kind,id,name,"esES"))changes++;
+    }
+   }
+   staticState={status:"loaded",items:Object.keys(obj.items).length,recipes:Object.keys(obj.recipes).length,
+    source:obj.source?.dataset??null};
+   if(changes)persist();
+   publish();
+  }catch(err){
+   staticState={status:"unavailable",items:0,recipes:0,source:null,error:err.message};
+  }
+ }
+ const publishedStatus=()=>({...staticState});
+ g.RockpeaksCatalog=Object.freeze({get,isTranslated,set,counts,learned,setLearned,translateAll,stopBatch,exportData,publishedStatus});
+ loadPublished();
 })(window);
