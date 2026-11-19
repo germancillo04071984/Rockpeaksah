@@ -24,12 +24,13 @@
    ]).filter(Boolean))];
    const rid=[...new Set(chosen.map(r=>int(r.id)).filter(Boolean))];
    totals={recipes:rid.length,items:ids.length,translatedRecipes:rid.filter(id=>tool.isTranslated("recipes",id)).length,
-    translatedItems:ids.filter(id=>tool.isTranslated("items",id)).length};
+    translatedItems:ids.filter(id=>tool.isTranslated("items",id)).length,
+    recipesWithSpanishProduct:chosen.filter(r=>int(r.item)&&tool.isTranslated("items",int(r.item))).length};
   }
   e("catalog-stats").textContent=totals?
    "Entre las recetas de las tres profesiones: "+totals.translatedRecipes+"/"+totals.recipes+
    " nombres de receta verificados en español y "+totals.translatedItems+"/"+totals.items+
-   " nombres de producto/material. Recetas marcadas como aprendidas: "+c.learned+".":
+   " nombres de producto/material. Recetas cuyo producto está identificado en español: "+totals.recipesWithSpanishProduct+"/"+totals.recipes+". Recetas marcadas como aprendidas: "+c.learned+".":
    "Guardados: "+c.recipes+" nombres de recetas, "+c.items+" nombres de objetos. Recetas marcadas como aprendidas: "+c.learned+
    ". Para medir la cobertura completa es necesario consultar el catálogo.";
  }
