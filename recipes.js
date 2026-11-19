@@ -8,7 +8,7 @@ let records=[],visible=0,loading=false,stop=false,mod=null,coverage="",dataset="
 const csvCell=x=>'"'+String(x??"").replaceAll('"','""')+'"';
 const recipeAudit=()=>records.map(r=>{const ing=ingredients(r),out=r.product||r.output||r.createdItem||{};return [r._prof,r.id??r.spellId??"",title(r),r.nameLocale??"no informado",usable(r)?"estructura completa":"incompleta",out.name||out.item?.name||(isPositiveInt(out.item)?"ID "+out.item:""),out.count??out.quantity??r.outputCount??"",ing.map(x=>(x.itemId??x.item?.id??x.id??"")+":"+(x.count??x.quantity??x.amount??x.requiredCount??"")).join(";"),dataset]});
 const isPositiveInt=x=>x!==null&&x!==undefined&&x!==""&&Number.isSafeInteger(Number(x))&&Number(x)>0;
-const usable=r=>{const ing=ingredients(r),out=r.product||r.output||r.createdItem||{},yieldValue=out.count??out.quantity??r.outputCount;return ing.length>0&&ing.every(x=>x&&typeof x==="object"&&!Array.isArray(x)&&isPositiveInt(x.count??x.quantity??x.amount??x.requiredCount)&&(typeof(x.name||x.item?.name||x.itemName)==="string"||isPositiveInt(x.itemId??x.item?.id??x.id)))&&isPositiveInt(yieldValue)&&typeof(out.name||out.item?.name)==="string"};
+const usable=r=>{const ing=ingredients(r),out=r.product||r.output||r.createdItem||{},yieldValue=out.count??out.quantity??r.outputCount;return ing.length>0&&ing.every(x=>x&&typeof x==="object"&&!Array.isArray(x)&&isPositiveInt(x.count??x.quantity??x.amount??x.requiredCount)&&(typeof(x.name||x.item?.name||x.itemName)==="string"||isPositiveInt(x.itemId??x.item?.id??x.id)))&&isPositiveInt(yieldValue)&&(typeof(out.name||out.item?.name)==="string"||isPositiveInt(out.item)||isPositiveInt(out.item?.id))};
 const norm=s=>String(s??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 const professionsById=new Map([[171,"alchemy"],[165,"leatherworking"],[185,"cooking"]]);
 const category=r=>{const prof=professionsById.get(Number(r.profession));if(prof)return prof;const raw=[r.profession,r.professionName,r.skillLine,r.skillLineName,r.category,r.profession?.name,r.skill?.name,r.skill?.profession].filter(Boolean).map(v=>typeof v==="object"?JSON.stringify(v):String(v)).join(" ").toLowerCase();if(/leatherworking|peleter|cuero|leatherwork/.test(raw))return"leatherworking";if(/alchemy|alquimia/.test(raw))return"alchemy";if(/cooking|cocina/.test(raw))return"cooking";return null};
@@ -161,8 +161,8 @@ e("recipe-load").onclick=async()=>{
    pinnedDataset=result.dataset;
    if(result.data.length===0&&pages===0)throw Error("La fuente devolvió cero recetas; no puede validarse la cobertura");
    coverage=JSON.stringify(result.coverage||{}).slice(0,160);dataset=result.dataset||dataset;
-   for(const r of result.data){if(!r||typeof r!=="object"||Array.isArray(r)){unclassified++;continue}if(r.nameLocale==="esES")spanish++;else if(typeof r.name==="string"&&r.name.trim())fallback++;else unnamed++;const cat=category(r);if(cat){const k=String(r.id??r.spellId??"")+"|"+cat;if(k!=="|"+cat&&ids.has(k)){duplicates++;continue}if(k!=="|"+cat)ids.add(k);records.push({...r,_prof:cat})}else unclassified++}
-   pages++;e("recipe-status").textContent="Páginas: "+pages+" · recetas clasificadas: "+records.length+" · pendientes de clasificar: "+unclassified;
+   for(const r of result.data){if(!r||typeof r!=="object"||Array.isArray(r)){unclassified++;continue}const cat=category(r);if(cat){const k=String(r.id??r.spellId??"")+"|"+cat;if(k!=="|"+cat&&ids.has(k)){duplicates++;continue}if(k!=="|"+cat)ids.add(k);if(r.nameLocale==="esES")spanish++;else if(typeof r.name==="string"&&r.name.trim())fallback++;else unnamed++;records.push({...r,_prof:cat})}else unclassified++}
+   pages++;e("recipe-status").textContent="Páginas: "+pages+" · recetas clasificadas: "+records.length+" · fuera del catálogo seleccionado: "+unclassified;
    render();
    const next=result.nextCursor||null;
    if(next&&seen.has(next))throw Error("Cursor repetido; catálogo incompleto");
@@ -170,7 +170,7 @@ e("recipe-load").onclick=async()=>{
    cursor=next;
    if(pages>200)throw Error("Límite de seguridad alcanzado");
   }while(cursor);
-  e("recipe-status").textContent=(stop?"Carga interrumpida; catálogo parcial.":"Lectura terminada, cobertura aún no verificada contra el juego.")+" "+records.length+" recetas clasificadas · "+records.filter(usable).length+" con estructura completa · "+spanish+" nombres esES · "+fallback+" nombres en otro idioma · "+unnamed+" sin nombre · "+unclassified+" sin profesión identificable · "+duplicates+" duplicadas omitidas. Versión fijada: "+pinnedDataset+" · Cobertura: "+(coverage||"no informada");
+  e("recipe-status").textContent=(stop?"Carga interrumpida; catálogo parcial.":"Lectura terminada, cobertura aún no verificada contra el juego.")+" "+records.length+" recetas clasificadas · "+records.filter(usable).length+" con estructura completa · "+spanish+" nombres esES · "+fallback+" nombres en otro idioma · "+unnamed+" sin nombre · "+unclassified+" fuera de las tres profesiones o sin clasificar · "+duplicates+" duplicadas omitidas. Versión fijada: "+pinnedDataset+" · Cobertura: "+(coverage||"no informada");
  }catch(err){e("recipe-status").textContent="Carga incompleta o fallida: "+err.message+". No se considerará un catálogo completo.";render()}
  finally{prepareAudit();loading=false;e("recipe-load").disabled=false;e("recipe-stop").disabled=true;e("recipe-audit").disabled=records.length===0;e("recipe-share").disabled=records.length===0;e("recipe-copy").disabled=records.length===0}
 };
