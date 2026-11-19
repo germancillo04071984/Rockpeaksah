@@ -2,7 +2,7 @@
 (function(){
 const key="rockpeaks-business-v1", fmt=n=>{n=Math.round(n||0);const sign=n<0?"−":"";n=Math.abs(n);return sign+[Math.floor(n/10000)?" "+Math.floor(n/10000)+"o":"",Math.floor(n%10000/100)?" "+Math.floor(n%10000/100)+"p":"",n%100+"c"].join(" ").trim()};
 let db;try{db=JSON.parse(localStorage.getItem(key)||"{}")}catch{db={}};db.transactions=Array.isArray(db.transactions)?db.transactions:[];db.recipes=db.recipes||{};db.stock=Array.isArray(db.stock)?db.stock:[];
-const section=document.createElement("section");section.className="card";section.innerHTML='<h2>⚒ Centro de operaciones Rockpeaks</h2><p class="muted">Calculadora, inventario y contabilidad local. Los datos se guardan en este navegador; exporta una copia para no perderlos.</p><h3>Calculadora comercial</h3><p><label>Producto o receta <input id="biz-product" placeholder="Ej.: Tortilla con un sabor curioso"></label></p><div class="row"><label>Unidades producidas por fabricación<input id="biz-yield" type="number" min="1" value="1"></label><label>Materiales por fabricación (cobres)<input id="biz-cost" type="number" min="0" value="0"></label></div><div class="row"><label>Otros costes por fabricación (cobres)<input id="biz-extra" type="number" min="0" value="0"></label><label>Precio de venta por unidad (cobres)<input id="biz-sale" type="number" min="0" value="0"></label></div><p><label>Canal de venta <select id="biz-channel"><option value="npc">NPC (sin comisión)</option><option value="ah">Subasta (comisión configurable)</option></select></label> <label>Comisión de subasta (%) <input id="biz-fee" type="number" min="0" max="100" value="5"></label></p><p id="biz-result" aria-live="polite"></p><button id="biz-save-recipe">Guardar configuración</button> <button id="biz-market">Usar precio mínimo del objeto seleccionado</button><p><small id="biz-market-note">Precio orientativo, verifica cantidades y costes reales.</small></p><h3>Inventario de materiales y productos</h3><p class="muted">Registra entradas y salidas reales. Las fabricaciones no descuentan materiales automáticamente hasta definir sus cantidades exactas.</p><p><label>Nombre del material o producto <input id="stock-name" placeholder="Ej.: Huevo de raptor"></label></p><div class="row"><label>Movimiento<select id="stock-kind"><option value="compra">Entrada comprada</option><option value="recoleccion">Entrada propia</option><option value="fabricacion">Entrada fabricada</option><option value="consumo">Salida por consumo</option><option value="venta">Salida por venta</option><option value="ajuste">Ajuste de inventario (+/-)</option></select></label><label>Unidades<input id="stock-qty" type="number" step="1" value="1"></label></div><p><button id="stock-add">Registrar movimiento</button></p><div id="stock-summary"></div><h3>Registrar operación</h3><div class="row"><label>Tipo<select id="biz-type"><option value="compra">Compra</option><option value="venta">Venta</option><option value="gasto">Gasto</option><option value="recoleccion">Recolección propia</option><option value="fabricacion">Fabricación</option></select></label><label>Cantidad<input id="biz-qty" type="number" min="1" value="1"></label></div><div class="row"><label>Precio total (cobres)<input id="biz-total" type="number" min="0" value="0"></label><label>Fecha<input id="biz-date" type="date"></label></div><p><button id="biz-add">Registrar</button> <button id="biz-export">Exportar copia JSON</button> <button id="biz-csv">Exportar CSV</button> <label>Restaurar JSON <input id="biz-import" type="file" accept=".json,application/json"></label></p><p id="biz-summary"></p><div id="biz-history"></div><small>El saldo representa movimientos registrados, no necesariamente el oro disponible en el personaje. La recolección propia se registra separada de las compras. No se deducen existencias sin datos suficientes.</small>';
+const section=document.createElement("section");section.className="card";section.innerHTML='<h2>⚒ Centro de operaciones Rockpeaks</h2><p class="muted">Calculadora, inventario y contabilidad local. Los datos se guardan en este navegador; exporta una copia para no perderlos.</p><h3>Calculadora comercial</h3><p><label>Producto o receta <input id="biz-product" placeholder="Ej.: Tortilla con un sabor curioso"></label></p><div class="row"><label>Unidades producidas por fabricación<input id="biz-yield" type="number" min="1" value="1"></label><label>Materiales por fabricación (cobres)<input id="biz-cost" type="number" min="0" value="0"></label></div><div class="row"><label>Otros costes por fabricación (cobres)<input id="biz-extra" type="number" min="0" value="0"></label><label>Precio de venta por unidad (cobres)<input id="biz-sale" type="number" min="0" value="0"></label></div><p><label>Canal de venta <select id="biz-channel"><option value="npc">NPC (sin comisión)</option><option value="ah">Subasta (comisión configurable)</option></select></label> <label>Comisión de subasta (%) <input id="biz-fee" type="number" min="0" max="100" value="5"></label></p><p id="biz-result" aria-live="polite"></p><button id="biz-save-recipe">Guardar configuración</button> <button id="biz-market">Usar precio mínimo del objeto seleccionado</button><p><small id="biz-market-note">Precio orientativo, verifica cantidades y costes reales.</small></p><h3>Inventario de materiales y productos</h3><p class="muted">Registra entradas y salidas reales. Las fabricaciones no descuentan materiales automáticamente hasta definir sus cantidades exactas.</p><p><label>Nombre del material o producto <input id="stock-name" placeholder="Ej.: Huevo de raptor"></label></p><div class="row"><label>Movimiento<select id="stock-kind"><option value="compra">Entrada comprada</option><option value="recoleccion">Entrada propia</option><option value="fabricacion">Entrada fabricada</option><option value="consumo">Salida por consumo</option><option value="venta">Salida por venta</option><option value="ajuste">Ajuste de inventario (+/-)</option></select></label><label>Unidades<input id="stock-qty" type="number" step="1" value="1"></label></div><p><button id="stock-add">Registrar movimiento</button></p><div id="stock-summary"></div><h4>Últimas fabricaciones confirmadas</h4><div id="craft-history"></div><h3>Registrar operación</h3><div class="row"><label>Tipo<select id="biz-type"><option value="compra">Compra</option><option value="venta">Venta</option><option value="gasto">Gasto</option><option value="recoleccion">Recolección propia</option><option value="fabricacion">Fabricación</option></select></label><label>Cantidad<input id="biz-qty" type="number" min="1" value="1"></label></div><div class="row"><label>Precio total (cobres)<input id="biz-total" type="number" min="0" value="0"></label><label>Fecha<input id="biz-date" type="date"></label></div><p><button id="biz-add">Registrar</button> <button id="biz-export">Exportar copia JSON</button> <button id="biz-csv">Exportar CSV</button> <label>Restaurar JSON <input id="biz-import" type="file" accept=".json,application/json"></label></p><p id="biz-summary"></p><div id="biz-history"></div><small>El saldo representa movimientos registrados, no necesariamente el oro disponible en el personaje. La recolección propia se registra separada de las compras. No se deducen existencias sin datos suficientes.</small>';
 document.querySelector("main").insertBefore(section,document.querySelector("main").lastElementChild);
 const e=id=>document.getElementById(id),num=id=>Number(e(id).value)||0,save=()=>localStorage.setItem(key,JSON.stringify(db));
 e("biz-date").value=new Date().toISOString().slice(0,10);
@@ -39,7 +39,34 @@ e("biz-import").onchange=async event=>{
  finally{event.target.value=""}
 };
 
+
+function renderCraftHistory(){
+ const out=e("craft-history");out.replaceChildren();
+ const groups=new Map();
+ for(const m of db.stock){if(!m.batchId)continue;if(!groups.has(m.batchId))groups.set(m.batchId,[]);groups.get(m.batchId).push(m)}
+ const recent=[...groups.entries()].slice(-12).reverse();
+ if(!recent.length){out.textContent="Todavía no hay fabricaciones confirmadas.";return}
+ for(const [batchId,entries] of recent){
+  const p=document.createElement("p"),made=entries.find(x=>x.kind==="fabricacion");
+  p.textContent=(made?.date||"Sin fecha")+" · "+(made?.qty||"?")+" × "+(made?.name||"Producto sin identificar")+" ";
+  const undo=document.createElement("button");undo.textContent="Deshacer lote";
+  undo.onclick=()=>{
+   const signs={compra:1,recoleccion:1,fabricacion:1,consumo:-1,venta:-1,ajuste:1},balances=new Map();
+   for(const m of db.stock)balances.set(m.name,(balances.get(m.name)||0)+(signs[m.kind]||0)*m.qty);
+   const outputs=new Map();
+   for(const m of entries)if(m.kind==="fabricacion")outputs.set(m.name,(outputs.get(m.name)||0)+m.qty);
+   const insufficient=[...outputs].filter(([name,qty])=>(balances.get(name)||0)<qty);
+   if(insufficient.length)return alert("No puede deshacerse: ya se han consumido o vendido productos de este lote. Revisa el inventario.");
+   if(!confirm("¿Deshacer esta fabricación y devolver todos sus materiales? Esta acción no modifica ventas ni movimientos contables."))return;
+   const previous=db.stock;db.stock=previous.filter(x=>x.batchId!==batchId);
+   try{save();render()}catch(err){db.stock=previous;alert("No se pudo deshacer: "+err.message)}
+  };
+  p.append(undo);out.append(p)
+ }
+}
+
 function renderStock(){
+ renderCraftHistory();
  const balances=new Map(),kinds={compra:1,recoleccion:1,fabricacion:1,consumo:-1,venta:-1,ajuste:1};
  db.stock.forEach(m=>{const sign=kinds[m.kind];if(!sign)return;balances.set(m.name,(balances.get(m.name)||0)+sign*m.qty)});
  const out=e("stock-summary");out.replaceChildren();
@@ -66,7 +93,8 @@ window.addEventListener("rockpeaks:craft",event=>{
  const balances=new Map();
  db.stock.forEach(x=>balances.set(x.name,(balances.get(x.name)||0)+(sign[x.kind]||0)*x.qty));
  const needs=new Map();
- materials.forEach(m=>needs.set(m.name,(needs.get(m.name)||0)+m.qty*batches));
+ for(const m of materials){const amount=m.qty*batches;if(!Number.isSafeInteger(amount)||amount<=0)return alert("Cantidad total fuera de rango.");needs.set(m.name,(needs.get(m.name)||0)+amount)}
+ if(![...needs.values()].every(Number.isSafeInteger)||!Number.isSafeInteger(output.qty*batches))return alert("Cantidad total fuera de rango.");
  const shortages=[...needs].filter(([name,qty])=>(balances.get(name)||0)<qty);
  if(shortages.length){alert("Inventario insuficiente o no registrado: "+shortages.map(([n,q])=>n+" (necesitas "+q+", constan "+(balances.get(n)||0)+")").join("; "));return}
  const desc=[...needs].map(([n,q])=>q+" × "+n).join("; ");
