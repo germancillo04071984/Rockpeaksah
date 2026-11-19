@@ -8,7 +8,7 @@
  '<p class="muted">Consulta los nombres oficiales españoles por ID y guarda cada lote traducido en este iPhone. El resto no se inventa. Una receta de los archivos no implica que tu personaje la haya aprendido.</p>'+
  '<p><button id="catalog-translate" type="button">Completar traducciones disponibles</button> <button id="catalog-stop" type="button" disabled>Detener después del lote actual</button></p>'+
  '<p id="catalog-status" role="status" aria-live="polite">Preparado.</p><progress id="catalog-progress" value="0" max="100" style="width:100%" hidden></progress>'+
- '<p id="catalog-stats" class="muted"></p><small>La fuente pública de profesiones puede devolver inglés cuando falta una traducción. Solo se guardan nombres que declara expresamente «esES». Para una receta aprendida tendrás que marcarla como tal desde su ficha.</small>';
+ '<p id="catalog-stats" class="muted"></p><small>La fuente pública de profesiones puede devolver inglés cuando falta una traducción. Solo se guardan nombres que declara expresamente «esES». Los nombres de recetas se validan por producto, ingredientes y profesión, nunca solo por coincidencia de ID. Para una receta aprendida tendrás que marcarla como tal desde su ficha.</small>';
  host.append(box);
  const e=id=>document.getElementById(id);
  const int=x=>x!==null&&x!==undefined&&x!==""&&Number.isSafeInteger(Number(x))&&Number(x)>0?Number(x):null;
@@ -66,7 +66,7 @@
    const recipeIds=[...new Set(selected.map(r=>int(r.id)).filter(Boolean))];
    if(!itemIds.length&&!recipeIds.length)throw Error("No se encontraron recetas con IDs válidos.");
    describe();
-   const summary=await tool.translateAll({items:itemIds,recipes:recipeIds},status=>{
+   const summary=await tool.translateAll({items:itemIds,recipes:[]},status=>{
     const pct=status.pending?Math.floor(status.reviewed/status.pending*100):100;
     e("catalog-progress").value=Math.min(pct,100);
     e("catalog-status").textContent="Consulta española: "+status.reviewed+"/"+status.pending+
