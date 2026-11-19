@@ -1,6 +1,6 @@
 "use strict";
 (async function(){
-const root=document.createElement("section");root.className="card";root.innerHTML='<h2>📚 Catálogo de recetas de WoW Forever</h2><p class="muted">Cocina, alquimia y peletería. Datos del corpus público de profesiones; una receta en los archivos no garantiza que Rockpeaks pueda aprenderla. La cobertura y los nombres dependen de la fuente.</p><p><button id="recipe-load">Cargar catálogo completo disponible</button> <button id="recipe-stop" disabled>Detener</button></p><p id="recipe-status" aria-live="polite">Sin cargar</p><div class="row"><label>Profesión<select id="recipe-prof"><option value="all">Todas las tres</option><option value="cooking">Cocina</option><option value="alchemy">Alquimia</option><option value="leatherworking">Peletería</option></select></label><label>Buscar<input id="recipe-search" placeholder="Receta, ingrediente o ID"></label></div><p id="recipe-count"></p><div id="recipe-results"></div><div id="recipe-plan" class="card" hidden><h3 id="recipe-plan-title">Planificador</h3><p id="recipe-plan-info"></p><label>Fabricaciones <input id="recipe-batches" type="number" min="1" step="1" value="1"></label><div id="recipe-materials"></div><p><label>Raciones / unidades obtenidas por fabricación <input id="recipe-output" type="number" min="1" step="1" value="1"></label></p><div class="row"><label>Venta por unidad (cobres)<input id="recipe-sale" type="number" min="0" step="1" value="0"></label><label>Otros gastos por fabricación (cobres)<input id="recipe-other" type="number" min="0" step="1" value="0"></label></div><p><label>Comisión subasta (%) <input id="recipe-commission" type="number" min="0" max="100" step=".1" value="0"></label></p><p id="recipe-profit" aria-live="polite"></p><small>Los precios de materiales se introducen manualmente o se toman del mercado solo cuando coinciden los ID. Un ingrediente sin precio no equivale a coste cero.</small></div><p><button id="recipe-more" hidden>Mostrar más</button></p><small>El catálogo no modifica tu contabilidad ni inventario. Revisa cantidades y disponibilidad antes de fabricar. Los precios de mercado pueden faltar.</small>';
+const root=document.createElement("section");root.className="card";root.innerHTML='<h2>📚 Catálogo de recetas de WoW Forever</h2><p class="muted">Cocina, alquimia y peletería. Datos del corpus público de profesiones; una receta en los archivos no garantiza que Rockpeaks pueda aprenderla. La cobertura y los nombres dependen de la fuente.</p><p><button id="recipe-load">Cargar catálogo completo disponible</button> <button id="recipe-stop" disabled>Detener</button></p><p id="recipe-status" aria-live="polite">Sin cargar</p><div class="row"><label>Profesión<select id="recipe-prof"><option value="all">Todas las tres</option><option value="cooking">Cocina</option><option value="alchemy">Alquimia</option><option value="leatherworking">Peletería</option></select></label><label>Buscar<input id="recipe-search" placeholder="Receta, ingrediente o ID"></label></div><p id="recipe-count"></p><div id="recipe-results"></div><div id="recipe-plan" class="card" hidden><h3 id="recipe-plan-title">Planificador</h3><p id="recipe-plan-info"></p><label>Fabricaciones <input id="recipe-batches" type="number" min="1" step="1" value="1"></label><div id="recipe-materials"></div><p><label>Raciones / unidades obtenidas por fabricación <input id="recipe-output" type="number" min="1" step="1" value="1"></label></p><div class="row"><label>Venta por unidad (cobres)<input id="recipe-sale" type="number" min="0" step="1" value="0"></label><label>Otros gastos por fabricación (cobres)<input id="recipe-other" type="number" min="0" step="1" value="0"></label></div><p><label>Comisión subasta (%) <input id="recipe-commission" type="number" min="0" max="100" step=".1" value="0"></label></p><p id="recipe-profit" aria-live="polite"></p><p><label>Nombre del producto fabricado <input id="recipe-output-name" placeholder="Confirma el nombre del producto"></label></p><button id="recipe-confirm-craft">Confirmar fabricación real y mover inventario</button><small>Los precios de materiales se introducen manualmente o se toman del mercado solo cuando coinciden los ID. Un ingrediente sin precio no equivale a coste cero.</small></div><p><button id="recipe-more" hidden>Mostrar más</button></p><small>El catálogo no modifica tu contabilidad ni inventario. Revisa cantidades y disponibilidad antes de fabricar. Los precios de mercado pueden faltar.</small>';
 document.querySelector("main").append(root);
 const e=id=>document.getElementById(id);
 let records=[],visible=0,loading=false,stop=false,mod=null,coverage="",dataset="";
@@ -21,6 +21,7 @@ function plan(r){
  planned=r;const root=e("recipe-plan");root.hidden=false;e("recipe-plan-title").textContent="Fabricación: "+title(r);
  const raw=ingredients(r);const out=r.product||r.output||r.createdItem||{};
  const knownYield=out.count??out.quantity??r.outputCount;
+ e("recipe-output-name").value=typeof out.name==="string"?out.name:"";
  e("recipe-output").value=Number.isInteger(Number(knownYield))&&Number(knownYield)>0?knownYield:1;
  e("recipe-plan-info").textContent=raw.length?"Revisa ingredientes y cantidades. Los valores sin confirmar se marcarán como pendientes.":"La fuente no proporciona ingredientes verificables: cálculo bloqueado.";
  const box=e("recipe-materials");box.replaceChildren();
@@ -49,6 +50,21 @@ function calc(){
  const totalCost=b*(cost+other),revenue=b*y*sale*(1-fee/100),profit=revenue-totalCost;
  msg.textContent="Coste materiales: "+gold(b*cost)+" · Coste total: "+gold(totalCost)+" · Ingreso neto estimado: "+gold(revenue)+" · Resultado: "+gold(profit)+" ("+(profit>0?"beneficio estimado":profit<0?"pérdida estimada":"equilibrio")+"). No registra una venta ni descuenta inventario.";
 }
+
+
+e("recipe-confirm-craft").onclick=()=>{
+ if(!planned)return;
+ const batches=Number(e("recipe-batches").value),yieldCount=Number(e("recipe-output").value),outputName=e("recipe-output-name").value.trim();
+ const ing=ingredients(planned);
+ if(!ing.length||!Number.isSafeInteger(batches)||batches<=0||!Number.isSafeInteger(yieldCount)||yieldCount<=0||!outputName){alert("Faltan ingredientes, cantidades o producto. No se registrará nada.");return}
+ const materials=[];
+ for(let i=0;i<ing.length;i++){
+  const x=ing[i],qty=Number(e("recipe-qty-"+i).value),name=String(x.name||x.item?.name||x.itemName||("ID "+(x.itemId??x.item?.id??x.id??"?"))).trim();
+  if(!Number.isSafeInteger(qty)||qty<=0||!name||name==="ID ?"){alert("Falta identificar un ingrediente o su cantidad.");return}
+  materials.push({name,qty});
+ }
+ window.dispatchEvent(new CustomEvent("rockpeaks:craft",{detail:{materials,batches,output:{name:outputName,qty:yieldCount}}}));
+};
 
 e("recipe-load").onclick=async()=>{
  if(loading)return;loading=true;stop=false;records=[];visible=0;e("recipe-load").disabled=true;e("recipe-stop").disabled=false;e("recipe-status").textContent="Conectando con Warcraft Forever…";
