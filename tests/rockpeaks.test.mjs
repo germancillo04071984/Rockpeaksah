@@ -51,6 +51,23 @@ test('Auction profit applies commission, non-listed items stay pending',()=>{
  assert.equal(result.records[0].sure24,3);
  assert.equal(result.stats.missingSale,1);
 });
+test('Auction break-even and relisting losses use only known deposits',()=>{
+ const noDeposit=core.scan(sampleRecipes,market,{channel:'ah',fee:5}).records[0];
+ assert.equal(noDeposit.breakEvenUnit,253);
+ assert.equal(noDeposit.depositCopper,null);
+ assert.equal(noDeposit.breakEvenAfterRelist,null);
+ assert.equal(noDeposit.afterFailedListing,null);
+ assert.equal(noDeposit.downside10,529);
+ const deposit=core.scan(sampleRecipes,market,{channel:'ah',fee:5,depositCopper:120}).records[0];
+ assert.equal(deposit.profit,615);
+ assert.equal(deposit.afterFailedListing,495);
+ assert.equal(deposit.breakEvenAfterRelist,379);
+ assert.equal(deposit.depositCopper,120);
+ assert.throws(()=>core.scan(sampleRecipes,market,{channel:'ah',depositCopper:-1}),/Depósito/);
+ const npc=core.scan(sampleRecipes,market,{channel:'npc',depositCopper:120}).records[0];
+ assert.equal(npc.depositCopper,null);
+ assert.equal(npc.breakEvenUnit,null);
+});
 test('Missing and zero prices are never treated as valid purchase or sale prices',()=>{
  assert.equal(core.positiveInt(0),null);
  assert.equal(core.positiveInt(null),null);
