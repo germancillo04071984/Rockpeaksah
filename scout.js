@@ -206,7 +206,7 @@
   }finally{busy=false;e("scout-load").disabled=false}
  }
  e("scout-load").onclick=load;
- ["scout-channel","scout-fee","scout-deposit"].forEach(id=>e(id).addEventListener("change",recalc));
+ ["scout-channel","scout-fee","scout-deposit"].forEach(id=>{e(id).addEventListener("change",recalc);e(id).addEventListener("input",recalc)});
  ["scout-prof","scout-sort","scout-budget","scout-query","scout-positive","scout-known","scout-fresh"].forEach(id=>
   e(id).addEventListener("input",()=>{visible=20;render()}));
  e("scout-more").onclick=()=>{visible+=20;render()};
