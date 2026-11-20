@@ -50,6 +50,13 @@ try{
  assert.match(summary,/4p 38c/);
  assert.match(summary,/7p 0c/);
  assert.match(summary,/2p 62c/);
+ await page.locator("#scout-channel").selectOption("ah");
+ await page.locator("#scout-deposit").fill("1.2");
+ const ahText=await page.locator(".scout-opportunity").first().innerText();
+ assert.match(ahText,/Precio mínimo de venta/);
+ assert.match(ahText,/Depósito perdido: 1p 20c/);
+ assert.match(ahText,/Escenario de venta un 10% más barata/);
+ await page.locator("#scout-channel").selectOption("npc");
  await page.locator(".scout-learned").first().click();
  assert.ok((await page.locator(".scout-opportunity").first().innerText()).includes("Aprendida"));
  await page.locator("#catalog-backup").click();
