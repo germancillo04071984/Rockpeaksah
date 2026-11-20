@@ -52,6 +52,7 @@ try{
  assert.match(summary,/2p 62c/);
  await page.locator("#scout-channel").selectOption("ah");
  await page.locator("#scout-deposit").fill("1.2");
+ await page.waitForFunction(()=>document.querySelector(".scout-opportunity")?.innerText.includes("Depósito perdido: 1p 20c"),null,{timeout:10000});
  const ahText=await page.locator(".scout-opportunity").first().innerText();
  assert.match(ahText,/Precio mínimo de venta/);
  assert.match(ahText,/Depósito perdido: 1p 20c/);
