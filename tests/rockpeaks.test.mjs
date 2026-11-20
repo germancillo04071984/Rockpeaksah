@@ -92,7 +92,7 @@ test('Verified localization preserves original names and learned status',()=>{
  assert.equal(dict.learned(710),false);
 });
 test('Browser site metadata identifies version and current market',()=>{
- assert.match(html,/2026-11-20\.12/);
+ assert.match(html,/2026-11-20\.13/);
  assert.match(html,/MARKET="eu-2-113"/);
 });
 test('Live auction and recipe public APIs expose expected structured data',async()=>{
