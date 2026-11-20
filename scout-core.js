@@ -14,6 +14,8 @@
   if(!catalog||!Array.isArray(catalog.recipes)||!catalog.items||!market||!Array.isArray(market.items)||!Array.isArray(market.f))
    throw Error("Las fuentes no contienen el catálogo y el mercado esperados.");
   const channel=options?.channel==="npc"?"npc":"ah",fee=Number(options?.fee??5);
+  const deposit=options?.depositCopper==null?null:nonneg(options.depositCopper);
+  if(options?.depositCopper!=null&&deposit===null)throw Error("Depósito inválido.");
   if(!Number.isFinite(fee)||fee<0||fee>100)throw Error("Comisión fuera de rango.");
   const fields=new Map(market.f.map((name,i)=>[name,i]));
   const listed=new Map(market.items.map(row=>[pos(row?.id),row]).filter(x=>x[0]));
@@ -44,9 +46,16 @@
    const unitSale=channel==="npc"?sell(productId):ask(productId);
    if(unitSale===null){stats.missingSale++;continue}
    const gross=unitSale*yieldCount,revenue=channel==="ah"?Math.floor(gross*(1-fee/100)):gross,profit=revenue-cost;
+   const breakEvenUnit=channel==="ah"&&fee<100?Math.ceil(cost/(yieldCount*(1-fee/100))):null;
+   const breakEvenAfterRelist=channel==="ah"&&fee<100&&deposit!==null?
+    Math.ceil((cost+deposit)/(yieldCount*(1-fee/100))):null;
+   const cheaperRevenue=channel==="ah"?Math.floor(Math.floor(gross*.9)*(1-fee/100)):null;
    records.push({id,prof,profession:labels[prof],name:String(r.name||"Receta "+id),category:String(r.cat||""),
     productId,productName:String(item(productId).name||"ID "+productId),yieldCount,cost,revenue,profit,
     roi:cost>0?profit/cost*100:null,unitSale,channel,fee:channel==="ah"?fee:0,materials,
+    breakEvenUnit,breakEvenAfterRelist,depositCopper:channel==="ah"?deposit:null,
+    downside10:cheaperRevenue===null?null:cheaperRevenue-cost,
+    afterFailedListing:channel==="ah"&&deposit!==null?profit-deposit:null,
     vol24:nonneg(metric(productId,"vol24")),sure24:nonneg(metric(productId,"sure24")),
     listedUnits:nonneg(metric(productId,"listed")),lastSoldT:pos(metric(productId,"lastSoldT")),
     saleSource:channel==="ah"?"Precio mínimo anunciado":"Precio al vendedor NPC"});
