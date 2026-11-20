@@ -91,8 +91,14 @@ test('Verified localization preserves original names and learned status',()=>{
  assert.equal(dict.setLearned(710,false),true);
  assert.equal(dict.learned(710),false);
 });
+test('Light mode is selectable, persisted and retains dark mode option',()=>{
+ assert.match(html,/id="theme-toggle"/);
+ assert.match(html,/rockpeaks-theme/);
+ assert.match(html,/theme-light/);
+ assert.match(html,/aria-pressed/);
+});
 test('Browser site metadata identifies version and current market',()=>{
- assert.match(html,/2026-11-20\.13/);
+ assert.match(html,/2026-11-20\.14/);
  assert.match(html,/MARKET="eu-2-113"/);
 });
 test('Live auction and recipe public APIs expose expected structured data',async()=>{
