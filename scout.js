@@ -106,6 +106,17 @@
    item.append(child("p","Materiales "+coins(r.cost)+" · Ingreso neto "+coins(r.revenue)+" · "+r.yieldCount+" unidades"+
     (r.roi===null?"":" · Rentabilidad "+r.roi.toFixed(1)+"%"),"scout-stats"));
    if(r.channel==="ah"){
+    const risk=r.sure24===null?"Sin confirmación de ventas: riesgo de que el anuncio no se venda.":
+     r.sure24===0?"Sin ventas confirmadas en las últimas 24h: liquidez no demostrada.":
+     r.listedUnits!==null&&r.listedUnits>r.sure24*10?"Mucha oferta respecto a las ventas confirmadas: posible competencia de precios.":
+     "Hay ventas confirmadas, pero no garantizan vender al precio anunciado.";
+    const gross=r.unitSale*r.yieldCount;
+    const haircutRevenue=Math.floor(gross*.9*(1-r.fee/100));
+    const haircutProfit=haircutRevenue-r.cost;
+    item.append(child("p","Escenario de venta un 10% más barata: "+
+      (haircutProfit>=0?"+":"")+coins(haircutProfit)+
+      " por fabricación. No incluye depósitos ni anuncios caducados.","scout-demand"));
+    item.append(child("p",risk,"scout-demand"));
     item.append(child("p","Ventas inferidas 24h: "+(r.vol24===null?"sin datos":r.vol24)+
       " · confirmadas: "+(r.sure24===null?"sin datos":r.sure24)+
       " · ofertadas: "+(r.listedUnits===null?"sin datos":r.listedUnits)+
@@ -114,7 +125,8 @@
     item.append(child("p","Venta a NPC según precio publicado. Verifica disponibilidad y costes de los materiales.","scout-demand"));
    }
    const details=document.createElement("details"),sum=document.createElement("summary");sum.textContent="Materiales y fuentes de precio";details.append(sum);
-   for(const m of r.materials)details.append(child("p",m.count+" × "+displayName(m.id,m.name)+" · "+coins(m.unitPrice)+"/ud. ("+m.source+") · total "+coins(m.unitPrice*m.count),"scout-material"));
+   for(const m of r.materials)details.append(child("p",m.count+" × "+displayName(m.id,m.name)+" · "+coins(m.unitPrice)+"/ud. ("+m.source+") · total "+coins(m.unitPrice*m.count)+
+    (m.source==="subasta"?" · Precio mínimo: cantidad disponible a este precio sin verificar":""),"scout-material"));
    item.append(details);out.append(item);
   });
   e("scout-more").hidden=visible>=all.length;
@@ -125,7 +137,7 @@
    const rec=view[i];if(!rec)return;
    const heading=node.querySelector(".scout-name");if(heading)heading.textContent=displayName(rec.productId,rec.productName);
    node.querySelectorAll(".scout-material").forEach((p,j)=>{const m=rec.materials[j];
-    if(m)p.textContent=m.count+" × "+displayName(m.id,m.name)+" · "+coins(m.unitPrice)+"/ud. ("+m.source+") · total "+coins(m.unitPrice*m.count);
+    if(m)p.textContent=m.count+" × "+displayName(m.id,m.name)+" · "+coins(m.unitPrice)+"/ud. ("+m.source+") · total "+coins(m.unitPrice*m.count)+(m.source==="subasta"?" · Precio mínimo: cantidad disponible a este precio sin verificar":"");
    });
   });
  }
