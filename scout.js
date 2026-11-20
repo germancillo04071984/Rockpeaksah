@@ -10,7 +10,7 @@
  '<div class="row"><label>Ordenar<select id="scout-sort"><option value="profit">Mayor beneficio</option><option value="roi">Mayor rentabilidad %</option><option value="cost">Menor coste</option><option value="demand">Más ventas inferidas</option></select></label>'+
  '<label>Presupuesto (oros)<input id="scout-budget" type="number" inputmode="decimal" step=".01" min="0" placeholder="Sin límite"></label></div>'+
  '<div class="row"><label>Buscar receta o ingrediente<input id="scout-query" placeholder="Nombre o ID"></label>'+
- '<label id="scout-fee-label">Comisión subasta (%)<input id="scout-fee" type="number" min="0" max="100" step=".5" value="5"></label></div>'+
+ '<label id="scout-fee-label">Comisión subasta (%)<input id="scout-fee" type="number" min="0" max="100" step=".5" value="5"></label><label id="scout-deposit-label">Depósito perdido si caduca un anuncio (platas por fabricación)<input id="scout-deposit" type="number" min="0" step=".01" inputmode="decimal" placeholder="Desconocido"></label></div>'+
  '<label class="scout-check"><input id="scout-positive" type="checkbox" checked> Mostrar solo beneficio positivo</label><label class="scout-check"><input id="scout-fresh" type="checkbox" checked> Exigir precios recientes (máximo 6 horas)</label><label class="scout-check"><input id="scout-known" type="checkbox"> Solo recetas que he confirmado aprender</label></div>'+
  '<p id="scout-count" class="muted"></p><div id="scout-results"></div><p><button id="scout-more" hidden>Mostrar más</button></p>'+
  '<small>Origen: auctionhouse.tk.gg. La demanda refleja ventas inferidas, no operaciones garantizadas. No se incluyen depósitos de subasta, desplazamientos ni tiempo de venta. Verifica los precios NPC y que Rockpeaks puede fabricar la receta.</small>';
@@ -43,11 +43,18 @@
  function recalc(){
   if(!recipesData||!marketData)return;
   const fee=Number(e("scout-fee").value);
+  const depositRaw=e("scout-deposit").value.trim();
+  const depositSilver=depositRaw===""?null:Number(depositRaw);
+  if(depositSilver!==null&&(!Number.isFinite(depositSilver)||depositSilver<0||depositSilver>100000)){
+   e("scout-count").textContent="El depósito debe ser una cantidad válida de platas.";e("scout-results").replaceChildren();return;
+  }
+  const depositCopper=depositSilver===null?null:Math.round(depositSilver*100);
   if(e("scout-fee").value===""||!Number.isFinite(fee)||fee<0||fee>100){
    e("scout-count").textContent="La comisión debe estar entre 0 y 100.";e("scout-results").replaceChildren();return;
   }
-  analysis=core.scan(recipesData,marketData,{channel:e("scout-channel").value,fee});
+  analysis=core.scan(recipesData,marketData,{channel:e("scout-channel").value,fee,depositCopper});
   e("scout-fee-label").hidden=e("scout-channel").value==="npc";
+  e("scout-deposit-label").hidden=e("scout-channel").value==="npc";
   visible=20;render();
  }
  const snapshotTime=()=>{const n=Number(marketData?.t);return Number.isFinite(n)&&n>0?(n<1e11?n*1000:n):null};
@@ -110,9 +117,16 @@
      r.sure24===0?"Sin ventas confirmadas en las últimas 24h: liquidez no demostrada.":
      r.listedUnits!==null&&r.listedUnits>r.sure24*10?"Mucha oferta respecto a las ventas confirmadas: posible competencia de precios.":
      "Hay ventas confirmadas, pero no garantizan vender al precio anunciado.";
-    const gross=r.unitSale*r.yieldCount;
-    const haircutRevenue=Math.floor(gross*.9*(1-r.fee/100));
-    const haircutProfit=haircutRevenue-r.cost;
+    const haircutProfit=r.downside10;
+    item.append(child("p","Precio mínimo de venta para cubrir materiales y comisión: "+
+      (r.breakEvenUnit===null?"no calculable":coins(r.breakEvenUnit)+"/ud.")+
+      ". El precio mínimo es una estimación, no una venta asegurada.","scout-demand"));
+    item.append(child("p",r.depositCopper===null?
+      "Depósito por anuncio: desconocido; no se ha supuesto que sea cero. Si caduca, se pierde el depósito y los materiales siguen en inventario.":
+      "Si caduca un anuncio y luego se vende al precio actual: "+
+      (r.afterFailedListing>=0?"+":"")+coins(r.afterFailedListing)+
+      " por fabricación. Depósito perdido: "+coins(r.depositCopper)+
+      ". Precio de equilibrio tras un anuncio fallido: "+coins(r.breakEvenAfterRelist)+"/ud.","scout-demand"));
     item.append(child("p","Escenario de venta un 10% más barata: "+
       (haircutProfit>=0?"+":"")+coins(haircutProfit)+
       " por fabricación. No incluye depósitos ni anuncios caducados.","scout-demand"));
@@ -192,7 +206,7 @@
   }finally{busy=false;e("scout-load").disabled=false}
  }
  e("scout-load").onclick=load;
- ["scout-channel","scout-fee"].forEach(id=>e(id).addEventListener("change",recalc));
+ ["scout-channel","scout-fee","scout-deposit"].forEach(id=>e(id).addEventListener("change",recalc));
  ["scout-prof","scout-sort","scout-budget","scout-query","scout-positive","scout-known","scout-fresh"].forEach(id=>
   e(id).addEventListener("input",()=>{visible=20;render()}));
  e("scout-more").onclick=()=>{visible+=20;render()};
