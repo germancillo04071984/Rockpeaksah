@@ -59,7 +59,7 @@ try{
  assert.match(ahText,/Escenario de venta un 10% más barata/);
  await page.locator("#scout-channel").selectOption("npc");
  await page.locator(".scout-learned").first().click();
- assert.ok((await page.locator(".scout-opportunity").first().innerText()).includes("Aprendida"));
+ await page.waitForFunction(()=>document.querySelector(".scout-opportunity")?.innerText.includes("Aprendida"),null,{timeout:10000});
  await page.locator("#catalog-backup").click();
  assert.match(await page.locator("#catalog-backup-link").getAttribute("href"),/^blob:/);
  const backupText=await page.evaluate(async()=>await (await fetch(document.getElementById("catalog-backup-link").href)).text());
