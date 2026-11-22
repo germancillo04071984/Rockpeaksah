@@ -50,8 +50,8 @@ assert.equal(dictionary.items["6358"],"Bocanegra graso");
 assert.equal(dictionary.items["217398"],"Elixir Arcano inferior");
 assert.equal(dictionary.items["238639"],"Tortilla del alba");
 assert.ok(Object.keys(dictionary.items).length>=1108);
-assert.ok(Object.keys(dictionary.recipes).length>=859);
-assert.equal(dictionary.source.coverage.translatedRecipes,859);
+assert.ok(Object.keys(dictionary.recipes).length>=909);
+assert.equal(dictionary.source.coverage.translatedRecipes,909);
 const latestTen={
  "51732":"Sopa de Garranegra",
  "51733":"Branquirrojo ahumado",
@@ -78,11 +78,11 @@ assert.ok(Object.keys(dictionary.recipes).length>0);
 const wowheadAudit=JSON.parse(await read(root+"locales/wowhead-checked-recipes.json?verify="+Date.now()));
 const checkedInWowheadAudit=JSON.parse(fs.readFileSync(path.join(sourceDir,"locales/wowhead-checked-recipes.json"),"utf8"));
 assert.deepEqual(wowheadAudit,checkedInWowheadAudit,"La referencia de Wowhead publicada no coincide con main.");
-assert.equal(wowheadAudit.entries.length,41);
+assert.equal(wowheadAudit.entries.length,91);
 assert.deepEqual(wowheadAudit.entries.slice(3,6).map(r=>r.wowheadSpell),[435819,435951,435949]);
 assert.deepEqual(wowheadAudit.entries.slice(6,16).map(r=>r.id),
  [51732,51733,52010,52012,52014,52015,50023,49863,49866,51368]);
-const last25=wowheadAudit.entries.slice(16);
+const last25=wowheadAudit.entries.slice(16,41);
 assert.equal(last25.length,25);
 assert.deepEqual(last25.map(e=>e.id),
  [51367,51369,51371,51373,51372,51364,51366,51393,51394,
@@ -93,6 +93,16 @@ for(const entry of last25){
   "La traducción confirmada en Wowhead no se ha publicado: "+entry.id);
  assert.ok(entry.wowheadSource?.startsWith("https://nether.wowhead.com/classic/tooltip/spell/"),
   "Falta la procedencia verificable de "+entry.id);
+}
+const last50=wowheadAudit.entries.slice(41);
+assert.equal(last50.length,50);
+assert.equal(new Set(last50.map(entry=>entry.id)).size,50);
+for(const entry of last50){
+ assert.equal(dictionary.recipes[entry.id],entry.name,
+  "La nueva traducción de la receta "+entry.id+" no está publicada");
+ assert.equal(entry.batch,"wowhead-50-2026-11-22");
+ assert.ok(entry.wowheadSource?.startsWith("https://nether.wowhead.com/classic/tooltip/spell/"));
+ assert.ok(entry.wowheadEnglishSource?.endsWith("?locale=0"));
 }
 const packagePath="downloads/RockpeaksBridge-0.3.0.zip";
 const download=await fetch(root+packagePath+"?verify="+Date.now(),{signal:AbortSignal.timeout(15000)});
