@@ -58,8 +58,11 @@ try{
  assert.match(ahText,/Depósito perdido: 1p 20c/);
  assert.match(ahText,/Escenario de venta un 10% más barata/);
  await page.locator("#scout-channel").selectOption("npc");
- await page.locator(".scout-learned").first().click();
- await page.waitForFunction(()=>document.querySelector(".scout-opportunity")?.innerText.includes("Aprendida"),null,{timeout:10000});
+ assert.equal(await page.evaluate(()=>window.RockpeaksCatalog?.learned(718)),false);
+ await page.locator('.scout-learned[data-recipe-id="718"]').click();
+ await page.waitForFunction(()=>window.RockpeaksCatalog?.learned(718)===true,null,{timeout:10000});
+ await page.locator('.scout-learned[data-recipe-id="718"][aria-pressed="true"]').waitFor({timeout:10000});
+ assert.match(await page.locator(".scout-opportunity").first().innerText(),/Aprendida/);
  await page.locator("#catalog-backup").click();
  assert.match(await page.locator("#catalog-backup-link").getAttribute("href"),/^blob:/);
  const backupText=await page.evaluate(async()=>await (await fetch(document.getElementById("catalog-backup-link").href)).text());
