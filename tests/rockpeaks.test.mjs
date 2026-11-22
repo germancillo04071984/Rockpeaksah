@@ -303,9 +303,9 @@ test('Published locale dictionary contains only structure-checked names',()=>{
  assert.equal(data.items[217398],"Elixir Arcano inferior");
  assert.equal(data.items[238639],"Tortilla del alba");
  assert.equal(data.items[213370],"Restos de cuero irradiado");
- assert.equal(Object.keys(data.items).length,1160);
+ assert.equal(Object.keys(data.items).length,1212);
  assert.equal(Object.keys(data.recipes).length,920);
- assert.equal(data.source.coverage.translatedItems,1160);
+ assert.equal(data.source.coverage.translatedItems,1212);
  assert.equal(data.source.coverage.translatedRecipes,920);
  assert.ok(data.source.updates.some(x=>x.itemsAdded===19));
  assert.ok(data.source.updates.some(x=>x.itemsAdded===52));
@@ -345,5 +345,36 @@ test('52 sourced item translations match precise IDs, and materials retain verif
  assert.equal(dict.items[233962],"Frasco de locura");
  assert.equal(dict.items[227869],"Capa cromática brillante");
  assert.equal(Object.keys(dict.recipes).length,920);
- assert.equal(Object.keys(dict.items).length,1160);
+ assert.equal(Object.keys(dict.items).length,1212);
+});
+
+test('Final 52 sourced item names fill the current market catalog with auditable exceptions',()=>{
+ const locale=JSON.parse(read('locales/esES.json'));
+ const first=JSON.parse(read('locales/wowhead-checked-items.json'));
+ const last=JSON.parse(read('locales/wowhead-checked-items-final.json'));
+ assert.equal(last.schema,1);
+ assert.equal(last.batch,"wowhead-items-final-52-2026-11-22");
+ assert.equal(last.entries.length,52);
+ assert.equal(new Set(last.entries.map(x=>x.id)).size,52);
+ assert.equal(last.entries.filter(x=>x.method==="id-and-market-english").length,49);
+ assert.equal(new Set([...first.entries,...last.entries].map(x=>x.id)).size,104);
+ assert.deepEqual(last.entries.filter(x=>x.method!=="id-and-market-english").map(x=>x.id),[1529,227855,252948]);
+ for(const item of last.entries){
+  assert.equal(locale.items[item.id],item.es);
+  assert.equal(item.spanishSource,"https://nether.wowhead.com/"+item.edition+"/tooltip/item/"+item.id+"?locale=6");
+  assert.equal(item.englishSource,"https://nether.wowhead.com/"+item.edition+"/tooltip/item/"+item.id+"?locale=0");
+  assert.ok(item.roles.length>=1);
+  assert.ok(item.recipeReferences>=1);
+ }
+ assert.equal(locale.items[1529],"Jade");
+ assert.equal(locale.items[227855],"Disfraz de ogro Gordok sintético");
+ assert.equal(locale.items[252948],"Brotevil purificado");
+ assert.equal(locale.items[221313],"Frasco de mojo de pesadilla");
+ assert.equal(last.entries.find(x=>x.id===227855).recipeId,51382);
+ assert.equal(last.entries.find(x=>x.id===227855).wowheadSpell,461692);
+ assert.equal(Object.keys(locale.recipes).length,920);
+ assert.equal(Object.keys(locale.items).length,1212);
+ assert.equal(locale.source.coverage.targetItems,1212);
+ assert.equal(locale.source.coverage.translatedItems,1212);
+ assert.ok(locale.source.updates.some(x=>x.batch===last.batch&&x.itemsAdded===52));
 });
