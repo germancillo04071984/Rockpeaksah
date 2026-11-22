@@ -99,7 +99,7 @@
   }finally{busy=false}
  }
  const exportData=()=>({schema:1,locale:"esES",items:{...data.items},recipes:{...data.recipes},learned:[...known]});
- // Static verified dictionary is built in GitHub Actions from Warcraft Forever's esES client records.
+ // Published verified names include explicit Warcraft Forever esES client records and signature-matched Wowhead recipe entries.
  // Browser-side additions remain possible, and nothing is fabricated for missing IDs.
  let staticState={status:"pending",items:0,recipes:0,source:null,coverage:null,updates:[]};
  async function loadPublished(){
