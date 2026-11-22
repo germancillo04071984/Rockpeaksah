@@ -207,10 +207,10 @@ test('Recipe translation is joined by full manufacturing identity, never collidi
  const notMatched=validatedNames(market,[client[0]]);
  assert.equal(Object.keys(notMatched.names).length,0);
 });
-test('Ninety-one sourced Wowhead translations include the 25- and 50-recipe batches',()=>{
+test('One hundred and two Wowhead source entries include the final 11 translated recipes',()=>{
  const dictionary=JSON.parse(read('locales/esES.json'));
  const provenance=JSON.parse(read('locales/wowhead-checked-recipes.json'));
- assert.equal(provenance.entries.length,91);
+ assert.equal(provenance.entries.length,102);
  const expected=new Map([
   [49957,"Brazales de cuero de guardián"],
   [49958,"Cinturón de guardián"],
@@ -230,16 +230,18 @@ test('Ninety-one sourced Wowhead translations include the 25- and 50-recipe batc
   [51368,"Coraza de escamas de dragón verde viviente"]
  ]);
  const last25=provenance.entries.slice(16,41);
- const last50=provenance.entries.slice(41);
+ const last50=provenance.entries.slice(41,91);
+ const final11=provenance.entries.slice(91);
  assert.equal(last50.length,50);
  assert.equal(new Set(last50.map(e=>e.id)).size,50);
  assert.equal(last25.length,25);
+ assert.equal(final11.length,11);
  const ids=[51367,51369,51371,51373,51372,51364,51366,51393,51394,
   51376,51375,51377,51383,51379,51380,49955,51663,51664,51665,
   51906,51901,51899,51903,52108,49865];
  assert.deepEqual(last25.map(e=>e.id),ids);
  assert.deepEqual([...new Set(provenance.entries.map(e=>e.id))].sort((a,b)=>a-b),
-  [...expected.keys(),...ids,...last50.map(e=>e.id)].sort((a,b)=>a-b));
+  [...expected.keys(),...ids,...last50.map(e=>e.id),...final11.map(e=>e.id)].sort((a,b)=>a-b));
  for(const entry of provenance.entries){
   assert.equal(dictionary.recipes[entry.id],expected.has(entry.id)?expected.get(entry.id):entry.name);
   assert.notEqual(entry.id,entry.wowheadSpell);
@@ -277,6 +279,19 @@ test('Ninety-one sourced Wowhead translations include the 25- and 50-recipe batc
  }
  assert.equal(last50.filter(e=>e.profession==="Alchemy").length,11);
  assert.equal(last50.filter(e=>e.profession==="Leatherworking").length,39);
+ assert.deepEqual(final11.map(e=>e.id),[50600,49876,52011,51655,51717,50561,50562,51206,50563,50564,50565]);
+ for(const entry of final11){
+  assert.equal(entry.batch,"wowhead-final-11-2026-11-22");
+  assert.equal(dictionary.recipes[entry.id],entry.name);
+  assert.deepEqual(entry.r,entry.wowheadMaterials);
+  assert.match(entry.wowheadSource,/^https:\/\/nether\.wowhead\.com\//);
+  assert.equal(entry.wowheadUrl,"https://www.wowhead.com/"+(entry.wowheadEdition==="Forever"?"forever":"classic")+"/es/spell="+entry.wowheadSpell);
+ }
+ assert.equal(dictionary.recipes[50600],"Jarra de mojo de pesadilla");
+ assert.equal(dictionary.recipes[49876],"Poción de rejuvenecimiento ligeramente irradiada");
+ assert.equal(dictionary.recipes[52011],"Filete de falda");
+ assert.equal(final11.find(e=>e.id===49876).qty,5);
+ assert.equal(final11.find(e=>e.id===52011).qty,2);
 });
 test('Published locale dictionary contains only structure-checked names',()=>{
  const data=JSON.parse(read('locales/esES.json'));
@@ -289,14 +304,15 @@ test('Published locale dictionary contains only structure-checked names',()=>{
  assert.equal(data.items[238639],"Tortilla del alba");
  assert.equal(data.items[213370],"Restos de cuero irradiado");
  assert.equal(Object.keys(data.items).length,1108);
- assert.equal(Object.keys(data.recipes).length,909);
+ assert.equal(Object.keys(data.recipes).length,920);
  assert.equal(data.source.coverage.translatedItems,1108);
- assert.equal(data.source.coverage.translatedRecipes,909);
+ assert.equal(data.source.coverage.translatedRecipes,920);
  assert.ok(data.source.updates.some(x=>x.itemsAdded===19));
  assert.ok(data.source.updates.some(x=>x.recipesAdded===3));
  assert.ok(data.source.updates.some(x=>x.recipesAdded===10));
  assert.ok(data.source.updates.some(x=>x.recipesAdded===25));
  assert.ok(data.source.updates.some(x=>x.recipesAdded===50));
+ assert.ok(data.source.updates.some(x=>x.recipesAdded===11));
  assert.notEqual(data.recipes[3928],"Ardilla mecánica");
  assert.ok(Object.keys(data.recipes).length>0);
 });
