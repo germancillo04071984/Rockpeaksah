@@ -73,7 +73,7 @@ async function process(id){
    qty:recipe.qty===1
   };
   if(Object.values(checks).every(Boolean))foundStructured++;
-  results.push({id:recipe.id,spell,spanish:es.name,english:english.name,profession:recipe.prof,
+  results.push({id:recipe.id,spell:id,spanish:es.name,english:english.name,profession:recipe.prof,
    item:recipe.item,qty:recipe.qty,reagents:recipe.r,foundProduct:product,foundReagents:comp,
    verified:Object.values(checks).every(Boolean),checks,
    wowheadUrl:"https://www.wowhead.com/classic/es/spell="+id});
