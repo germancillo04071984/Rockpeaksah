@@ -62,14 +62,14 @@ try{
  await page.evaluate(()=>{
   window.__learnedDebug=[];
   document.addEventListener("click",event=>{
-   if(event.target.closest(".scout-learned"))
-    window.__learnedDebug.push({type:"click",learned:window.RockpeaksCatalog?.learned(718)});
+   window.__learnedDebug.push({type:"click",target:event.target?.tagName,id:event.target?.id,css:event.target?.className,
+    learned:window.RockpeaksCatalog?.learned(718)});
   },true);
   window.addEventListener("rockpeaks:learned-change",event=>{
    window.__learnedDebug.push({type:"changed",detail:event.detail,learned:window.RockpeaksCatalog?.learned(718)});
   });
  });
- await page.locator('.scout-learned[data-recipe-id="718"]').click();
+ await page.locator('.scout-learned[data-recipe-id="718"]').tap();
  console.log("LEARNED_CLICK_DIAGNOSTIC",JSON.stringify(await page.evaluate(()=>({
   learned:window.RockpeaksCatalog?.learned(718),
   button:document.querySelector('.scout-learned[data-recipe-id="718"]')?.outerHTML,
