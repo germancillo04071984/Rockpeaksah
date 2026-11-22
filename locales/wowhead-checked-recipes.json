@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "date": "2026-11-22",
-  "note": "The market recipe ID and Wowhead spell ID are not equivalent. Each stored entry matches the live crafting recipe's profession, product item ID, output quantity, all reagent IDs and quantities; the newest 50 additionally use independent Wowhead ES and EN JSON tooltips. These mappings do not imply the recipe is available or learned in the user's WoW Forever client.",
+  "note": "Market recipe IDs and Wowhead spell IDs are different. All 102 source-verified mappings are checked by profession, product, and reagent lists. The last 11 use Wowhead Classic and Forever localized spell names; one recipe was renamed in Forever (Jar vs Flask), and the two multi-output recipes retain market output quantities corroborated by independent Forever recipe references. No assertion about learnability or in-game client coverage.",
   "entries": [
     {
       "id": 49957,
@@ -4169,6 +4169,573 @@
       "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/446186?locale=0",
       "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
       "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 50600,
+      "profession": "Alchemy",
+      "name": "Jarra de mojo de pesadilla",
+      "nameEn": "Jar of Nightmarish Mojo",
+      "item": 221313,
+      "qty": 1,
+      "r": [
+        [
+          221021,
+          5
+        ],
+        [
+          8925,
+          1
+        ],
+        [
+          221312,
+          5
+        ]
+      ],
+      "wowheadSpell": 446851,
+      "wowheadUrl": "https://www.wowhead.com/forever/es/spell=446851",
+      "wowheadEdition": "Forever",
+      "wowheadMaterials": [
+        [
+          221021,
+          5
+        ],
+        [
+          8925,
+          1
+        ],
+        [
+          221312,
+          5
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/forever/tooltip/spell/446851?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/forever/tooltip/spell/446851?locale=0",
+      "wowheadClassicCrosscheck": "https://nether.wowhead.com/classic/tooltip/spell/446851?locale=6",
+      "batch": "wowhead-final-11-2026-11-22",
+      "validation": "Modern Forever recipe label and English name; Classic same spell ID has exact product and all reagents, with old 'Flask' naming",
+      "englishClassicAlias": "Flask of Nightmarish Mojo"
+    },
+    {
+      "id": 49876,
+      "profession": "Alchemy",
+      "name": "Poción de rejuvenecimiento ligeramente irradiada",
+      "nameEn": "Mildly Irradiated Rejuvenation Potion",
+      "item": 215162,
+      "qty": 5,
+      "r": [
+        [
+          213371,
+          1
+        ],
+        [
+          2456,
+          1
+        ],
+        [
+          215430,
+          3
+        ],
+        [
+          8925,
+          5
+        ]
+      ],
+      "wowheadSpell": 435971,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=435971",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          213371,
+          1
+        ],
+        [
+          2456,
+          1
+        ],
+        [
+          215430,
+          3
+        ],
+        [
+          8925,
+          5
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/435971?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/435971?locale=0",
+      "wowheadClassicCrosscheck": "https://nether.wowhead.com/classic/tooltip/spell/435971?locale=6",
+      "batch": "wowhead-final-11-2026-11-22",
+      "validation": "Localized spell name, crafted item and complete reagents match; market output quantity separately corroborated by independent WoW Forever recipe database",
+      "outputQuantitySource": "https://www.wowforeveraddon.com/professions/alchemy/mildly-irradiated-rejuvenation-potion/"
+    },
+    {
+      "id": 52011,
+      "profession": "Cooking",
+      "name": "Filete de falda",
+      "nameEn": "Filet o' Flank",
+      "item": 238638,
+      "qty": 2,
+      "r": [
+        [
+          12203,
+          2
+        ],
+        [
+          239016,
+          1
+        ]
+      ],
+      "wowheadSpell": 1225759,
+      "wowheadUrl": "https://www.wowhead.com/forever/es/spell=1225759",
+      "wowheadEdition": "Forever",
+      "wowheadMaterials": [
+        [
+          12203,
+          2
+        ],
+        [
+          239016,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/forever/tooltip/spell/1225759?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/forever/tooltip/spell/1225759?locale=0",
+      "wowheadClassicCrosscheck": "https://nether.wowhead.com/classic/tooltip/spell/1225759?locale=6",
+      "batch": "wowhead-final-11-2026-11-22",
+      "validation": "Localized spell name, crafted item and complete reagents match; market output quantity separately corroborated by independent WoW Forever recipe database",
+      "outputQuantitySource": "https://wowforeverhelper.com/item/238638/filet-o-flank"
+    },
+    {
+      "id": 51655,
+      "profession": "Leatherworking",
+      "name": "Peto de escamas oníricas",
+      "nameEn": "Dreamscale Breastplate",
+      "item": 234324,
+      "qty": 1,
+      "r": [
+        [
+          12810,
+          12
+        ],
+        [
+          20381,
+          6
+        ],
+        [
+          12803,
+          4
+        ],
+        [
+          15407,
+          4
+        ],
+        [
+          14227,
+          6
+        ]
+      ],
+      "wowheadSpell": 1213751,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213751",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          12810,
+          12
+        ],
+        [
+          20381,
+          6
+        ],
+        [
+          12803,
+          4
+        ],
+        [
+          15407,
+          4
+        ],
+        [
+          14227,
+          6
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213751?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213751?locale=0",
+      "wowheadClassicCrosscheck": "https://nether.wowhead.com/classic/tooltip/spell/1213751?locale=6",
+      "batch": "wowhead-final-11-2026-11-22",
+      "validation": "Localized spell name, exact product and reagent list in Wowhead Classic matched to market identity and output amount"
+    },
+    {
+      "id": 51717,
+      "profession": "Leatherworking",
+      "name": "Falda de escamas oníricas",
+      "nameEn": "Dreamscale Kilt",
+      "item": 234482,
+      "qty": 1,
+      "r": [
+        [
+          12810,
+          12
+        ],
+        [
+          20381,
+          6
+        ],
+        [
+          12803,
+          4
+        ],
+        [
+          15407,
+          4
+        ],
+        [
+          14227,
+          6
+        ]
+      ],
+      "wowheadSpell": 1214303,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1214303",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          12810,
+          12
+        ],
+        [
+          20381,
+          6
+        ],
+        [
+          12803,
+          4
+        ],
+        [
+          15407,
+          4
+        ],
+        [
+          14227,
+          6
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1214303?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1214303?locale=0",
+      "wowheadClassicCrosscheck": "https://nether.wowhead.com/classic/tooltip/spell/1214303?locale=6",
+      "batch": "wowhead-final-11-2026-11-22",
+      "validation": "Localized spell name, exact product and reagent list in Wowhead Classic matched to market identity and output amount"
+    },
+    {
+      "id": 50561,
+      "profession": "Leatherworking",
+      "name": "Membrana de neurosis oscura",
+      "nameEn": "Membrane of Dark Neurosis",
+      "item": 220745,
+      "qty": 1,
+      "r": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          15407,
+          2
+        ],
+        [
+          8170,
+          6
+        ]
+      ],
+      "wowheadSpell": 446192,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=446192",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          15407,
+          2
+        ],
+        [
+          8170,
+          6
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/446192?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/446192?locale=0",
+      "wowheadClassicCrosscheck": "https://nether.wowhead.com/classic/tooltip/spell/446192?locale=6",
+      "batch": "wowhead-final-11-2026-11-22",
+      "validation": "Localized spell name, exact product and reagent list in Wowhead Classic matched to market identity and output amount"
+    },
+    {
+      "id": 50562,
+      "profession": "Leatherworking",
+      "name": "Manto de paranoia",
+      "nameEn": "Paranoia Mantle",
+      "item": 220747,
+      "qty": 1,
+      "r": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          15423,
+          8
+        ],
+        [
+          8170,
+          4
+        ]
+      ],
+      "wowheadSpell": 446183,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=446183",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          15423,
+          8
+        ],
+        [
+          8170,
+          4
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/446183?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/446183?locale=0",
+      "wowheadClassicCrosscheck": "https://nether.wowhead.com/classic/tooltip/spell/446183?locale=6",
+      "batch": "wowhead-final-11-2026-11-22",
+      "validation": "Localized spell name, exact product and reagent list in Wowhead Classic matched to market identity and output amount"
+    },
+    {
+      "id": 51206,
+      "profession": "Leatherworking",
+      "name": "Espaldares de anillas aulladoras",
+      "nameEn": "Screaming Chain Pauldrons",
+      "item": 220741,
+      "qty": 1,
+      "r": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          15412,
+          5
+        ],
+        [
+          8170,
+          10
+        ]
+      ],
+      "wowheadSpell": 451706,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=451706",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          15412,
+          5
+        ],
+        [
+          8170,
+          10
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/451706?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/451706?locale=0",
+      "wowheadClassicCrosscheck": "https://nether.wowhead.com/classic/tooltip/spell/451706?locale=6",
+      "batch": "wowhead-final-11-2026-11-22",
+      "validation": "Localized spell name, exact product and reagent list in Wowhead Classic matched to market identity and output amount"
+    },
+    {
+      "id": 50563,
+      "profession": "Leatherworking",
+      "name": "Hombreras de obsesión",
+      "nameEn": "Shoulderpads of Obsession",
+      "item": 220748,
+      "qty": 1,
+      "r": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          7080,
+          1
+        ],
+        [
+          8170,
+          12
+        ]
+      ],
+      "wowheadSpell": 446189,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=446189",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          7080,
+          1
+        ],
+        [
+          8170,
+          12
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/446189?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/446189?locale=0",
+      "wowheadClassicCrosscheck": "https://nether.wowhead.com/classic/tooltip/spell/446189?locale=6",
+      "batch": "wowhead-final-11-2026-11-22",
+      "validation": "Localized spell name, exact product and reagent list in Wowhead Classic matched to market identity and output amount"
+    },
+    {
+      "id": 50564,
+      "profession": "Leatherworking",
+      "name": "Bufas chillonas",
+      "nameEn": "Shrieking Spaulders",
+      "item": 220742,
+      "qty": 1,
+      "r": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          15416,
+          8
+        ],
+        [
+          8170,
+          8
+        ]
+      ],
+      "wowheadSpell": 446185,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=446185",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          15416,
+          8
+        ],
+        [
+          8170,
+          8
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/446185?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/446185?locale=0",
+      "wowheadClassicCrosscheck": "https://nether.wowhead.com/classic/tooltip/spell/446185?locale=6",
+      "batch": "wowhead-final-11-2026-11-22",
+      "validation": "Localized spell name, exact product and reagent list in Wowhead Classic matched to market identity and output amount"
+    },
+    {
+      "id": 50565,
+      "profession": "Leatherworking",
+      "name": "Manto de anillas gemebundas",
+      "nameEn": "Wailing Chain Mantle",
+      "item": 220744,
+      "qty": 1,
+      "r": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          15412,
+          8
+        ],
+        [
+          8170,
+          8
+        ]
+      ],
+      "wowheadSpell": 446190,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=446190",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          15412,
+          8
+        ],
+        [
+          8170,
+          8
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/446190?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/446190?locale=0",
+      "wowheadClassicCrosscheck": "https://nether.wowhead.com/classic/tooltip/spell/446190?locale=6",
+      "batch": "wowhead-final-11-2026-11-22",
+      "validation": "Localized spell name, exact product and reagent list in Wowhead Classic matched to market identity and output amount"
     }
   ],
   "updatedAt": "2026-11-22"
