@@ -1,18 +1,29 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import {fileURLToPath} from "node:url";
+import path from "node:path";
+
 const root="https://germancillo04071984.github.io/Rockpeaksah/";
-const version="2026-11-19.10";
+const sourceDir=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
+const source=fs.readFileSync(path.join(sourceDir,"index.html"),"utf8");
+const release=source.match(/Interfaz Rockpeaks organizada · versión ([0-9.-]+)/)?.[0];
+assert.ok(release,"No se puede identificar la versión actual en index.html");
+const scriptRefs=[...source.matchAll(/<script src="([^"]+\.js\?[^"]+)"\s*><\/script>/g)].map(m=>m[1]);
+assert.ok(scriptRefs.length>=5,"Faltan los scripts versionados en index.html");
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 async function read(url){
  const response=await fetch(url,{headers:{"cache-control":"no-cache"},signal:AbortSignal.timeout(15000)});
  if(!response.ok)throw Error("HTTP "+response.status+" "+url);
  return response.text();
 }
+// Derive expected release from this checkout, never from an obsolete hard-coded version.
 let page=null,lastError=null;
 for(let attempt=1;attempt<=25;attempt++){
  try{
   page=await read(root+"?version-verification="+Date.now()+"-"+attempt);
-  if(!page.includes("Interfaz Rockpeaks organizada · versión "+version))throw Error("publicada versión distinta de "+version);
-  if(!page.includes("catalog-tools.js?v=ui-20261119-10"))throw Error("el HTML publicado usa scripts antiguos");
+  if(!page.includes(release))throw Error("GitHub Pages no publica todavía "+release);
+  for(const ref of scriptRefs)
+   if(!page.includes('src="'+ref+'"'))throw Error("La página publicada carga un script de otra versión: "+ref);
   lastError=null;break;
  }catch(err){
   lastError=err;
@@ -21,20 +32,23 @@ for(let attempt=1;attempt<=25;attempt++){
  }
 }
 if(lastError)throw lastError;
-const scripts=["catalog-tools.js","recipes.js","scout-core.js","scout.js","catalog-ui.js"];
-const checks=await Promise.all(scripts.map(async path=>{
- const text=await read(root+path+"?verify="+Date.now());
- assert.ok(text.length>100,path+" vacio");
- return {path,bytes:text.length};
+const checks=await Promise.all(scriptRefs.map(async ref=>{
+ const relative=ref.split("?")[0];
+ const published=await read(root+ref+"&verify="+Date.now());
+ const checkedIn=fs.readFileSync(path.join(sourceDir,relative),"utf8");
+ assert.equal(published,checkedIn,relative+" publicado difiere del código de main");
+ return {path:relative,bytes:published.length};
 }));
 const localeText=await read(root+"locales/esES.json?verify="+Date.now());
 const dictionary=JSON.parse(localeText);
+const checkedInDictionary=JSON.parse(fs.readFileSync(path.join(sourceDir,"locales/esES.json"),"utf8"));
+assert.deepEqual(dictionary,checkedInDictionary,"El diccionario publicado no coincide con main");
 assert.equal(dictionary.schema,1);
 assert.equal(dictionary.locale,"esES");
 assert.ok(dictionary.source.coverage.matchMethod.includes("profession"));
 assert.equal(dictionary.items["6358"],"Bocanegra graso");
 assert.notEqual(dictionary.recipes["3928"],"Ardilla mecánica");
 assert.ok(Object.keys(dictionary.recipes).length>0);
-console.log("PUBLISHED_VERIFY",JSON.stringify({version,scriptFiles:checks,
+console.log("PUBLISHED_VERIFY",JSON.stringify({release,scriptFiles:checks,
  recipesSpanish:Object.keys(dictionary.recipes).length,itemsSpanish:Object.keys(dictionary.items).length,
  matching:dictionary.source.coverage.matchMethod,site:root}));
