@@ -4,7 +4,7 @@ import {signature} from "./recipe-match.mjs";
 const dictionary=JSON.parse(fs.readFileSync("locales/esES.json","utf8"));
 const checks=JSON.parse(fs.readFileSync("locales/wowhead-checked-recipes.json","utf8"));
 assert.equal(checks.schema,1);
-assert.equal(checks.entries.length,91,"Se esperaban 91 recetas documentadas, incluidas las últimas 50 verificadas");
+assert.equal(checks.entries.length,102,"Se esperaban 102 referencias de Wowhead, incluidas las once finales");
 assert.equal(new Set(checks.entries.map(r=>r.id)).size,checks.entries.length,"ID de receta duplicado");
 const response=await fetch("https://auctionhouse.tk.gg/api/recipes",{signal:AbortSignal.timeout(35000)});
 assert.ok(response.ok,"Catálogo comercial no disponible: HTTP "+response.status);
@@ -62,5 +62,16 @@ assert.ok(dictionary.source?.updates?.some(entry=>entry.recipesAdded===50&&
  entry.batch==="wowhead-50-2026-11-22"&&entry.ids.length===50&&
  entry.ids.every(id=>finalBatch.some(record=>record.id===id))),
  "No está documentada la procedencia de las 50 recetas nuevas");
+const final11=checks.entries.filter(entry=>entry.batch==="wowhead-final-11-2026-11-22");
+assert.equal(final11.length,11,"Faltan recetas finales con origen de Wowhead");
+assert.deepEqual(final11.map(entry=>entry.id),
+ [50600,49876,52011,51655,51717,50561,50562,51206,50563,50564,50565]);
+assert.ok(dictionary.source?.updates?.some(entry=>entry.recipesAdded===11&&
+ entry.batch==="wowhead-final-11-2026-11-22"&&entry.ids.length===11&&
+ entry.ids.every(id=>final11.some(record=>record.id===id))),
+ "No consta la procedencia de las once traducciones finales");
+assert.equal(final11.find(entry=>entry.id===49876).qty,5,"La poción debe fabricar cinco unidades");
+assert.equal(final11.find(entry=>entry.id===52011).qty,2,"El filete debe fabricar dos unidades");
 assert.equal(dictionary.source.coverage.translatedRecipes,Object.keys(dictionary.recipes).length);
+assert.equal(dictionary.source.coverage.translatedRecipes,920);
 console.log("WOWHEAD_RECIPE_MATCHES",JSON.stringify(report));
