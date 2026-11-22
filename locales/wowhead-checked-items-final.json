@@ -1,0 +1,802 @@
+{
+  "schema": 1,
+  "checkedAt": "2026-11-22",
+  "batch": "wowhead-items-final-52-2026-11-22",
+  "verification": "49 verified by matching item ID and exact market English name across Wowhead locales; Jade checked in both locales despite identical names; two placeholder market items verified using Wowhead item IDs, with synthetic disguise independently tied to its full sourced crafting recipe.",
+  "notes": [
+    "WoW Classic localized names are used when Forever does not serve an item.",
+    "Item names and recipe spell names may differ, e.g. Flask of Nightmarish Mojo versus Jar of Nightmarish Mojo.",
+    "Names translated here do not prove the user's WoW client contains any particular item."
+  ],
+  "entries": [
+    {
+      "id": 1529,
+      "en": "Jade",
+      "es": "Jade",
+      "edition": "forever",
+      "roles": [
+        "material"
+      ],
+      "recipeReferences": 12,
+      "method": "same-in-both-locales",
+      "marketEnglish": "Jade",
+      "wowheadUrl": "https://www.wowhead.com/forever/es/item=1529",
+      "spanishSource": "https://nether.wowhead.com/forever/tooltip/item/1529?locale=6",
+      "englishSource": "https://nether.wowhead.com/forever/tooltip/item/1529?locale=0",
+      "verifiedSameName": true,
+      "note": "Jade is correctly written identically in Spanish and English; no artificial translation needed."
+    },
+    {
+      "id": 221313,
+      "en": "Flask of Nightmarish Mojo",
+      "es": "Frasco de mojo de pesadilla",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Flask of Nightmarish Mojo",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=221313",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/221313?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/221313?locale=0"
+    },
+    {
+      "id": 227855,
+      "en": "Synthetic Gordok Ogre Suit",
+      "es": "Disfraz de ogro Gordok sintético",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "market-placeholder-and-wowhead-crafting",
+      "marketEnglish": "Item 227855",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227855",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227855?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227855?locale=0",
+      "marketPlaceholder": "Item 227855",
+      "recipeId": 51382,
+      "wowheadSpell": 461692,
+      "relatedRecipeName": "Disfraz de ogro Gordok sintético",
+      "note": "Market supplies placeholder only; crafted item's distinct ID matches the independently checked recipe product item and Wowhead spell."
+    },
+    {
+      "id": 227873,
+      "en": "Honed Blue Dragonscale Shoulders",
+      "es": "Sobrehombros de escamas de dragón azul pulidos",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Honed Blue Dragonscale Shoulders",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227873",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227873?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227873?locale=0"
+    },
+    {
+      "id": 227874,
+      "en": "Honed Blue Dragonscale Leggings",
+      "es": "Leotardos de escamas de dragón azul pulidos",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Honed Blue Dragonscale Leggings",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227874",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227874?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227874?locale=0"
+    },
+    {
+      "id": 227875,
+      "en": "Honed Blue Dragonscale Breastplate",
+      "es": "Coraza de escamas de dragón azul pulida",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Honed Blue Dragonscale Breastplate",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227875",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227875?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227875?locale=0"
+    },
+    {
+      "id": 227877,
+      "en": "Living Green Dragonscale Leggings",
+      "es": "Leotardos de escamas de dragón verde vivientes",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Living Green Dragonscale Leggings",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227877",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227877?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227877?locale=0"
+    },
+    {
+      "id": 227878,
+      "en": "Living Green Dragonscale Gauntlets",
+      "es": "Guanteletes de escamas de dragón verde vivientes",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Living Green Dragonscale Gauntlets",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227878",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227878?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227878?locale=0"
+    },
+    {
+      "id": 227879,
+      "en": "Living Green Dragonscale Breastplate",
+      "es": "Coraza de escamas de dragón verde viviente",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Living Green Dragonscale Breastplate",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227879",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227879?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227879?locale=0"
+    },
+    {
+      "id": 227882,
+      "en": "Girdle of Arcane Insight",
+      "es": "Faja de perspicacia Arcana",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Girdle of Arcane Insight",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227882",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227882?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227882?locale=0"
+    },
+    {
+      "id": 227883,
+      "en": "Swift Flight Vambraces",
+      "es": "Avambrazos de vuelo presto",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Swift Flight Vambraces",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227883",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227883?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227883?locale=0"
+    },
+    {
+      "id": 233802,
+      "en": "Glowing Chitin Armor Kit",
+      "es": "Refuerzo para armadura de quitina resplandeciente",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Glowing Chitin Armor Kit",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=233802",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/233802?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/233802?locale=0"
+    },
+    {
+      "id": 233803,
+      "en": "Sharpened Chitin Armor Kit",
+      "es": "Refuerzo para armadura de quitina afilada",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Sharpened Chitin Armor Kit",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=233803",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/233803?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/233803?locale=0"
+    },
+    {
+      "id": 233804,
+      "en": "Razorbramble Shoulderpads",
+      "es": "Hombreras de filozarza",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Razorbramble Shoulderpads",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=233804",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/233804?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/233804?locale=0"
+    },
+    {
+      "id": 233808,
+      "en": "Razorbramble Cowl",
+      "es": "Capucha de filozarza",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Razorbramble Cowl",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=233808",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/233808?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/233808?locale=0"
+    },
+    {
+      "id": 233813,
+      "en": "Razorbramble Leathers",
+      "es": "Cuero de filozarza",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Razorbramble Leathers",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=233813",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/233813?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/233813?locale=0"
+    },
+    {
+      "id": 234294,
+      "en": "Sandstalker Bracers",
+      "es": "Brazales acecharenas",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Sandstalker Bracers",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=234294",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/234294?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/234294?locale=0"
+    },
+    {
+      "id": 234296,
+      "en": "Sandstalker Gauntlets",
+      "es": "Guanteletes acecharenas",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Sandstalker Gauntlets",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=234296",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/234296?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/234296?locale=0"
+    },
+    {
+      "id": 234298,
+      "en": "Sandstalker Breastplate",
+      "es": "Peto acecharenas",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Sandstalker Breastplate",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=234298",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/234298?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/234298?locale=0"
+    },
+    {
+      "id": 234300,
+      "en": "Spitfire Bracers",
+      "es": "Brazales escupefuego",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Spitfire Bracers",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=234300",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/234300?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/234300?locale=0"
+    },
+    {
+      "id": 234302,
+      "en": "Spitfire Gauntlets",
+      "es": "Guanteletes escupefuego",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Spitfire Gauntlets",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=234302",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/234302?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/234302?locale=0"
+    },
+    {
+      "id": 234304,
+      "en": "Spitfire Breastplate",
+      "es": "Peto escupefuego",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Spitfire Breastplate",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=234304",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/234304?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/234304?locale=0"
+    },
+    {
+      "id": 234306,
+      "en": "Bramblewood Belt",
+      "es": "Cinturón zarzal",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Bramblewood Belt",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=234306",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/234306?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/234306?locale=0"
+    },
+    {
+      "id": 234308,
+      "en": "Bramblewood Boots",
+      "es": "Botas zarzal",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Bramblewood Boots",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=234308",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/234308?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/234308?locale=0"
+    },
+    {
+      "id": 234310,
+      "en": "Bramblewood Helm",
+      "es": "Yelmo zarzal",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Bramblewood Helm",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=234310",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/234310?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/234310?locale=0"
+    },
+    {
+      "id": 234324,
+      "en": "Dreamscale Breastplate",
+      "es": "Peto de escamas oníricas",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Dreamscale Breastplate",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=234324",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/234324?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/234324?locale=0"
+    },
+    {
+      "id": 234482,
+      "en": "Dreamscale Kilt",
+      "es": "Falda de escamas oníricas",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Dreamscale Kilt",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=234482",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/234482?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/234482?locale=0"
+    },
+    {
+      "id": 236698,
+      "en": "Icy Scale Bracers",
+      "es": "Brazales de escamas heladas",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Icy Scale Bracers",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=236698",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/236698?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/236698?locale=0"
+    },
+    {
+      "id": 236699,
+      "en": "Icy Scale Breastplate",
+      "es": "Coraza de escamas heladas",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Icy Scale Breastplate",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=236699",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/236699?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/236699?locale=0"
+    },
+    {
+      "id": 236700,
+      "en": "Icy Scale Gauntlets",
+      "es": "Guanteletes de escamas heladas",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Icy Scale Gauntlets",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=236700",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/236700?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/236700?locale=0"
+    },
+    {
+      "id": 236701,
+      "en": "Polar Bracers",
+      "es": "Brazales polares",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Polar Bracers",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=236701",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/236701?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/236701?locale=0"
+    },
+    {
+      "id": 236702,
+      "en": "Polar Tunic",
+      "es": "Guerrera polar",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Polar Tunic",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=236702",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/236702?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/236702?locale=0"
+    },
+    {
+      "id": 236703,
+      "en": "Polar Gloves",
+      "es": "Guantes polares",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Polar Gloves",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=236703",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/236703?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/236703?locale=0"
+    },
+    {
+      "id": 238272,
+      "en": "Scarlet Infiltrator's Bandana",
+      "es": "Bandana de infiltrado Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Infiltrator's Bandana",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238272",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238272?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238272?locale=0"
+    },
+    {
+      "id": 238273,
+      "en": "Scarlet Infiltrator's Shoulderpads",
+      "es": "Hombreras de infiltrado Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Infiltrator's Shoulderpads",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238273",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238273?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238273?locale=0"
+    },
+    {
+      "id": 238274,
+      "en": "Scarlet Infiltrator's Vest",
+      "es": "Jubón de infiltrado Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Infiltrator's Vest",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238274",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238274?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238274?locale=0"
+    },
+    {
+      "id": 238275,
+      "en": "Scarlet Infiltrator's Bracers",
+      "es": "Brazales de infiltrado Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Infiltrator's Bracers",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238275",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238275?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238275?locale=0"
+    },
+    {
+      "id": 238276,
+      "en": "Scarlet Infiltrator's Gloves",
+      "es": "Guantes de infiltrado Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Infiltrator's Gloves",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238276",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238276?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238276?locale=0"
+    },
+    {
+      "id": 238277,
+      "en": "Scarlet Infiltrator's Belt",
+      "es": "Cinturón de infiltrado Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Infiltrator's Belt",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238277",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238277?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238277?locale=0"
+    },
+    {
+      "id": 238278,
+      "en": "Scarlet Infiltrator's Trousers",
+      "es": "Pantalones de infiltrado Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Infiltrator's Trousers",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238278",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238278?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238278?locale=0"
+    },
+    {
+      "id": 238279,
+      "en": "Scarlet Infiltrator's Shoes",
+      "es": "Zapatos de infiltrado Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Infiltrator's Shoes",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238279",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238279?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238279?locale=0"
+    },
+    {
+      "id": 238280,
+      "en": "Scarlet Huntsman's Coif",
+      "es": "Almófar de cazador Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Huntsman's Coif",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238280",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238280?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238280?locale=0"
+    },
+    {
+      "id": 238281,
+      "en": "Scarlet Huntsman's Pauldrons",
+      "es": "Espaldares de cazador Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Huntsman's Pauldrons",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238281",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238281?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238281?locale=0"
+    },
+    {
+      "id": 238282,
+      "en": "Scarlet Huntsman's Chain",
+      "es": "Cadena de cazador Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Huntsman's Chain",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238282",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238282?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238282?locale=0"
+    },
+    {
+      "id": 238283,
+      "en": "Scarlet Huntsman's Wristguards",
+      "es": "Guardamuñecas de cazador Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Huntsman's Wristguards",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238283",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238283?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238283?locale=0"
+    },
+    {
+      "id": 238284,
+      "en": "Scarlet Huntsman's Handguards",
+      "es": "Manoplas de cazador Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Huntsman's Handguards",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238284",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238284?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238284?locale=0"
+    },
+    {
+      "id": 238285,
+      "en": "Scarlet Huntsman's Clasp",
+      "es": "Cinto de cazador Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Huntsman's Clasp",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238285",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238285?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238285?locale=0"
+    },
+    {
+      "id": 238286,
+      "en": "Scarlet Huntsman's Legguards",
+      "es": "Musleras de cazador Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Huntsman's Legguards",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238286",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238286?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238286?locale=0"
+    },
+    {
+      "id": 238287,
+      "en": "Scarlet Huntsman's Boots",
+      "es": "Botas de cazador Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Huntsman's Boots",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238287",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238287?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238287?locale=0"
+    },
+    {
+      "id": 238925,
+      "en": "Scarlet Quiver",
+      "es": "Carcaj Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Quiver",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238925",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238925?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238925?locale=0"
+    },
+    {
+      "id": 238926,
+      "en": "Scarlet Ammo Pouch",
+      "es": "Faltriquera de munición Escarlata",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "method": "id-and-market-english",
+      "marketEnglish": "Scarlet Ammo Pouch",
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=238926",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/238926?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/238926?locale=0"
+    },
+    {
+      "id": 252948,
+      "en": "Cleansed Felbloom",
+      "es": "Brotevil purificado",
+      "edition": "forever",
+      "roles": [
+        "material"
+      ],
+      "recipeReferences": 1,
+      "method": "market-placeholder-and-forever-item-id",
+      "marketEnglish": "Item 252948",
+      "wowheadUrl": "https://www.wowhead.com/forever/es/item=252948",
+      "spanishSource": "https://nether.wowhead.com/forever/tooltip/item/252948?locale=6",
+      "englishSource": "https://nether.wowhead.com/forever/tooltip/item/252948?locale=0",
+      "marketPlaceholder": "Item 252948",
+      "note": "Market does not supply a meaningful English label; authoritative localized Forever item ID has Spanish and English names."
+    }
+  ]
+}
