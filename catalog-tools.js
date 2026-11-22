@@ -101,7 +101,7 @@
  const exportData=()=>({schema:1,locale:"esES",items:{...data.items},recipes:{...data.recipes},learned:[...known]});
  // Static verified dictionary is built in GitHub Actions from Warcraft Forever's esES client records.
  // Browser-side additions remain possible, and nothing is fabricated for missing IDs.
- let staticState={status:"pending",items:0,recipes:0,source:null};
+ let staticState={status:"pending",items:0,recipes:0,source:null,coverage:null};
  async function loadPublished(){
   try{
    const r=await fetch("./locales/esES.json",{cache:"no-store"});
@@ -119,11 +119,11 @@
     }
    }
    staticState={status:"loaded",items:Object.keys(obj.items).length,recipes:structureChecked?Object.keys(obj.recipes).length:0,
-    source:obj.source?.dataset??null};
+    source:obj.source?.dataset??null,coverage:obj.source?.coverage??null};
    if(changes)persist();
    publish();
   }catch(err){
-   staticState={status:"unavailable",items:0,recipes:0,source:null,error:err.message};
+   staticState={status:"unavailable",items:0,recipes:0,source:null,coverage:null,error:err.message};
   }
  }
  const publishedStatus=()=>({...staticState});
