@@ -61,10 +61,12 @@ try{
  assert.equal(await page.evaluate(()=>window.RockpeaksCatalog?.learned(718)),false);
  await page.evaluate(()=>{
   window.__learnedDebug=[];
-  document.addEventListener("click",event=>{
-   window.__learnedDebug.push({type:"click",target:event.target?.tagName,id:event.target?.id,css:event.target?.className,
-    learned:window.RockpeaksCatalog?.learned(718)});
-  },true);
+  for(const type of ["click","touchstart","touchend","pointerdown","pointerup","mousedown","mouseup"]){
+   document.addEventListener(type,event=>{
+    window.__learnedDebug.push({type,target:event.target?.tagName,id:event.target?.id,css:event.target?.className,
+     learned:window.RockpeaksCatalog?.learned(718)});
+   },true);
+  }
   window.addEventListener("rockpeaks:learned-change",event=>{
    window.__learnedDebug.push({type:"changed",detail:event.detail,learned:window.RockpeaksCatalog?.learned(718)});
   });
@@ -75,6 +77,20 @@ try{
   button:document.querySelector('.scout-learned[data-recipe-id="718"]')?.outerHTML,
   events:window.__learnedDebug,errors:[...document.querySelectorAll("#scout-status")].map(x=>x.textContent)
  }))));
+ if(!(await page.evaluate(()=>window.RockpeaksCatalog?.learned(718)))){
+  console.log("LEARNED_HIT_TEST",JSON.stringify(await page.evaluate(()=>{
+   const btn=document.querySelector('.scout-learned[data-recipe-id="718"]');
+   const rect=btn.getBoundingClientRect(),x=rect.left+rect.width/2,y=rect.top+rect.height/2;
+   const front=document.elementFromPoint(x,y);
+   return {rect:{x:rect.x,y:rect.y,width:rect.width,height:rect.height},scrollY:window.scrollY,
+    viewport:{width:innerWidth,height:innerHeight},front:front?.outerHTML?.slice(0,500)};
+  })));
+  console.log("LEARNED_DIRECT_CLICK",JSON.stringify(await page.evaluate(()=>{
+   document.querySelector('.scout-learned[data-recipe-id="718"]').click();
+   return {learned:window.RockpeaksCatalog?.learned(718),events:window.__learnedDebug};
+  })));
+  throw Error("El gesto táctil de WebKit no llegó al botón de receta aprendida.");
+ }
  await page.waitForFunction(()=>window.RockpeaksCatalog?.learned(718)===true,null,{timeout:10000});
  await page.locator('.scout-learned[data-recipe-id="718"][aria-pressed="true"]').waitFor({timeout:10000});
  assert.match(await page.locator(".scout-opportunity").first().innerText(),/Aprendida/);
