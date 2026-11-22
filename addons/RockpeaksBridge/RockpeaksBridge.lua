@@ -1,4 +1,4 @@
--- Rockpeaks Bridge 0.2.0 for WoW Forever (Interface 16001).
+-- Rockpeaks Bridge 0.3.0 for WoW Forever (Interface 16001).
 -- Read-only. Never sends data over the network, automates auctions or changes game data.
 RockpeaksBridgeRecipes = RockpeaksBridgeRecipes or {}
 RockpeaksBridgeRecipeScans = RockpeaksBridgeRecipeScans or {}
