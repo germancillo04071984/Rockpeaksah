@@ -1,0 +1,688 @@
+{
+  "schema": 1,
+  "checkedAt": "2026-11-22",
+  "batch": "wowhead-items-first-52-2026-11-22",
+  "source": "Wowhead localized tooltip JSON: https://nether.wowhead.com/classic/tooltip/item/{itemID}?locale=6 and locale=0; for supported entries Forever also verified",
+  "matchRule": "Exact item ID, English item name from market must equal Wowhead enUS, Wowhead esES must have a non-placeholder name different from enUS.",
+  "caveat": "Classic SoD localized item names match the shared market ID; they are source translations, not proof of specific item availability in the user's WoW Forever client.",
+  "selection": "12 material items (prioritized), 11 alchemy products, 29 other crafted products; the classically named mojo flask is deferred because recipe and item use different names in Forever.",
+  "entries": [
+    {
+      "id": 221021,
+      "en": "Nightmare Seed",
+      "es": "Semilla de pesadilla",
+      "edition": "classic",
+      "roles": [
+        "material"
+      ],
+      "recipeReferences": 10,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=221021",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/221021?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/221021?locale=0"
+    },
+    {
+      "id": 220688,
+      "en": "Inert Mantle of Nightmares",
+      "es": "Manto de pesadillas inerte",
+      "edition": "classic",
+      "roles": [
+        "material"
+      ],
+      "recipeReferences": 9,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=220688",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/220688?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/220688?locale=0"
+    },
+    {
+      "id": 236656,
+      "en": "Frozen Rune",
+      "es": "Runa congelada",
+      "edition": "classic",
+      "roles": [
+        "material"
+      ],
+      "recipeReferences": 6,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=236656",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/236656?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/236656?locale=0"
+    },
+    {
+      "id": 234007,
+      "en": "Spiked Silithid Chitin",
+      "es": "Quitina de silítido con pinchos",
+      "edition": "classic",
+      "roles": [
+        "material"
+      ],
+      "recipeReferences": 5,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=234007",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/234007?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/234007?locale=0"
+    },
+    {
+      "id": 234011,
+      "en": "Qiraji Stalker Venom",
+      "es": "Veneno de acechador Qiraji",
+      "edition": "classic",
+      "roles": [
+        "material"
+      ],
+      "recipeReferences": 5,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=234011",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/234011?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/234011?locale=0"
+    },
+    {
+      "id": 213372,
+      "en": "Insulating Gniodine",
+      "es": "Gniodina aislante",
+      "edition": "classic",
+      "roles": [
+        "product",
+        "material"
+      ],
+      "recipeReferences": 4,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=213372",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/213372?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/213372?locale=0"
+    },
+    {
+      "id": 234009,
+      "en": "Bolt of Qiraji Silk",
+      "es": "Madeja de seda Qiraji",
+      "edition": "classic",
+      "roles": [
+        "material"
+      ],
+      "recipeReferences": 3,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=234009",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/234009?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/234009?locale=0"
+    },
+    {
+      "id": 211422,
+      "en": "Shard of the Void",
+      "es": "Fragmento del Vacío",
+      "edition": "classic",
+      "roles": [
+        "material"
+      ],
+      "recipeReferences": 2,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=211422",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/211422?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/211422?locale=0"
+    },
+    {
+      "id": 221312,
+      "en": "Flask of Atal'ai Mojo",
+      "es": "Frasco de mojo Atal'ai",
+      "edition": "classic",
+      "roles": [
+        "material"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=221312",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/221312?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/221312?locale=0"
+    },
+    {
+      "id": 227813,
+      "en": "Drinkable Stratholme Holy Water",
+      "es": "Agua bendita de Stratholme potable",
+      "edition": "forever",
+      "roles": [
+        "material"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/forever/es/item=227813",
+      "spanishSource": "https://nether.wowhead.com/forever/tooltip/item/227813?locale=6",
+      "englishSource": "https://nether.wowhead.com/forever/tooltip/item/227813?locale=0"
+    },
+    {
+      "id": 234006,
+      "en": "Monstrous Silithid Chitin",
+      "es": "Quitina de silítido monstruoso",
+      "edition": "classic",
+      "roles": [
+        "material"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=234006",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/234006?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/234006?locale=0"
+    },
+    {
+      "id": 234010,
+      "en": "Ancient Sandworm Bile",
+      "es": "Bilis de gusano de arena antiguo",
+      "edition": "classic",
+      "roles": [
+        "material"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=234010",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/234010?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/234010?locale=0"
+    },
+    {
+      "id": 215162,
+      "en": "Mildly Irradiated Rejuvenation Potion",
+      "es": "Poción de rejuvenecimiento ligeramente irradiada",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=215162",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/215162?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/215162?locale=0"
+    },
+    {
+      "id": 221024,
+      "en": "Flask of Everlasting Nightmares",
+      "es": "Frasco de pesadillas perpetuas",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=221024",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/221024?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/221024?locale=0"
+    },
+    {
+      "id": 222952,
+      "en": "Flask of Restless Dreams",
+      "es": "Frasco de Sueños Inquietos",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=222952",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/222952?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/222952?locale=0"
+    },
+    {
+      "id": 233962,
+      "en": "Flask of Madness",
+      "es": "Frasco de locura",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=233962",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/233962?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/233962?locale=0"
+    },
+    {
+      "id": 233964,
+      "en": "Flask of Ancient Knowledge",
+      "es": "Frasco de conocimiento ancestral",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=233964",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/233964?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/233964?locale=0"
+    },
+    {
+      "id": 233965,
+      "en": "Flask of the Old Gods",
+      "es": "Frasco de los dioses antiguos",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=233965",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/233965?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/233965?locale=0"
+    },
+    {
+      "id": 233966,
+      "en": "Flask of Unyielding Sorrow",
+      "es": "Frasco de pesar implacable",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=233966",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/233966?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/233966?locale=0"
+    },
+    {
+      "id": 233967,
+      "en": "Elixir of the Honey Badger",
+      "es": "Elixir de tejón",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=233967",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/233967?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/233967?locale=0"
+    },
+    {
+      "id": 233968,
+      "en": "Elixir of the Mage-Lord",
+      "es": "Elixir del señor de la magia",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=233968",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/233968?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/233968?locale=0"
+    },
+    {
+      "id": 233969,
+      "en": "Elixir of the Ironside",
+      "es": "Elixir de brazo de hierro",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=233969",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/233969?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/233969?locale=0"
+    },
+    {
+      "id": 233977,
+      "en": "Elixir of Alacrity",
+      "es": "Elixir de prontitud",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=233977",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/233977?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/233977?locale=0"
+    },
+    {
+      "id": 211423,
+      "en": "Void-Touched Leather Gloves",
+      "es": "Guantes de cuero tocados por el Vacío",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=211423",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/211423?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/211423?locale=0"
+    },
+    {
+      "id": 211502,
+      "en": "Void-Touched Leather Gauntlets",
+      "es": "Guanteletes de cuero tocados por el Vacío",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=211502",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/211502?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/211502?locale=0"
+    },
+    {
+      "id": 215114,
+      "en": "Glowing Hyperconductive Scale Coif",
+      "es": "Almófar de escamas hiperconductoras brillante",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=215114",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/215114?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/215114?locale=0"
+    },
+    {
+      "id": 215166,
+      "en": "Glowing Gneuro-Linked Cowl",
+      "es": "Capucha gneurovinculada brillante",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=215166",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/215166?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/215166?locale=0"
+    },
+    {
+      "id": 215381,
+      "en": "Gneuro-Conductive Channeler's Hood",
+      "es": "Caperuza de canalizador gneuroconductora",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=215381",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/215381?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/215381?locale=0"
+    },
+    {
+      "id": 215382,
+      "en": "Rad-Resistant Scale Hood",
+      "es": "Caperuza de escamas resistente a la radiación",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=215382",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/215382?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/215382?locale=0"
+    },
+    {
+      "id": 217259,
+      "en": "Big Voodoo Mask",
+      "es": "Máscara de gran vudú",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=217259",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/217259?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/217259?locale=0"
+    },
+    {
+      "id": 217261,
+      "en": "Big Voodoo Robe",
+      "es": "Toga de gran vudú",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=217261",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/217261?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/217261?locale=0"
+    },
+    {
+      "id": 217263,
+      "en": "Guardian Leather Bracers",
+      "es": "Brazales de cuero de guardián",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=217263",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/217263?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/217263?locale=0"
+    },
+    {
+      "id": 217265,
+      "en": "Guardian Belt",
+      "es": "Cinturón de guardián",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=217265",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/217265?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/217265?locale=0"
+    },
+    {
+      "id": 217267,
+      "en": "Guardian Pants",
+      "es": "Pantalones de guardián",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=217267",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/217267?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/217267?locale=0"
+    },
+    {
+      "id": 217268,
+      "en": "Turtle Scale Breastplate",
+      "es": "Coraza de escamas de tortuga",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=217268",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/217268?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/217268?locale=0"
+    },
+    {
+      "id": 220741,
+      "en": "Screaming Chain Pauldrons",
+      "es": "Espaldares de anillas aulladoras",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=220741",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/220741?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/220741?locale=0"
+    },
+    {
+      "id": 220742,
+      "en": "Shrieking Spaulders",
+      "es": "Bufas chillonas",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=220742",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/220742?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/220742?locale=0"
+    },
+    {
+      "id": 220743,
+      "en": "Cacophonous Chain Shoulderguards",
+      "es": "Guardahombros de anillas cacofónicas",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=220743",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/220743?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/220743?locale=0"
+    },
+    {
+      "id": 220744,
+      "en": "Wailing Chain Mantle",
+      "es": "Manto de anillas gemebundas",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=220744",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/220744?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/220744?locale=0"
+    },
+    {
+      "id": 220745,
+      "en": "Membrane of Dark Neurosis",
+      "es": "Membrana de neurosis oscura",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=220745",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/220745?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/220745?locale=0"
+    },
+    {
+      "id": 220747,
+      "en": "Paranoia Mantle",
+      "es": "Manto de paranoia",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=220747",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/220747?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/220747?locale=0"
+    },
+    {
+      "id": 220748,
+      "en": "Shoulderpads of Obsession",
+      "es": "Hombreras de obsesión",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=220748",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/220748?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/220748?locale=0"
+    },
+    {
+      "id": 227847,
+      "en": "Devilcore Leggings",
+      "es": "Leotardos de núcleo demoníaco",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227847",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227847?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227847?locale=0"
+    },
+    {
+      "id": 227848,
+      "en": "Devilcore Gauntlets",
+      "es": "Guanteletes de núcleo demoníaco",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227848",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227848?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227848?locale=0"
+    },
+    {
+      "id": 227851,
+      "en": "Hardened Black Dragonscale Breastplate",
+      "es": "Coraza de escamas de dragón negro endurecida",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227851",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227851?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227851?locale=0"
+    },
+    {
+      "id": 227852,
+      "en": "Hardened Black Dragonscale Leggings",
+      "es": "Leotardos de escamas de dragón negro endurecidos",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227852",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227852?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227852?locale=0"
+    },
+    {
+      "id": 227853,
+      "en": "Hardened Black Dragonscale Shoulders",
+      "es": "Sobrehombros de escamas de dragón negro endurecidos",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227853",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227853?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227853?locale=0"
+    },
+    {
+      "id": 227854,
+      "en": "Mastercrafted Shifting Cloak",
+      "es": "Capa cambiante magistral",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227854",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227854?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227854?locale=0"
+    },
+    {
+      "id": 227866,
+      "en": "Masterwork Volcanic Shoulders",
+      "es": "Sobrehombros volcánicos magistrales",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227866",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227866?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227866?locale=0"
+    },
+    {
+      "id": 227867,
+      "en": "Masterwork Volcanic Leggings",
+      "es": "Leotardos volcánicos magistrales",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227867",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227867?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227867?locale=0"
+    },
+    {
+      "id": 227868,
+      "en": "Masterwork Volcanic Breastplate",
+      "es": "Coraza volcánica magistral",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227868",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227868?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227868?locale=0"
+    },
+    {
+      "id": 227869,
+      "en": "Brilliant Chromatic Cloak",
+      "es": "Capa cromática brillante",
+      "edition": "classic",
+      "roles": [
+        "product"
+      ],
+      "recipeReferences": 1,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/item=227869",
+      "spanishSource": "https://nether.wowhead.com/classic/tooltip/item/227869?locale=6",
+      "englishSource": "https://nether.wowhead.com/classic/tooltip/item/227869?locale=0"
+    }
+  ]
+}
