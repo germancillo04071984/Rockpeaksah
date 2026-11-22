@@ -22,8 +22,8 @@ const specialRanges=[
  [446182,446230],[429350,429371],[429864,429877],[1213745,1213770]
 ];
 const specialSpells=[426607,435971,448085,1225759,1213751,429354,429869];
-const scanRanges=process.env.WOWHEAD_SPECIALS==="1"?specialRanges:ranges;
-const scanExtras=process.env.WOWHEAD_SPECIALS==="1"?specialSpells:extras;
+const scanRanges=globalThis.process.env.WOWHEAD_SPECIALS==="1"?specialRanges:ranges;
+const scanExtras=globalThis.process.env.WOWHEAD_SPECIALS==="1"?specialSpells:extras;
 const ids=[...new Set([...scanRanges.flatMap(([a,b])=>Array.from({length:b-a+1},(_,i)=>i+a)),...scanExtras])];
 const results=[],errors=[];
 let pointer=0,foundEnglish=0,foundStructured=0;
