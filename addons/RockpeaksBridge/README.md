@@ -1,25 +1,32 @@
-# Rockpeaks Bridge · prototipo 0.1.0 (WoW Forever)
+# Rockpeaks Bridge 0.2.0 · Captura automática (WoW Forever)
 
-Exportador **local y de solo lectura** para Industrias Rockpeaks. No automatiza la subasta, no compra, no vende y no envía datos por Internet.
+Exportador **local y de solo lectura** para Industrias Rockpeaks. No automatiza subastas, compras ni ventas, y no envía datos del juego a Internet.
 
-## Instalación
+## Instalación: una sola vez en Windows
 
-1. Coloca la carpeta `RockpeaksBridge` (la que contiene `RockpeaksBridge.toc`) dentro de `World of Warcraft\\_forever_\\Interface\\AddOns\\`.
-2. Comprueba en la selección de personaje que el addon aparece habilitado.
-3. Entra con Rockpeaks y **abre cada ventana de profesión** que quieras registrar. Algunas recetas solo son visibles para addons mientras el panel de profesión está abierto.
-4. Escribe `/rpbridge export` en el chat y después `/reload` para guardar la captura en disco.
-5. Abre `World of Warcraft\\_forever_\\WTF\\Account\\<tu cuenta>\\SavedVariables\\RockpeaksBridge.lua`.
-6. En la aplicación web, entra en **Negocio → Mi personaje** e importa ese archivo.
+1. Descarga el ZIP Rockpeaks Bridge 0.2.0 desde **Negocio → Mi personaje** en la aplicación web.
+2. Extrae la carpeta RockpeaksBridge y cópiala dentro de World of Warcraft\_forever_\Interface\AddOns\ (o en la carpeta Interface\AddOns de tu instalación de Forever).
+3. Comprueba en la pantalla de selección de personaje que **Rockpeaks Bridge** está habilitado.
+4. Entra en Rockpeaks y abre las ventanas de las profesiones que quieras registrar para que el addon pueda leer las recetas que el cliente exponga.
 
-## Datos incluidos y límites
+**A partir de aquí no hace falta escribir comandos:** al cerrar sesión, el evento PLAYER_LOGOUT prepara una captura y WoW guarda su variable en WTF\Account\<tu cuenta>\SavedVariables\RockpeaksBridge.lua. También puedes usar /rpbridge export si necesitas generar una captura manualmente antes de /reload.
 
-- Oro total del personaje, nivel, nombre y reino.
-- Rangos de profesión que exponga el cliente.
-- Objetos presentes en las bolsas 0-4 (sin banco).
-- Identificadores y nombres de recetas que la API de profesiones exponga como aprendidas, tras abrir sus ventanas.
-- No hay sincronización en tiempo real. Las SavedVariables se guardan al recargar interfaz o cerrar sesión.
-- El importador **no modifica tu contabilidad ni tus recetas aprendidas confirmadas**: los identificadores de recetas del cliente no equivalen necesariamente a los IDs del catálogo de subasta.
-- Si algún dato no aparece, puede ser una limitación de la API o que todavía no se haya abierto la ventana necesaria.
-- Nunca compartas archivos de otras carpetas WTF: podrían contener datos ajenos o información personal.
+## Vincular una sola vez en el navegador
 
-**Estado de validación:** estructura y parser probables bajo la API WoW Forever 1.60.1, pero este prototipo todavía requiere una prueba dentro del juego real. No se debe considerar compatible con todos los clientes hasta confirmarlo.
+1. Abre https://germancillo04071984.github.io/Rockpeaksah/ en **Chrome o Edge para Windows**, dejando la pestaña abierta en la segunda pantalla.
+2. Entra en **Negocio → Mi personaje → Sincronización automática con el PC**.
+3. Pulsa **Vincular archivo del juego** y selecciona RockpeaksBridge.lua dentro de la carpeta WTF\Account\<tu cuenta>\SavedVariables.
+4. Autoriza al navegador a leer el archivo. La aplicación lo recordará cuando el navegador lo permita y comprobará cambios periódicamente mientras esté abierta. Al volver a la pestaña, también comprueba inmediatamente.
+
+El navegador puede pedir **renovar permiso** tras cerrar sus ventanas; para ello hay un botón. Si el navegador no es compatible, seguirá disponible la importación manual. No hace falta instalar programas auxiliares.
+
+## Datos y límites
+
+- Captura: oro total del personaje, nivel, profesiones que exponga el cliente, inventario de las bolsas 0–4 (no incluye el banco) y recetas que la API del cliente informe como aprendidas.
+- Se separa la información de recetas por personaje y reino, y la web **solo sincroniza Rockpeaks**; cerrar sesión en otro personaje no sustituye sus datos.
+- Las recetas del cliente no se marcan automáticamente como aprendidas en el mercado, porque **los identificadores no tienen por qué coincidir**.
+- Los datos de la captura **no sustituyen la contabilidad**, los movimientos de inventario, las ventas ni el capital empresarial.
+- El navegador no puede leer el disco sin tu autorización, ni cuando la aplicación está completamente cerrada. La lectura automática funciona con la web abierta y permiso vigente; puede demorarse si Chrome o Edge suspenden la pestaña.
+- Los datos permanecen en el PC y en el almacenamiento local del navegador; **no se suben a GitHub**.
+
+**Estado:** interfaz de navegador, importador y pruebas automatizadas verificables; el addon todavía necesita una prueba dentro del cliente real de WoW Forever. Hay constancia de incidencias históricas de SavedVariables en algunas versiones beta, por lo que no se debe asumir compatibilidad con todas las instalaciones sin comprobarlo.
