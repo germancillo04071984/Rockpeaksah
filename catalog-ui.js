@@ -10,12 +10,20 @@
  '<p><button id="catalog-backup" type="button">Guardar copia de recetas aprendidas</button> <a id="catalog-backup-link" hidden download="rockpeaks-recetas-aprendidas.json">Descargar copia</a></p><p><label>Restaurar recetas aprendidas desde copia <input id="catalog-restore" type="file" accept="application/json,.json"></label></p>'+
  '<p id="catalog-backup-status" role="status" aria-live="polite"></p>'+
  '<p id="catalog-status" role="status" aria-live="polite">Preparado.</p><progress id="catalog-progress" value="0" max="100" style="width:100%" hidden></progress>'+
- '<p id="catalog-stats" class="muted"></p><small>La fuente pública de profesiones puede devolver inglés cuando falta una traducción. Solo se guardan nombres que declara expresamente «esES». Los nombres de recetas se validan por producto, ingredientes y profesión, nunca solo por coincidencia de ID. Para una receta aprendida tendrás que marcarla como tal desde su ficha.</small>';
+ '<p id="catalog-stats" class="muted"></p><p id="catalog-publication" class="muted" aria-live="polite"></p><small>La fuente pública de profesiones puede devolver inglés cuando falta una traducción. Solo se guardan nombres que declara expresamente «esES». Los nombres de recetas se validan por producto, ingredientes y profesión, nunca solo por coincidencia de ID. Para una receta aprendida tendrás que marcarla como tal desde su ficha.</small>';
  host.append(box);
  const e=id=>document.getElementById(id);
  const int=x=>x!==null&&x!==undefined&&x!==""&&Number.isSafeInteger(Number(x))&&Number(x)>0?Number(x):null;
  let running=false;
  function describe(){
+  const published=tool.publishedStatus();
+  const coverage=published.coverage;
+  e("catalog-publication").textContent=published.status==="loaded"&&coverage?
+   "Diccionario contrastado: "+published.recipes+"/"+coverage.targetRecipes+
+   " recetas y "+published.items+"/"+coverage.targetItems+
+   " nombres de materiales y productos en español. Los restantes no tienen traducción verificada en la fuente consultada.":
+   published.status==="pending"?"Cargando diccionario español verificado…":
+   "Diccionario publicado no disponible; se conservan las traducciones ya guardadas.";
   const c=tool.counts();
   const raw=window.rockpeaksCatalogRaw;
   let totals=null;
