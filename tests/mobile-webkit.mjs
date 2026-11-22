@@ -44,6 +44,15 @@ try{
  await page.goto("http://127.0.0.1:"+server.address().port+"/#recipes",{waitUntil:"load"});
  await page.waitForFunction(()=>document.getElementById('refresh')?.disabled===false,null,{timeout:20000});
  assert.equal(await page.locator('[data-view="recipes"]').getAttribute("aria-selected"),"true");
+ assert.equal(await page.locator('[data-recipe-tab="opportunities"]').getAttribute("aria-selected"),"true");
+ assert.equal(await page.locator("#scout-load").isVisible(),true);
+ assert.equal(await page.locator("#recipe-load").isVisible(),false);
+ await page.locator('[data-recipe-tab="catalogue"]').click();
+ assert.equal(await page.locator("#recipe-load").isVisible(),true);
+ assert.equal(await page.locator("#scout-load").isVisible(),false);
+ await page.locator('[data-recipe-tab="translations"]').click();
+ assert.equal(await page.locator("#catalog-translate").isVisible(),true);
+ await page.locator('[data-recipe-tab="opportunities"]').click();
  await page.locator("#scout-load").click();
  await page.locator(".scout-opportunity").first().waitFor({timeout:20000});
  const summary=await page.locator(".scout-opportunity").first().innerText();
@@ -63,6 +72,7 @@ try{
  await page.waitForFunction(()=>window.RockpeaksCatalog?.learned(718)===true,null,{timeout:10000});
  await page.locator('.scout-learned[data-recipe-id="718"][aria-pressed="true"]').waitFor({timeout:10000});
  assert.match(await page.locator(".scout-opportunity").first().innerText(),/Aprendida/);
+ await page.locator('[data-recipe-tab="translations"]').click();
  await page.locator("#catalog-backup").click();
  assert.match(await page.locator("#catalog-backup-link").getAttribute("href"),/^blob:/);
  const backupText=await page.evaluate(async()=>await (await fetch(document.getElementById("catalog-backup-link").href)).text());
@@ -72,13 +82,16 @@ try{
  await page.locator("#catalog-restore").setInputFiles({name:"learned.json",mimeType:"application/json",buffer:Buffer.from(backupText)});
  await page.waitForFunction(()=>document.querySelector("#catalog-backup-status")?.textContent.includes("Copia restaurada"),null,{timeout:10000});
  assert.match(await page.locator("#catalog-backup-status").innerText(),/Copia restaurada/);
+ await page.locator('[data-recipe-tab="opportunities"]').click();
  await page.locator("#scout-known").check();
  assert.equal(await page.locator(".scout-opportunity").count(),1);
+ await page.locator('[data-recipe-tab="translations"]').click();
  await page.locator("#catalog-translate").click();
  await page.locator("#catalog-translate:not([disabled])").waitFor({timeout:25000});
  const translationStatus=await page.locator("#catalog-status").innerText();
  assert.match(translationStatus,/Recetas 0\/1/); // Fixture has no structural recipe match; do not assign a colliding spell name.
  assert.match(translationStatus,/productos\/materiales 3\/3/);
+ await page.locator('[data-recipe-tab="catalogue"]').click();
  await page.locator("#recipe-load").click();
  await page.locator("#recipe-load:not([disabled])").waitFor({timeout:30000});
  assert.ok((await page.locator("#recipe-count").innerText()).includes("1 recetas"));
