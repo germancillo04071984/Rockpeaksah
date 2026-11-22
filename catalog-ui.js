@@ -10,7 +10,7 @@
  '<p><button id="catalog-backup" type="button">Guardar copia de recetas aprendidas</button> <a id="catalog-backup-link" hidden download="rockpeaks-recetas-aprendidas.json">Descargar copia</a></p><p><label>Restaurar recetas aprendidas desde copia <input id="catalog-restore" type="file" accept="application/json,.json"></label></p>'+
  '<p id="catalog-backup-status" role="status" aria-live="polite"></p>'+
  '<p id="catalog-status" role="status" aria-live="polite">Preparado.</p><progress id="catalog-progress" value="0" max="100" style="width:100%" hidden></progress>'+
- '<p id="catalog-stats" class="muted"></p><p id="catalog-publication" class="muted" aria-live="polite"></p><small>La fuente pública de profesiones puede devolver inglés cuando falta una traducción. Solo se guardan nombres que declara expresamente «esES». Los nombres de recetas se validan por producto, ingredientes y profesión, nunca solo por coincidencia de ID. Para una receta aprendida tendrás que marcarla como tal desde su ficha.</small>';
+ '<p id="catalog-stats" class="muted"></p><p id="catalog-publication" class="muted" aria-live="polite"></p><small>Los nombres del cliente de Forever solo se aceptan si su idioma consta como «esES». Las traducciones añadidas desde Wowhead se comprueban por producto fabricado, profesión, cantidad e ingredientes. Nunca se traduce por coincidencia del ID de hechizo. Para una receta aprendida tendrás que marcarla como tal desde su ficha.</small>';
  host.append(box);
  const e=id=>document.getElementById(id);
  const int=x=>x!==null&&x!==undefined&&x!==""&&Number.isSafeInteger(Number(x))&&Number(x)>0?Number(x):null;
@@ -18,8 +18,10 @@
  function describe(){
   const published=tool.publishedStatus();
   const coverage=published.coverage;
-  const recent=[...(published.updates||[])].reverse().find(x=>Number.isSafeInteger(x.itemsAdded)&&x.itemsAdded>0);
-  const publishedDetail=recent?" Última ampliación: "+recent.itemsAdded+" nombres nuevos ("+recent.date+").":"";
+  const recent=[...(published.updates||[])].reverse().find(x=>Number.isSafeInteger(x.itemsAdded)||Number.isSafeInteger(x.recipesAdded));
+  const changes=recent?[recent.itemsAdded?recent.itemsAdded+" nombres de objetos":null,
+   recent.recipesAdded?recent.recipesAdded+" recetas":null].filter(Boolean):[];
+  const publishedDetail=changes.length?" Última ampliación: "+changes.join(" y ")+" ("+recent.date+").":"";
   const pendingDetail=coverage?" Pendientes de verificar: "+Math.max(0,coverage.targetRecipes-published.recipes)+
    " recetas y "+Math.max(0,coverage.targetItems-published.items)+" nombres de materiales/productos.":"";
   e("catalog-publication").textContent=published.status==="loaded"&&coverage?
