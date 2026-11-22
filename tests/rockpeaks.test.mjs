@@ -207,27 +207,47 @@ test('Recipe translation is joined by full manufacturing identity, never collidi
  const notMatched=validatedNames(market,[client[0]]);
  assert.equal(Object.keys(notMatched.names).length,0);
 });
-test('Three Wowhead Guardian spell identities match distinct market recipe IDs and Spanish translations',()=>{
+test('Sixteen Wowhead name mappings include ten additional checked cooking, alchemy and leatherworking recipes',()=>{
  const dictionary=JSON.parse(read('locales/esES.json'));
  const provenance=JSON.parse(read('locales/wowhead-checked-recipes.json'));
- assert.equal(provenance.entries.length,6);
- const expected=new Map([[49957,"Brazales de cuero de guardián"],
-  [49958,"Cinturón de guardián"],[49959,"Pantalones de guardián"],
+ assert.equal(provenance.entries.length,16);
+ const expected=new Map([
+  [49957,"Brazales de cuero de guardián"],
+  [49958,"Cinturón de guardián"],
+  [49959,"Pantalones de guardián"],
   [49861,"Cuero de tenue resplandor"],
   [49867,"Caperuza de canalizador gneuroconductora"],
-  [49868,"Almófar de escamas hiperconductoras brillante"]]);
+  [49868,"Almófar de escamas hiperconductoras brillante"],
+  [51732,"Sopa de Garranegra"],
+  [51733,"Branquirrojo ahumado"],
+  [52010,"Filete de merodeador"],
+  [52012,"Tortilla del alba"],
+  [52014,"Festín de pez moteado"],
+  [52015,"Gran festín de langostas"],
+  [50023,"Elixir Arcano inferior"],
+  [49863,"Gniodina aislante"],
+  [49866,"Capucha gneurovinculada brillante"],
+  [51368,"Coraza de escamas de dragón verde viviente"]
+ ]);
+ assert.deepEqual([...new Set(provenance.entries.map(e=>e.id))].sort((a,b)=>a-b),
+  [...expected.keys()].sort((a,b)=>a-b));
  for(const entry of provenance.entries){
   assert.equal(dictionary.recipes[entry.id],expected.get(entry.id));
   assert.notEqual(entry.id,entry.wowheadSpell);
   assert.ok(entry.wowheadUrl.startsWith("https://www.wowhead.com/"));
   assert.ok(signature({prof:entry.profession,item:entry.item,qty:entry.qty,r:entry.r},"market"));
  }
- assert.deepEqual(provenance.entries.map(x=>x.id),[49957,49958,49959,49861,49867,49868]);
- assert.deepEqual(provenance.entries.map(x=>x.item),[217263,217265,217267,213369,215381,215114]);
- for(const entry of provenance.entries.slice(3)){
-  assert.equal(entry.wowheadEdition,"Forever");
+ assert.deepEqual(provenance.entries.slice(3,6).map(x=>x.wowheadSpell),
+  [435819,435951,435949]);
+ const newer=provenance.entries.slice(6);
+ assert.equal(newer.length,10);
+ assert.equal(newer.filter(e=>e.profession==="Cooking").length,6);
+ assert.equal(newer.filter(e=>e.profession==="Alchemy").length,2);
+ assert.equal(newer.filter(e=>e.profession==="Leatherworking").length,2);
+ for(const entry of newer){
   assert.deepEqual(entry.r,entry.wowheadMaterials);
-  assert.match(entry.wowheadUrl,/^https:\/\/www\.wowhead\.com\/forever\/es\/spell=/);
+  assert.ok(["Forever","Classic","Classic PTR"].includes(entry.wowheadEdition));
+  assert.ok(entry.wowheadUrl.includes("/es/spell="));
  }
 });
 test('Published locale dictionary contains only structure-checked names',()=>{
@@ -241,11 +261,12 @@ test('Published locale dictionary contains only structure-checked names',()=>{
  assert.equal(data.items[238639],"Tortilla del alba");
  assert.equal(data.items[213370],"Restos de cuero irradiado");
  assert.equal(Object.keys(data.items).length,1108);
- assert.equal(Object.keys(data.recipes).length,824);
+ assert.equal(Object.keys(data.recipes).length,834);
  assert.equal(data.source.coverage.translatedItems,1108);
- assert.equal(data.source.coverage.translatedRecipes,824);
+ assert.equal(data.source.coverage.translatedRecipes,834);
  assert.ok(data.source.updates.some(x=>x.itemsAdded===19));
  assert.ok(data.source.updates.some(x=>x.recipesAdded===3));
+ assert.ok(data.source.updates.some(x=>x.recipesAdded===10));
  assert.notEqual(data.recipes[3928],"Ardilla mecánica");
  assert.ok(Object.keys(data.recipes).length>0);
 });
