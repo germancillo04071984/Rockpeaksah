@@ -5,11 +5,11 @@
  const key="rockpeaks-character-snapshot-v1";
  const panel=document.createElement("section");panel.className="card";
  panel.innerHTML='<h2>🛡️ Mi personaje · Rockpeaks Bridge</h2>'+
- '<p class="muted">Importa una captura local de tu personaje: oro, nivel, profesiones, materiales en las bolsas y recetas vistas como aprendidas por el cliente.</p>'+
+ '<p class="muted">Sincroniza automáticamente tus datos del juego en Chrome o Edge para PC. También puedes importar archivos manualmente.</p>'+
  '<p><label>Importar archivo del addon (.lua) o captura (.json) <input id="bridge-import" type="file" accept=".lua,.json,.txt,application/json,text/plain"></label></p>'+
  '<p id="bridge-status" role="status" aria-live="polite">Sin captura importada.</p>'+
  '<div id="bridge-summary"></div>'+
- '<p><a href="./downloads/RockpeaksBridge-0.1.0.zip" download="RockpeaksBridge-0.1.0.zip">Descargar addon Rockpeaks Bridge (ZIP)</a> · <a href="https://github.com/germancillo04071984/Rockpeaksah/tree/main/addons/RockpeaksBridge" target="_blank" rel="noopener noreferrer">Instrucciones y código</a></p>'+
+ '<p><a href="./downloads/RockpeaksBridge-0.2.0.zip" download="RockpeaksBridge-0.2.0.zip">Descargar addon Rockpeaks Bridge (ZIP)</a> · <a href="https://github.com/germancillo04071984/Rockpeaksah/tree/main/addons/RockpeaksBridge" target="_blank" rel="noopener noreferrer">Instrucciones y código</a></p>'+
  '<small>Datos locales, sin subida al servidor. El inventario importado es una fotografía de las bolsas, no movimientos de compra o venta. Nunca modifica la contabilidad ni marca automáticamente recetas como aprendidas: los ID de hechizo del cliente pueden ser distintos de los ID del catálogo.</small>';
  host.prepend(panel);
  const $=id=>document.getElementById(id),summary=$("bridge-summary"),status=$("bridge-status");
