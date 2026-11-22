@@ -33,7 +33,7 @@ jobs:
       - name: Verify actual published GitHub Pages release and Spanish dictionary
         run: node tools/check-published.mjs
 
-  wowhead-probe:
+  wowhead-spanish-verification:
     runs-on: ubuntu-latest
     timeout-minutes: 4
     steps:
