@@ -69,7 +69,7 @@
    (!e("scout-fresh").checked||!isStale())&&
    (!e("scout-known").checked||window.RockpeaksCatalog?.learned(r.id))&&
    (!e("scout-positive").checked||r.profit>0)&&(budget===null||r.cost<=budget)&&
-   (!q||norm([r.name,r.id,r.productId,r.productName,displayName(r.productId,r.productName),
+   (!q||norm([r.name,window.RockpeaksCatalog?.get("recipes",r.id,null),r.id,r.productId,r.productName,displayName(r.productId,r.productName),
      ...r.materials.flatMap(x=>[x.id,x.name,displayName(x.id,x.name)])].join(" ")).includes(q)));
   const sort=e("scout-sort").value;
   rows.sort((a,b)=>sort==="cost"?a.cost-b.cost||b.profit-a.profit:
