@@ -6,7 +6,7 @@ import vm from 'node:vm';
 import path from 'node:path';
 const root=path.resolve(process.cwd());
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
-const paths=['business.js','catalog-tools.js','recipes.js','scout-core.js','scout.js','catalog-ui.js','recipe-tabs.js'];
+const paths=['business.js','catalog-tools.js','recipes.js','scout-core.js','scout.js','catalog-ui.js','recipe-tabs.js','character-core.js','character-bridge.js'];
 const html=read('index.html');
 const coreCtx={window:{}};
 vm.runInNewContext(read('scout-core.js'),coreCtx);
@@ -41,6 +41,34 @@ test('Recipe workspace exposes three accessible subtabs with market scanner as d
  assert.match(tabs,/translations/);
  assert.match(tabs,/select\("opportunities"\)/);
  assert.match(html,/#panel-recipes>\.card\[hidden\]/);
+});
+test('Rockpeaks Bridge imports local JSON and escaped Lua without executing code',()=>{
+ const context={window:{}};
+ vm.runInNewContext(read('character-core.js'),context);
+ const bridge=context.window.RockpeaksCharacterCore;
+ const sample={schema:"rockpeaks-character-v1",version:1,capturedAt:1795356000,
+  character:{name:"Rockpeaks",realm:"EU PvP",level:31,gold:18234},
+  professions:[{name:"Alquimia",rank:75,max:150,id:171}],
+  bagItems:[{id:3685,count:32},{id:3371,count:12}],
+  knownRecipes:[{id:718,name:"Aceite de bocanegra"}]};
+ const json=JSON.stringify(sample);
+ const lua='RockpeaksBridgePayload = "'+json.replaceAll('\\','\\\\').replaceAll('"','\\"')+'"';
+ const imported=bridge.parse(lua);
+ assert.equal(imported.character.gold,18234);
+ assert.equal(imported.bagItems[0].count,32);
+ assert.equal(imported.knownRecipes[0].id,718);
+ assert.equal(bridge.parse(json).character.level,31);
+ assert.throws(()=>bridge.parse('RockpeaksBridgePayload = "os.execute(\\"evil\\")"'),/JSON/);
+ assert.throws(()=>bridge.parse(JSON.stringify({...sample,character:{...sample.character,gold:-1}})),/personaje/i);
+ assert.throws(()=>bridge.parse(JSON.stringify({...sample,schema:"other"})),/exportador/i);
+ assert.throws(()=>bridge.parse(JSON.stringify({...sample,bagItems:null})),/Listas/);
+});
+test('Snapshot import never overwrites business history or declares client IDs to be market IDs',()=>{
+ const app=read('character-bridge.js');
+ assert.match(app,/rockpeaks-character-snapshot-v1/);
+ assert.match(app,/no modifica la contabilidad/i);
+ assert.doesNotMatch(app,/setLearned\(/);
+ assert.doesNotMatch(app,/rockpeaks-business-v1/);
 });
 test('NPC profit uses real vendor value and no auction fee',()=>{
  const result=core.scan(sampleRecipes,market,{channel:'npc',fee:5});
