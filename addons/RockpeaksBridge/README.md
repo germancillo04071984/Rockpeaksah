@@ -1,10 +1,10 @@
-# Rockpeaks Bridge 0.2.0 · Captura automática (WoW Forever)
+# Rockpeaks Bridge 0.3.0 · Captura automática (WoW Forever)
 
 Exportador **local y de solo lectura** para Industrias Rockpeaks. No automatiza subastas, compras ni ventas, y no envía datos del juego a Internet.
 
 ## Instalación: una sola vez en Windows
 
-1. Descarga el ZIP Rockpeaks Bridge 0.2.0 desde **Negocio → Mi personaje** en la aplicación web.
+1. Descarga el ZIP Rockpeaks Bridge 0.3.0 desde **Negocio → Mi personaje** en la aplicación web.
 2. Extrae la carpeta RockpeaksBridge y cópiala dentro de World of Warcraft\_forever_\Interface\AddOns\ (o en la carpeta Interface\AddOns de tu instalación de Forever).
 3. Comprueba en la pantalla de selección de personaje que **Rockpeaks Bridge** está habilitado.
 4. Entra en Rockpeaks y abre las ventanas de las profesiones que quieras registrar para que el addon pueda leer las recetas que el cliente exponga.
@@ -24,6 +24,8 @@ El navegador puede pedir **renovar permiso** tras cerrar sus ventanas; para ello
 
 - Captura: oro total del personaje, nivel, profesiones que exponga el cliente, inventario de las bolsas 0–4 (no incluye el banco) y recetas que la API del cliente informe como aprendidas.
 - Se separa la información de recetas por personaje y reino, y la web **solo sincroniza Rockpeaks**; cerrar sesión en otro personaje no sustituye sus datos.
+- Cada captura incluye un diagnóstico de disponibilidad. Si Forever no deja leer bolsas o profesiones, aparecerá «API no disponible» o «Lectura parcial», nunca se interpretará un dato vacío como una lectura completa.
+- En Negocio → Mi personaje hay una **demostración con datos ficticios**, que no guarda ni reemplaza tus datos reales. Puedes probar el aspecto de la integración sin entrar al juego.
 - Las recetas del cliente no se marcan automáticamente como aprendidas en el mercado, porque **los identificadores no tienen por qué coincidir**.
 - Los datos de la captura **no sustituyen la contabilidad**, los movimientos de inventario, las ventas ni el capital empresarial.
 - El navegador no puede leer el disco sin tu autorización, ni cuando la aplicación está completamente cerrada. La lectura automática funciona con la web abierta y permiso vigente; puede demorarse si Chrome o Edge suspenden la pestaña.
