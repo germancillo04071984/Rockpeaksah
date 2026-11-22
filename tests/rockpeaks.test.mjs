@@ -148,6 +148,56 @@ test('Missing and zero prices are never treated as valid purchase or sale prices
  const empty={t:market.t,f:market.f,items:[{id:30,o:[null,null,null,null]},{id:20,o:[100,1,1,1]}]};
  assert.equal(core.scan(sampleRecipes,empty,{channel:'ah'}).records.length,0);
 });
+test('Economic audit handles two meals per craft, NPC-only inputs, 5% fees and loss of deposit',()=>{
+ const recipes={recipes:[{
+  id:2026,prof:"Cooking",name:"Two meal fixture",item:440,qty:2,r:[[320,2],[321,1]]
+ }],items:{
+  320:{name:"Meat"},321:{name:"Spice",buy:40},440:{name:"Two meals",sell:120}
+ },vendor:{321:40}};
+ const snapshot={t:1795356000,f:["ask","vol24","sure24","listed"],items:[
+  {id:320,o:[88,4,2,30]},{id:321,o:[null,0,0,0]},{id:440,o:[160,1,1,12]}
+ ]};
+ const npc=core.scan(recipes,snapshot,{channel:"npc",fee:5}).records[0];
+ assert.equal(npc.yieldCount,2);
+ assert.equal(npc.cost,216);
+ assert.equal(npc.revenue,240);
+ assert.equal(npc.profit,24);
+ assert.equal(npc.materials[1].source,"NPC");
+ const ah=core.scan(recipes,snapshot,{channel:"ah",fee:5,depositCopper:120}).records[0];
+ assert.equal(ah.revenue,304);
+ assert.equal(ah.profit,88);
+ assert.equal(ah.breakEvenUnit,114);
+ assert.equal(ah.breakEvenAfterRelist,177);
+ assert.equal(ah.afterFailedListing,-32);
+ assert.equal(core.scan(recipes,snapshot,{channel:"ah",fee:100}).records[0].profit,-216);
+ assert.equal(core.scan(recipes,{...snapshot,items:snapshot.items.filter(x=>x.id!==320)},{channel:"npc"}).records.length,0);
+ assert.equal(core.scan(recipes,{...snapshot,items:snapshot.items.filter(x=>x.id!==440)},{channel:"ah"}).records.length,0);
+});
+
+test('No fractional copper, out-of-range price, or unearned profit is accepted',()=>{
+ const catalog={recipes:[{id:902,prof:"Alchemy",name:"Potion test",item:400,qty:1,r:[[200,1]]}],
+ items:{200:{name:"Reagent",buy:1},400:{name:"Potion",sell:1}}};
+ const listings={f:["ask"],items:[{id:400,o:[1]}]};
+ const ah=core.scan(catalog,listings,{channel:"ah",fee:5}).records[0];
+ assert.equal(ah.cost,1);
+ assert.equal(ah.revenue,0);
+ assert.equal(ah.profit,-1);
+ assert.equal(ah.breakEvenUnit,2);
+ const npc=core.scan(catalog,listings,{channel:"npc"}).records[0];
+ assert.equal(npc.revenue,1);
+ assert.equal(npc.profit,0);
+ const huge={...catalog,recipes:[{...catalog.recipes[0],r:[[200,Number.MAX_SAFE_INTEGER]]}]};
+ assert.equal(core.scan(huge,listings,{channel:"npc"}).records.length,0);
+});
+
+test('Business price import populates SALE only; unknown costs never become zero',()=>{
+ const business=read('business.js');
+ assert.match(business,/e\("biz-channel"\)\.value="ah";\s*e\("biz-sale"\)\.value=Number\(price\)/);
+ assert.doesNotMatch(business,/e\("biz-cost"\)\.value=Number\(price\)/);
+ assert.match(business,/const copper=id=>/);
+ assert.match(business,/value\.trim\(\)/);
+ assert.match(business,/Math\.floor\(gross\*\(1-fee\/100\)\)/);
+});
 test('Verified localization preserves original names and learned status',()=>{
  const memory=new Map();
  const mockStorage={getItem:k=>memory.get(k)??null,setItem:(k,v)=>memory.set(k,v)};
