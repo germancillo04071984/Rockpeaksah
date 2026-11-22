@@ -1,5 +1,10 @@
 import fs from "node:fs";
+import assert from "node:assert/strict";
 const locale=JSON.parse(fs.readFileSync("locales/esES.json","utf8"));
+const curated=JSON.parse(fs.readFileSync("locales/wowhead-checked-recipes.json","utf8")).entries.slice(-25);
+assert.equal(curated.length,25,"Debe existir un bloque de 25 entradas contrastadas.");
+const must=new Map(curated.map(x=>[x.id,x]));
+assert.equal(must.size,25,"ID de receta duplicado en las últimas 25.");
 const wanted=[
  [51367,461677],[51369,461649],
  [51371,461655],[51373,461657],[51372,461659],
@@ -54,7 +59,7 @@ const catalogue=new Map(market.map(x=>[x.id,x]));
 const passed=[],rejected=[];
 for(const [id,spell] of wanted){
  const r=catalogue.get(id);
- if(!r||locale.recipes[id]){rejected.push({id,spell,reason:r?"already translated":"not in market"});continue}
+ if(!r){rejected.push({id,spell,reason:"not in market"});continue}
  try{
   const [es,en]=await Promise.all([
    get("https://nether.wowhead.com/classic/tooltip/spell/"+spell+"?locale=6"),
@@ -70,6 +75,14 @@ for(const [id,spell] of wanted){
    quantity:r.qty===1
   };
   if(Object.values(conditions).every(Boolean)){
+   if(must.has(id)){
+    const stored=must.get(id);
+    assert.equal(locale.recipes[id],es.name,"La traducción guardada no coincide con Wowhead "+id);
+    assert.equal(stored.name,es.name,"La referencia histórica no coincide con Wowhead "+id);
+    assert.equal(stored.wowheadSpell,spell,"El identificador de hechizo no coincide "+id);
+    assert.equal(stored.item,r.item,"El objeto fabricado ha cambiado "+id);
+    assert.equal(key(stored.wowheadMaterials),key(parts),"Los ingredientes de la referencia no coinciden "+id);
+   }
    passed.push({id,profession:r.prof,name:es.name,nameEn:r.name,item:r.item,qty:r.qty,r:r.r,
     wowheadSpell:spell,wowheadUrl:"https://www.wowhead.com/classic/es/spell="+spell,
     wowheadEdition:"Classic",wowheadMaterials:parts,wowheadSource:"nether.wowhead.com/classic/tooltip/spell/"+spell+"?locale=6",
@@ -78,3 +91,6 @@ for(const [id,spell] of wanted){
  }catch(err){rejected.push({id,spell,reason:String(err)})}
 }
 console.log("WOWHEAD_25_AUDIT",JSON.stringify({attempts:wanted.length,passed:passed.length,rejected:rejected.length,records:passed,failed:rejected}));
+assert.ok(passed.length>=25,"No se han validado al menos 25 traducciones con la fuente.");
+for(const id of must.keys())
+ assert.ok(passed.some(x=>x.id===id),"La traducción de la receta "+id+" no ha superado la verificación actual.");
