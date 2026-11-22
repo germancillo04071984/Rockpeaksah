@@ -18,7 +18,13 @@ const ranges=[
  [1213500,1213537],[1213920,1213950],
 ];
 const extras=[470359,470370,1213571,1213559,1213892,1213546,1213572,1223774,1223778,1223782,1213717,1213734,1213720,1213726,461692,461706,439108];
-const ids=[...new Set([...ranges.flatMap(([a,b])=>Array.from({length:b-a+1},(_,i)=>i+a)),...extras])];
+const specialRanges=[
+ [446182,446230],[429350,429371],[429864,429877],[1213745,1213770]
+];
+const specialSpells=[426607,435971,448085,1225759,1213751,429354,429869];
+const scanRanges=process.env.WOWHEAD_SPECIALS==="1"?specialRanges:ranges;
+const scanExtras=process.env.WOWHEAD_SPECIALS==="1"?specialSpells:extras;
+const ids=[...new Set([...scanRanges.flatMap(([a,b])=>Array.from({length:b-a+1},(_,i)=>i+a)),...scanExtras])];
 const results=[],errors=[];
 let pointer=0,foundEnglish=0,foundStructured=0;
 const sleep=ms=>new Promise(res=>setTimeout(res,ms));
