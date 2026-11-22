@@ -109,6 +109,15 @@ try{
  assert.match(recipeCsv,/profesion/);
  assert.match(await page.locator("#recipe-download").getAttribute("href"),/^blob:/);
  await page.locator('[data-view="business"]').click();
+ const oldSnapshot=await page.evaluate(()=>localStorage.getItem("rockpeaks-character-snapshot-v1"));
+ await page.locator("#bridge-demo").click();
+ assert.match(await page.locator("#bridge-status").innerText(),/DEMOSTRACIÓN · DATOS FICTICIOS/);
+ assert.match(await page.locator("#bridge-summary").innerText(),/Alquimia: 75\/150/);
+ assert.match(await page.locator("#bridge-summary").innerText(),/Calidad de lectura/);
+ assert.equal(await page.evaluate(()=>localStorage.getItem("rockpeaks-character-snapshot-v1")),oldSnapshot,
+  "Demo must never save made-up game data");
+ await page.locator("#bridge-demo").click();
+ assert.doesNotMatch(await page.locator("#bridge-status").innerText(),/DEMOSTRACIÓN/);
  await page.locator("#biz-product").fill("Prueba controlada");
  await page.locator("#biz-total").fill("125");
  await page.locator("#biz-add").click();
