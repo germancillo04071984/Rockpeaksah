@@ -59,8 +59,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Validate 25+ localized Wowhead recipes against market
+      - name: Validate original 25 localized Wowhead recipes against market
         run: node tools/validate-25-wowhead.mjs
+      - name: Recheck all 50 latest translated recipes using independent Spanish and English Wowhead tooltips
+        run: node tools/recheck-wowhead-50.mjs
 
   spanish-audit:
     runs-on: ubuntu-latest
