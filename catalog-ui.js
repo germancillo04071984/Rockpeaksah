@@ -5,7 +5,7 @@
  if(!tool||!core||!host)return;
  const box=document.createElement("section");box.className="card";
  box.innerHTML='<h2>🌍 Traducción y validación del catálogo</h2>'+
- '<p class="muted">Consulta los nombres oficiales españoles por ID y guarda cada lote traducido en este iPhone. El resto no se inventa. Una receta de los archivos no implica que tu personaje la haya aprendido.</p>'+
+ '<p class="muted">Consulta los nombres españoles verificables por ID en cocina, alquimia y peletería. Las traducciones se guardan en este navegador. Los nombres que faltan mantienen su idioma original; no se inventan.</p>'+
  '<p><button id="catalog-translate" type="button">Completar traducciones disponibles</button> <button id="catalog-stop" type="button" disabled>Detener después del lote actual</button></p>'+
  '<p><button id="catalog-backup" type="button">Guardar copia de recetas aprendidas</button> <a id="catalog-backup-link" hidden download="rockpeaks-recetas-aprendidas.json">Descargar copia</a></p><p><label>Restaurar recetas aprendidas desde copia <input id="catalog-restore" type="file" accept="application/json,.json"></label></p>'+
  '<p id="catalog-backup-status" role="status" aria-live="polite"></p>'+
@@ -18,10 +18,15 @@
  function describe(){
   const published=tool.publishedStatus();
   const coverage=published.coverage;
+  const recent=[...(published.updates||[])].reverse().find(x=>Number.isSafeInteger(x.itemsAdded)&&x.itemsAdded>0);
+  const publishedDetail=recent?" Última ampliación: "+recent.itemsAdded+" nombres nuevos ("+recent.date+").":"";
+  const pendingDetail=coverage?" Pendientes de verificar: "+Math.max(0,coverage.targetRecipes-published.recipes)+
+   " recetas y "+Math.max(0,coverage.targetItems-published.items)+" nombres de materiales/productos.":"";
   e("catalog-publication").textContent=published.status==="loaded"&&coverage?
    "Diccionario contrastado: "+published.recipes+"/"+coverage.targetRecipes+
    " recetas y "+published.items+"/"+coverage.targetItems+
-   " nombres de materiales y productos en español. Los restantes no tienen traducción verificada en la fuente consultada.":
+   " nombres de materiales y productos en español."+publishedDetail+pendingDetail+
+   " No tener un nombre verificado no significa que el objeto no exista en el juego.":
    published.status==="pending"?"Cargando diccionario español verificado…":
    "Diccionario publicado no disponible; se conservan las traducciones ya guardadas.";
   const c=tool.counts();
