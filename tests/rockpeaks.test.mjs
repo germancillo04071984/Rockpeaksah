@@ -63,6 +63,22 @@ test('Rockpeaks Bridge imports local JSON and escaped Lua without executing code
  assert.throws(()=>bridge.parse(JSON.stringify({...sample,schema:"other"})),/exportador/i);
  assert.throws(()=>bridge.parse(JSON.stringify({...sample,bagItems:null})),/Listas/);
 });
+test('Character import preserves valid capture-quality indicators without trusting unknown statuses',()=>{
+ const context={window:{}};
+ vm.runInNewContext(read('character-core.js'),context);
+ const parser=context.window.RockpeaksCharacterCore;
+ const base={schema:"rockpeaks-character-v1",version:1,capturedAt:1795356000,
+  character:{name:"Rockpeaks",realm:"EU PvP",level:31,gold:100},
+  professions:[],bagItems:[],knownRecipes:[],
+  diagnostics:{professions:{state:"unavailable",reason:"API de profesiones ausente"},
+   bags:{state:"partial",reason:"1/5 bolsas"},recipes:{state:"unobserved",reason:"Abre profesiones"}}};
+ const parsed=parser.parse(JSON.stringify(base));
+ assert.equal(parsed.diagnostics.professions.state,"unavailable");
+ assert.equal(parsed.diagnostics.bags.state,"partial");
+ assert.equal(parsed.diagnostics.recipes.state,"unobserved");
+ const wrong=parser.parse(JSON.stringify({...base,diagnostics:{bags:{state:"fabricated",reason:"a".repeat(1000)}}}));
+ assert.equal(wrong.diagnostics.bags,undefined);
+});
 test('Rockpeaks Bridge captures on character logout without requiring a chat command',()=>{
  const addon=read('addons/RockpeaksBridge/RockpeaksBridge.lua');
  assert.match(addon,/RegisterEvent\("PLAYER_LOGOUT"\)/);
