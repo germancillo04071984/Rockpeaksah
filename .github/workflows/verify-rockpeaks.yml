@@ -95,6 +95,8 @@ jobs:
         run: node tools/recheck-wowhead-final-11.mjs
       - name: Recheck first 52 translated product and material IDs with Spanish and English Wowhead
         run: node tools/recheck-wowhead-items-52.mjs
+      - name: Verify final 52 translated items, market-ID placeholders, and equal-language Jade
+        run: node tools/recheck-wowhead-items-final.mjs
 
   spanish-audit:
     runs-on: ubuntu-latest
