@@ -303,11 +303,12 @@ test('Published locale dictionary contains only structure-checked names',()=>{
  assert.equal(data.items[217398],"Elixir Arcano inferior");
  assert.equal(data.items[238639],"Tortilla del alba");
  assert.equal(data.items[213370],"Restos de cuero irradiado");
- assert.equal(Object.keys(data.items).length,1108);
+ assert.equal(Object.keys(data.items).length,1160);
  assert.equal(Object.keys(data.recipes).length,920);
- assert.equal(data.source.coverage.translatedItems,1108);
+ assert.equal(data.source.coverage.translatedItems,1160);
  assert.equal(data.source.coverage.translatedRecipes,920);
  assert.ok(data.source.updates.some(x=>x.itemsAdded===19));
+ assert.ok(data.source.updates.some(x=>x.itemsAdded===52));
  assert.ok(data.source.updates.some(x=>x.recipesAdded===3));
  assert.ok(data.source.updates.some(x=>x.recipesAdded===10));
  assert.ok(data.source.updates.some(x=>x.recipesAdded===25));
@@ -315,4 +316,34 @@ test('Published locale dictionary contains only structure-checked names',()=>{
  assert.ok(data.source.updates.some(x=>x.recipesAdded===11));
  assert.notEqual(data.recipes[3928],"Ardilla mecánica");
  assert.ok(Object.keys(data.recipes).length>0);
+});
+
+test('52 sourced item translations match precise IDs, and materials retain verified Spanish names',()=>{
+ const source=JSON.parse(read('locales/wowhead-checked-items.json'));
+ const dict=JSON.parse(read('locales/esES.json'));
+ assert.equal(source.schema,1);
+ assert.equal(source.batch,"wowhead-items-first-52-2026-11-22");
+ assert.equal(source.entries.length,52);
+ assert.equal(new Set(source.entries.map(x=>x.id)).size,52);
+ assert.equal(source.entries.filter(e=>e.roles.includes("material")).length,12);
+ for(const entry of source.entries){
+  assert.equal(dict.items[entry.id],entry.es);
+  assert.notEqual(entry.en,entry.es);
+  assert.ok(entry.roles.includes("material")||entry.roles.includes("product"));
+  assert.equal(entry.spanishSource,
+   "https://nether.wowhead.com/"+entry.edition+"/tooltip/item/"+entry.id+"?locale=6");
+  assert.equal(entry.englishSource,
+   "https://nether.wowhead.com/"+entry.edition+"/tooltip/item/"+entry.id+"?locale=0");
+  assert.ok(entry.recipeReferences>=1);
+ }
+ assert.equal(dict.items[221021],"Semilla de pesadilla");
+ assert.equal(dict.items[220688],"Manto de pesadillas inerte");
+ assert.equal(dict.items[236656],"Runa congelada");
+ assert.equal(dict.items[213372],"Gniodina aislante");
+ assert.equal(dict.items[234009],"Madeja de seda Qiraji");
+ assert.equal(dict.items[215162],"Poción de rejuvenecimiento ligeramente irradiada");
+ assert.equal(dict.items[233962],"Frasco de locura");
+ assert.equal(dict.items[227869],"Capa cromática brillante");
+ assert.equal(Object.keys(dict.recipes).length,920);
+ assert.equal(Object.keys(dict.items).length,1160);
 });
