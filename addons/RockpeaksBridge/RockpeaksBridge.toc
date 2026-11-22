@@ -2,6 +2,6 @@
 ## Title: Rockpeaks Bridge
 ## Notes: Exportador local de oro, profesiones y bolsas para Industrias Rockpeaks
 ## Author: Industrias Rockpeaks
-## Version: 0.1.0
+## Version: 0.2.0
 ## SavedVariables: RockpeaksBridgePayload, RockpeaksBridgeRecipes
 RockpeaksBridge.lua
