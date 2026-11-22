@@ -49,6 +49,15 @@ assert.ok(dictionary.source.coverage.matchMethod.includes("profession"));
 assert.equal(dictionary.items["6358"],"Bocanegra graso");
 assert.notEqual(dictionary.recipes["3928"],"Ardilla mecánica");
 assert.ok(Object.keys(dictionary.recipes).length>0);
+const packagePath="downloads/RockpeaksBridge-0.1.0.zip";
+const download=await fetch(root+packagePath+"?verify="+Date.now(),{signal:AbortSignal.timeout(15000)});
+assert.equal(download.ok,true,"No se puede descargar Rockpeaks Bridge desde la web.");
+const zip=Buffer.from(await download.arrayBuffer());
+const originalZip=fs.readFileSync(path.join(sourceDir,packagePath));
+assert.deepEqual(zip,originalZip,"El ZIP publicado no coincide con el repositorio.");
+assert.equal(zip.readUInt32LE(0),0x04034b50,"Cabecera ZIP incorrecta.");
+for(const name of ["RockpeaksBridge/RockpeaksBridge.toc","RockpeaksBridge/RockpeaksBridge.lua","RockpeaksBridge/README.md"])
+ assert.ok(zip.includes(Buffer.from(name)),"Falta un archivo del addon: "+name);
 console.log("PUBLISHED_VERIFY",JSON.stringify({release,scriptFiles:checks,
  recipesSpanish:Object.keys(dictionary.recipes).length,itemsSpanish:Object.keys(dictionary.items).length,
  matching:dictionary.source.coverage.matchMethod,site:root}));
