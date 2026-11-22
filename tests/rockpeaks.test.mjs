@@ -66,7 +66,7 @@ test('Rockpeaks Bridge imports local JSON and escaped Lua without executing code
 test('Snapshot import never overwrites business history or declares client IDs to be market IDs',()=>{
  const app=read('character-bridge.js');
  assert.match(app,/rockpeaks-character-snapshot-v1/);
- assert.match(app,/no modifica la contabilidad/i);
+ assert.match(app,/(?:nunca|no) modifica la contabilidad/i);
  assert.doesNotMatch(app,/setLearned\(/);
  assert.doesNotMatch(app,/rockpeaks-business-v1/);
 });
