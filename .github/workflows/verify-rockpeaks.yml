@@ -33,6 +33,20 @@ jobs:
       - name: Verify actual published GitHub Pages release and Spanish dictionary
         run: node tools/check-published.mjs
 
+  wowhead-range-discovery:
+    if: contains(github.event.head_commit.message, '[scan-wowhead]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Discover new Wowhead Spanish matches without changing published translations
+        run: node tools/scan-wowhead-untranslated.mjs
+
   wowhead-spanish-verification:
     runs-on: ubuntu-latest
     timeout-minutes: 4
