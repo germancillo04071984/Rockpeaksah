@@ -59,7 +59,22 @@ try{
  assert.match(ahText,/Escenario de venta un 10% más barata/);
  await page.locator("#scout-channel").selectOption("npc");
  assert.equal(await page.evaluate(()=>window.RockpeaksCatalog?.learned(718)),false);
+ await page.evaluate(()=>{
+  window.__learnedDebug=[];
+  document.addEventListener("click",event=>{
+   if(event.target.closest(".scout-learned"))
+    window.__learnedDebug.push({type:"click",learned:window.RockpeaksCatalog?.learned(718)});
+  },true);
+  window.addEventListener("rockpeaks:learned-change",event=>{
+   window.__learnedDebug.push({type:"changed",detail:event.detail,learned:window.RockpeaksCatalog?.learned(718)});
+  });
+ });
  await page.locator('.scout-learned[data-recipe-id="718"]').click();
+ console.log("LEARNED_CLICK_DIAGNOSTIC",JSON.stringify(await page.evaluate(()=>({
+  learned:window.RockpeaksCatalog?.learned(718),
+  button:document.querySelector('.scout-learned[data-recipe-id="718"]')?.outerHTML,
+  events:window.__learnedDebug,errors:[...document.querySelectorAll("#scout-status")].map(x=>x.textContent)
+ }))));
  await page.waitForFunction(()=>window.RockpeaksCatalog?.learned(718)===true,null,{timeout:10000});
  await page.locator('.scout-learned[data-recipe-id="718"][aria-pressed="true"]').waitFor({timeout:10000});
  assert.match(await page.locator(".scout-opportunity").first().innerText(),/Aprendida/);
