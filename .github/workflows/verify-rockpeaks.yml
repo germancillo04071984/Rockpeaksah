@@ -93,6 +93,8 @@ jobs:
         run: node tools/recheck-wowhead-50.mjs
       - name: Recheck final 11 Wowhead translations, ingredients, recipe name changes and output counts
         run: node tools/recheck-wowhead-final-11.mjs
+      - name: Recheck first 52 translated product and material IDs with Spanish and English Wowhead
+        run: node tools/recheck-wowhead-items-52.mjs
 
   spanish-audit:
     runs-on: ubuntu-latest
