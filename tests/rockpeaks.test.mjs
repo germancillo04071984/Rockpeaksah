@@ -210,17 +210,25 @@ test('Recipe translation is joined by full manufacturing identity, never collidi
 test('Three Wowhead Guardian spell identities match distinct market recipe IDs and Spanish translations',()=>{
  const dictionary=JSON.parse(read('locales/esES.json'));
  const provenance=JSON.parse(read('locales/wowhead-checked-recipes.json'));
- assert.equal(provenance.entries.length,3);
+ assert.equal(provenance.entries.length,6);
  const expected=new Map([[49957,"Brazales de cuero de guardián"],
-  [49958,"Cinturón de guardián"],[49959,"Pantalones de guardián"]]);
+  [49958,"Cinturón de guardián"],[49959,"Pantalones de guardián"],
+  [49861,"Cuero de tenue resplandor"],
+  [49867,"Caperuza de canalizador gneuroconductora"],
+  [49868,"Almófar de escamas hiperconductoras brillante"]]);
  for(const entry of provenance.entries){
   assert.equal(dictionary.recipes[entry.id],expected.get(entry.id));
   assert.notEqual(entry.id,entry.wowheadSpell);
   assert.ok(entry.wowheadUrl.startsWith("https://www.wowhead.com/"));
   assert.ok(signature({prof:entry.profession,item:entry.item,qty:entry.qty,r:entry.r},"market"));
  }
- assert.deepEqual(provenance.entries.map(x=>x.id),[49957,49958,49959]);
- assert.deepEqual(provenance.entries.map(x=>x.item),[217263,217265,217267]);
+ assert.deepEqual(provenance.entries.map(x=>x.id),[49957,49958,49959,49861,49867,49868]);
+ assert.deepEqual(provenance.entries.map(x=>x.item),[217263,217265,217267,213369,215381,215114]);
+ for(const entry of provenance.entries.slice(3)){
+  assert.equal(entry.wowheadEdition,"Forever");
+  assert.deepEqual(entry.r,entry.wowheadMaterials);
+  assert.match(entry.wowheadUrl,/^https:\/\/www\.wowhead\.com\/forever\/es\/spell=/);
+ }
 });
 test('Published locale dictionary contains only structure-checked names',()=>{
  const data=JSON.parse(read('locales/esES.json'));
@@ -233,9 +241,9 @@ test('Published locale dictionary contains only structure-checked names',()=>{
  assert.equal(data.items[238639],"Tortilla del alba");
  assert.equal(data.items[213370],"Restos de cuero irradiado");
  assert.equal(Object.keys(data.items).length,1108);
- assert.equal(Object.keys(data.recipes).length,821);
+ assert.equal(Object.keys(data.recipes).length,824);
  assert.equal(data.source.coverage.translatedItems,1108);
- assert.equal(data.source.coverage.translatedRecipes,821);
+ assert.equal(data.source.coverage.translatedRecipes,824);
  assert.ok(data.source.updates.some(x=>x.itemsAdded===19));
  assert.ok(data.source.updates.some(x=>x.recipesAdded===3));
  assert.notEqual(data.recipes[3928],"Ardilla mecánica");
