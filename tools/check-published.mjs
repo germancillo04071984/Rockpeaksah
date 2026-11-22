@@ -49,7 +49,21 @@ assert.ok(dictionary.source.coverage.matchMethod.includes("profession"));
 assert.equal(dictionary.items["6358"],"Bocanegra graso");
 assert.equal(dictionary.items["217398"],"Elixir Arcano inferior");
 assert.equal(dictionary.items["238639"],"Tortilla del alba");
-assert.ok(Object.keys(dictionary.items).length>=1108);
+assert.equal(Object.keys(dictionary.items).length,1160);
+assert.equal(dictionary.source.coverage.translatedItems,1160);
+for(const [id,es] of Object.entries({
+ "221021":"Semilla de pesadilla",
+ "220688":"Manto de pesadillas inerte",
+ "236656":"Runa congelada",
+ "234007":"Quitina de silítido con pinchos",
+ "234011":"Veneno de acechador Qiraji",
+ "213372":"Gniodina aislante",
+ "234009":"Madeja de seda Qiraji",
+ "211422":"Fragmento del Vacío",
+ "215162":"Poción de rejuvenecimiento ligeramente irradiada",
+ "233962":"Frasco de locura",
+ "227869":"Capa cromática brillante"
+}))assert.equal(dictionary.items[id],es,"Traducción de objeto ausente "+id);
 assert.equal(Object.keys(dictionary.recipes).length,920);
 assert.equal(dictionary.source.coverage.translatedRecipes,920);
 const latestTen={
@@ -75,6 +89,16 @@ assert.equal(dictionary.recipes["49959"],"Pantalones de guardián");
 assert.equal(dictionary.source.coverage.translatedItems,Object.keys(dictionary.items).length);
 assert.notEqual(dictionary.recipes["3928"],"Ardilla mecánica");
 assert.ok(Object.keys(dictionary.recipes).length>0);
+const publishedItemAudit=JSON.parse(await read(root+"locales/wowhead-checked-items.json?verify="+Date.now()));
+const sourceItemAudit=JSON.parse(fs.readFileSync(path.join(sourceDir,"locales/wowhead-checked-items.json"),"utf8"));
+assert.deepEqual(publishedItemAudit,sourceItemAudit,"La fuente de traducciones de objetos publicada no coincide con main");
+assert.equal(publishedItemAudit.entries.length,52);
+assert.equal(new Set(publishedItemAudit.entries.map(x=>x.id)).size,52);
+for(const item of publishedItemAudit.entries){
+ assert.equal(dictionary.items[item.id],item.es,"Falta el nombre de objeto en la web: "+item.id);
+ assert.ok(item.spanishSource?.startsWith("https://nether.wowhead.com/"));
+ assert.ok(item.englishSource?.endsWith("?locale=0"));
+}
 const wowheadAudit=JSON.parse(await read(root+"locales/wowhead-checked-recipes.json?verify="+Date.now()));
 const checkedInWowheadAudit=JSON.parse(fs.readFileSync(path.join(sourceDir,"locales/wowhead-checked-recipes.json"),"utf8"));
 assert.deepEqual(wowheadAudit,checkedInWowheadAudit,"La referencia de Wowhead publicada no coincide con main.");
