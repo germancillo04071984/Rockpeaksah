@@ -50,8 +50,8 @@ assert.equal(dictionary.items["6358"],"Bocanegra graso");
 assert.equal(dictionary.items["217398"],"Elixir Arcano inferior");
 assert.equal(dictionary.items["238639"],"Tortilla del alba");
 assert.ok(Object.keys(dictionary.items).length>=1108);
-assert.ok(Object.keys(dictionary.recipes).length>=909);
-assert.equal(dictionary.source.coverage.translatedRecipes,909);
+assert.equal(Object.keys(dictionary.recipes).length,920);
+assert.equal(dictionary.source.coverage.translatedRecipes,920);
 const latestTen={
  "51732":"Sopa de Garranegra",
  "51733":"Branquirrojo ahumado",
@@ -78,7 +78,7 @@ assert.ok(Object.keys(dictionary.recipes).length>0);
 const wowheadAudit=JSON.parse(await read(root+"locales/wowhead-checked-recipes.json?verify="+Date.now()));
 const checkedInWowheadAudit=JSON.parse(fs.readFileSync(path.join(sourceDir,"locales/wowhead-checked-recipes.json"),"utf8"));
 assert.deepEqual(wowheadAudit,checkedInWowheadAudit,"La referencia de Wowhead publicada no coincide con main.");
-assert.equal(wowheadAudit.entries.length,91);
+assert.equal(wowheadAudit.entries.length,102);
 assert.deepEqual(wowheadAudit.entries.slice(3,6).map(r=>r.wowheadSpell),[435819,435951,435949]);
 assert.deepEqual(wowheadAudit.entries.slice(6,16).map(r=>r.id),
  [51732,51733,52010,52012,52014,52015,50023,49863,49866,51368]);
@@ -94,7 +94,7 @@ for(const entry of last25){
  assert.ok(entry.wowheadSource?.startsWith("https://nether.wowhead.com/classic/tooltip/spell/"),
   "Falta la procedencia verificable de "+entry.id);
 }
-const last50=wowheadAudit.entries.slice(41);
+const last50=wowheadAudit.entries.slice(41,91);
 assert.equal(last50.length,50);
 assert.equal(new Set(last50.map(entry=>entry.id)).size,50);
 for(const entry of last50){
@@ -104,6 +104,20 @@ for(const entry of last50){
  assert.ok(entry.wowheadSource?.startsWith("https://nether.wowhead.com/classic/tooltip/spell/"));
  assert.ok(entry.wowheadEnglishSource?.endsWith("?locale=0"));
 }
+const final11=wowheadAudit.entries.slice(91);
+assert.equal(final11.length,11);
+assert.deepEqual(final11.map(e=>e.id),
+ [50600,49876,52011,51655,51717,50561,50562,51206,50563,50564,50565]);
+for(const entry of final11){
+ assert.equal(dictionary.recipes[entry.id],entry.name,"No aparece traducida la receta "+entry.id);
+ assert.equal(entry.batch,"wowhead-final-11-2026-11-22");
+ assert.ok(entry.wowheadSource?.startsWith("https://nether.wowhead.com/"));
+}
+assert.equal(dictionary.recipes["50600"],"Jarra de mojo de pesadilla");
+assert.equal(dictionary.recipes["49876"],"Poción de rejuvenecimiento ligeramente irradiada");
+assert.equal(dictionary.recipes["52011"],"Filete de falda");
+assert.equal(final11.find(e=>e.id===49876).qty,5);
+assert.equal(final11.find(e=>e.id===52011).qty,2);
 const packagePath="downloads/RockpeaksBridge-0.3.0.zip";
 const download=await fetch(root+packagePath+"?verify="+Date.now(),{signal:AbortSignal.timeout(15000)});
 assert.equal(download.ok,true,"No se puede descargar Rockpeaks Bridge desde la web.");
