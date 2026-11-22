@@ -45,6 +45,8 @@ jobs:
         with:
           node-version: '22'
       - name: Discover new Wowhead Spanish matches without changing published translations
+        env:
+          WOWHEAD_SPECIALS: '1'
         run: node tools/scan-wowhead-untranslated.mjs
 
   wowhead-spanish-verification:
