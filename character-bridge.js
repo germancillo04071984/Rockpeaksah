@@ -43,6 +43,15 @@
   if(ordered.length>60){const p=document.createElement("p");p.textContent="Mostrando 60 de "+ordered.length+" tipos. La captura completa permanece guardada.";list.append(p)}
   details.append(list);summary.append(details);
  }
+ function persistSnapshot(value,mode="manual"){
+  const next=core.validate(value);
+  if(mode==="auto"&&state&&next.capturedAt<state.capturedAt)return false;
+  localStorage.setItem(key,JSON.stringify(next));
+  state=next;show(state);
+  if(mode==="auto")status.textContent+=" · sincronizada automáticamente";
+  return true;
+ }
+ window.RockpeaksCharacterBridge=Object.freeze({importSnapshot(value){return persistSnapshot(value,"auto")}});
  try{
   const cached=localStorage.getItem(key);
   if(cached){state=core.parse(cached);show(state)}
@@ -51,9 +60,7 @@
   const file=event.target.files?.[0];if(!file)return;
   try{
    if(file.size>1000000)throw Error("El archivo supera el límite de 1 MB.");
-   const next=core.parse(await file.text());
-   localStorage.setItem(key,JSON.stringify(next));
-   state=next;show(state);
+   persistSnapshot(core.parse(await file.text()));
   }catch(err){status.textContent="No se pudo importar: "+err.message+". La captura anterior se conserva."}
   finally{event.target.value=""}
  });
