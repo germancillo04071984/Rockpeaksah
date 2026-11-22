@@ -28,6 +28,8 @@ jobs:
         run: node tools/probe-sdk.mjs
       - name: Compare client and auction-house recipe identities
         run: node tools/audit-recipe-matches.mjs
+      - name: Match Wowhead Spanish recipes against live Forever material and output signatures
+        run: node tools/check-wowhead-recipes.mjs
       - name: Verify actual published GitHub Pages release and Spanish dictionary
         run: node tools/check-published.mjs
 
