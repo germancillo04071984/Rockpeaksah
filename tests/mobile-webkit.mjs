@@ -112,6 +112,20 @@ try{
  await page.locator("#biz-product").fill("Prueba controlada");
  await page.locator("#biz-total").fill("125");
  await page.locator("#biz-add").click();
+ const businessBefore=await page.locator("#biz-history").innerText();
+ const snapshot={schema:"rockpeaks-character-v1",version:1,capturedAt:1795356000,
+  character:{name:"Rockpeaks",realm:"EU PvP",level:31,gold:18234},
+  professions:[{name:"Alquimia",rank:75,max:150,id:171}],
+  bagItems:[{id:6358,count:12},{id:3371,count:5}],knownRecipes:[{id:718,name:"Aceite de bocanegra"}]};
+ const escaped=JSON.stringify(snapshot).replaceAll("\\","\\\\").replaceAll('"','\\"');
+ await page.locator("#bridge-import").setInputFiles({
+  name:"RockpeaksBridge.lua",mimeType:"text/plain",
+  buffer:Buffer.from('RockpeaksBridgePayload = "'+escaped+'"')
+ });
+ await page.waitForFunction(()=>document.querySelector("#bridge-summary")?.textContent.includes("1o 82p 34c"),null,{timeout:10000});
+ assert.match(await page.locator("#bridge-summary").innerText(),/Alquimia: 75\/150/);
+ assert.match(await page.locator("#bridge-summary").innerText(),/2 tipos de objeto/);
+ assert.equal(await page.locator("#biz-history").innerText(),businessBefore);
  const businessDownloadEvent=page.waitForEvent("download",{timeout:10000});
  await page.locator("#biz-csv").click();
  const businessDownload=await businessDownloadEvent;
