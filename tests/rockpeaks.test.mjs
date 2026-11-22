@@ -98,7 +98,7 @@ test('Horde palette and section guidance are present',()=>{
  assert.doesNotMatch(html,/id="theme-toggle"/);
 });
 test('Browser site metadata identifies version and current market',()=>{
- assert.match(html,/2026-11-20\.15/);
+ assert.match(html,/Interfaz Rockpeaks organizada · versión 20\d{2}-\d{2}-\d{2}\.\d+/);
  assert.match(html,/MARKET="eu-2-113"/);
 });
 test('Live auction and recipe public APIs expose expected structured data',async()=>{
