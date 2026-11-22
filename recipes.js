@@ -200,7 +200,9 @@ function marketOpportunity(r){
   cost+=qty*price;
  }
  if(sale===null||!yieldCount)return {status:"sale-pending",cost};
- const revenue=yieldCount*sale*0.95;
+ const gross=yieldCount*sale;
+ if(!Number.isSafeInteger(cost)||!Number.isSafeInteger(gross))return {status:"incomplete"};
+ const revenue=Math.floor(gross*.95);
  return {status:"estimated",cost,revenue,profit:revenue-cost,sale};
 }
 function salePriceStatus(){
@@ -303,6 +305,11 @@ function calc(){
   return;
  }
  const totalCost=b*(cost+other),costPerCraft=cost+other,netFactor=1-fee/100;
+ const gross=sale===null?null:b*y*sale;
+ if(!Number.isSafeInteger(costPerCraft)||!Number.isSafeInteger(totalCost)||
+  gross!==null&&!Number.isSafeInteger(gross)){
+  setResult("Importe fuera de rango","Los importes acumulados deben representarse con cobres enteros.");return;
+ }
  const threshold=netFactor>0?Math.ceil(costPerCraft/(y*netFactor)):null;
  const channelName=channel==="ah"?"subasta":"NPC";
  const breakEven=threshold===null?"No existe precio rentable con comisión del 100%.":"Precio mínimo de venta para no perder: "+gold(threshold)+" por unidad.";
@@ -310,7 +317,7 @@ function calc(){
   setResult("Beneficio pendiente","Coste por fabricación: "+gold(costPerCraft)+" · Coste del lote: "+gold(totalCost)+". "+breakEven+" Introduce el precio de venta "+channelName+" para calcular el beneficio.");
   return;
  }
- const gross=b*y*sale,commission=gross*(fee/100),netRevenue=gross-commission;
+ const netRevenue=channel==="ah"?Math.floor(gross*netFactor):gross,commission=gross-netRevenue;
  const profit=netRevenue-totalCost,perCraft=profit/b;
  const margin=totalCost>0?(profit/totalCost*100).toFixed(1)+"%":"no calculable (coste 0)";
  const label=profit>0?"Beneficio potencial":profit<0?"Pérdida potencial":"Equilibrio";
@@ -336,7 +343,8 @@ function calc(){
   }
   let othersCost=other;
   raw.forEach((_,j)=>{if(j!==i)othersCost+=Number(e("recipe-qty-"+j).value)*Number(e("recipe-price-"+j).value)});
-  const ceiling=Math.floor((y*sale*netFactor-othersCost)/q);
+  const netPerCraft=channel==="ah"?Math.floor(y*sale*netFactor):y*sale;
+  const ceiling=Math.floor((netPerCraft-othersCost)/q);
   p.textContent=name+": "+(ceiling<0?"No rentable incluso a 0c (déficit de "+gold(-ceiling)+" por unidad)":gold(ceiling)+" máximo por unidad para no perder");
   maxBox.append(p);
  });
