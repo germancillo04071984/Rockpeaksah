@@ -100,6 +100,24 @@ try{
  const width=await page.evaluate(()=>({screen:innerWidth,body:document.documentElement.scrollWidth}));
  assert.ok(width.body<=width.screen+3,"Horizontal overflow on mobile "+JSON.stringify(width));
  assert.ok((await page.locator("#recipe-profit-heading").innerText()).length>0);
+ await page.locator("#recipe-price-0").fill("1");
+ await page.locator("#recipe-price-1").fill("1");
+ await page.locator("#recipe-sale").fill("1");
+ assert.match(await page.locator("#recipe-profit").innerText(),/Ingreso neto subasta: 0c/,
+  "Never round 0.95 copper to a paid copper");
+ assert.match(await page.locator("#recipe-profit-heading").innerText(),/Pérdida potencial/);
+ await page.locator("#recipe-output").fill("2");
+ await page.locator("#recipe-batches").fill("3");
+ await page.locator("#recipe-price-0").fill("10");
+ await page.locator("#recipe-price-1").fill("40");
+ await page.locator("#recipe-sale").fill("100");
+ assert.match(await page.locator("#recipe-profit-heading").innerText(),/3p 90c/,
+  "Three batches of two products must produce correct revenue and profit");
+ assert.match(await page.locator("#recipe-profit").innerText(),/Ingreso neto subasta: 5p 70c/);
+ await page.locator("#recipe-price-1").fill("");
+ assert.match(await page.locator("#recipe-profit-heading").innerText(),/Beneficio pendiente/,
+  "Unknown material price must not be interpreted as zero");
+ await page.locator("#recipe-price-1").fill("40");
  const recipeDownloadEvent=page.waitForEvent("download",{timeout:10000});
  await page.locator("#recipe-audit").click();
  const recipeDownload=await recipeDownloadEvent;
@@ -108,7 +126,30 @@ try{
  const recipeCsv=fs.readFileSync(recipeFile,"utf8");
  assert.match(recipeCsv,/profesion/);
  assert.match(await page.locator("#recipe-download").getAttribute("href"),/^blob:/);
+ await page.locator('[data-view="market"]').click();
+ await page.locator("#search").fill("6370");
+ await page.locator("#results .item").first().click();
  await page.locator('[data-view="business"]').click();
+ assert.match(await page.locator("#biz-result").innerText(),/Beneficio pendiente/);
+ await page.locator("#biz-cost").fill("240");
+ await page.locator("#biz-sale").fill("700");
+ assert.match(await page.locator("#biz-result").innerText(),/4p 60c/,"NPC sale must not incur an AH fee");
+ await page.locator("#biz-channel").selectOption("ah");
+ assert.match(await page.locator("#biz-result").innerText(),/4p 25c/,"AH must deduct 5% from gross");
+ await page.locator("#biz-sale").fill("1");
+ await page.locator("#biz-cost").fill("0");
+ assert.match(await page.locator("#biz-result").innerText(),/Ingreso neto subasta: 0c/,
+  "One copper of gross income cannot pay a fractional auction copper");
+ await page.locator("#biz-cost").fill("");
+ assert.match(await page.locator("#biz-result").innerText(),/Beneficio pendiente/,
+  "Unknown material cost must not be interpreted as zero");
+ await page.locator("#biz-cost").fill("240");
+ await page.locator("#biz-market").click();
+ assert.equal(await page.locator("#biz-cost").inputValue(),"240",
+  "Product market quote must not overwrite materials cost");
+ assert.equal(await page.locator("#biz-sale").inputValue(),"700",
+  "Product market quote should populate its sale price");
+ assert.equal(await page.locator("#biz-channel").inputValue(),"ah");
  const oldSnapshot=await page.evaluate(()=>localStorage.getItem("rockpeaks-character-snapshot-v1"));
  await page.locator("#bridge-demo").click();
  assert.match(await page.locator("#bridge-status").innerText(),/DEMOSTRACIÓN · DATOS FICTICIOS/);
