@@ -31,6 +31,19 @@ jobs:
       - name: Verify actual published GitHub Pages release and Spanish dictionary
         run: node tools/check-published.mjs
 
+  spanish-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout translation sources
+        uses: actions/checkout@v4
+      - name: Prepare Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check untranslated catalogue against latest Forever esES corpus
+        run: node tools/audit-locale-gaps.mjs
+
   lua-client-mock:
     runs-on: ubuntu-latest
     timeout-minutes: 5
