@@ -207,6 +207,21 @@ test('Recipe translation is joined by full manufacturing identity, never collidi
  const notMatched=validatedNames(market,[client[0]]);
  assert.equal(Object.keys(notMatched.names).length,0);
 });
+test('Three Wowhead Guardian spell identities match distinct market recipe IDs and Spanish translations',()=>{
+ const dictionary=JSON.parse(read('locales/esES.json'));
+ const provenance=JSON.parse(read('locales/wowhead-checked-recipes.json'));
+ assert.equal(provenance.entries.length,3);
+ const expected=new Map([[49957,"Brazales de cuero de guardián"],
+  [49958,"Cinturón de guardián"],[49959,"Pantalones de guardián"]]);
+ for(const entry of provenance.entries){
+  assert.equal(dictionary.recipes[entry.id],expected.get(entry.id));
+  assert.notEqual(entry.id,entry.wowheadSpell);
+  assert.ok(entry.wowheadUrl.startsWith("https://www.wowhead.com/"));
+  assert.ok(signature({prof:entry.profession,item:entry.item,qty:entry.qty,r:entry.r},"market"));
+ }
+ assert.deepEqual(provenance.entries.map(x=>x.id),[49957,49958,49959]);
+ assert.deepEqual(provenance.entries.map(x=>x.item),[217263,217265,217267]);
+});
 test('Published locale dictionary contains only structure-checked names',()=>{
  const data=JSON.parse(read('locales/esES.json'));
  assert.equal(data.schema,1);
@@ -218,9 +233,11 @@ test('Published locale dictionary contains only structure-checked names',()=>{
  assert.equal(data.items[238639],"Tortilla del alba");
  assert.equal(data.items[213370],"Restos de cuero irradiado");
  assert.equal(Object.keys(data.items).length,1108);
- assert.equal(Object.keys(data.recipes).length,818);
+ assert.equal(Object.keys(data.recipes).length,821);
  assert.equal(data.source.coverage.translatedItems,1108);
- assert.equal(data.source.updates.at(-1).itemsAdded,19);
+ assert.equal(data.source.coverage.translatedRecipes,821);
+ assert.ok(data.source.updates.some(x=>x.itemsAdded===19));
+ assert.ok(data.source.updates.some(x=>x.recipesAdded===3));
  assert.notEqual(data.recipes[3928],"Ardilla mecánica");
  assert.ok(Object.keys(data.recipes).length>0);
 });
