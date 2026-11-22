@@ -44,6 +44,8 @@ jobs:
       - name: Install WebKit browser test runner
         run: |
           npm install --no-save playwright
-          npx playwright install --with-deps webkit
+          npx playwright install --with-deps webkit chromium
       - name: Test iPhone-sized WebKit navigation, recipes, translation, and CSV
         run: node tests/mobile-webkit.mjs
+      - name: Test PC automatic character file sync and permission recovery in Chromium
+        run: node tests/desktop-chromium.mjs
