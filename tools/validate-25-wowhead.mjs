@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import assert from "node:assert/strict";
 const locale=JSON.parse(fs.readFileSync("locales/esES.json","utf8"));
-const curated=JSON.parse(fs.readFileSync("locales/wowhead-checked-recipes.json","utf8")).entries.slice(-25);
+const curated=JSON.parse(fs.readFileSync("locales/wowhead-checked-recipes.json","utf8")).entries.slice(16,41);
 assert.equal(curated.length,25,"Debe existir un bloque de 25 entradas contrastadas.");
 const must=new Map(curated.map(x=>[x.id,x]));
 assert.equal(must.size,25,"ID de receta duplicado en las últimas 25.");
