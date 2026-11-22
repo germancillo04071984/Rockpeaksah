@@ -77,6 +77,8 @@ jobs:
         run: node tools/validate-25-wowhead.mjs
       - name: Recheck all 50 latest translated recipes using independent Spanish and English Wowhead tooltips
         run: node tools/recheck-wowhead-50.mjs
+      - name: Recheck final 11 Wowhead translations, ingredients, recipe name changes and output counts
+        run: node tools/recheck-wowhead-final-11.mjs
 
   spanish-audit:
     runs-on: ubuntu-latest
