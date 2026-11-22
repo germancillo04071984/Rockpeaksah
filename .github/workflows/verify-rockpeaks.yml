@@ -31,6 +31,19 @@ jobs:
       - name: Verify actual published GitHub Pages release and Spanish dictionary
         run: node tools/check-published.mjs
 
+  lua-client-mock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout addon
+        uses: actions/checkout@v4
+      - name: Install Lua 5.1
+        run: sudo apt-get update -qq && sudo apt-get install -y lua5.1
+      - name: Validate addon Lua syntax
+        run: luac5.1 -p addons/RockpeaksBridge/RockpeaksBridge.lua tests/addon-lua.lua
+      - name: Run simulated WoW client addon checks
+        run: lua5.1 tests/addon-lua.lua
+
   mobile-webkit:
     runs-on: ubuntu-latest
     timeout-minutes: 12
