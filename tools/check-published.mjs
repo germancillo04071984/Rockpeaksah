@@ -49,8 +49,8 @@ assert.ok(dictionary.source.coverage.matchMethod.includes("profession"));
 assert.equal(dictionary.items["6358"],"Bocanegra graso");
 assert.equal(dictionary.items["217398"],"Elixir Arcano inferior");
 assert.equal(dictionary.items["238639"],"Tortilla del alba");
-assert.equal(Object.keys(dictionary.items).length,1160);
-assert.equal(dictionary.source.coverage.translatedItems,1160);
+assert.equal(Object.keys(dictionary.items).length,1212);
+assert.equal(dictionary.source.coverage.translatedItems,1212);
 for(const [id,es] of Object.entries({
  "221021":"Semilla de pesadilla",
  "220688":"Manto de pesadillas inerte",
@@ -99,6 +99,19 @@ for(const item of publishedItemAudit.entries){
  assert.ok(item.spanishSource?.startsWith("https://nether.wowhead.com/"));
  assert.ok(item.englishSource?.endsWith("?locale=0"));
 }
+const finalItemAudit=JSON.parse(await read(root+"locales/wowhead-checked-items-final.json?verify="+Date.now()));
+const finalItemSource=JSON.parse(fs.readFileSync(path.join(sourceDir,"locales/wowhead-checked-items-final.json"),"utf8"));
+assert.deepEqual(finalItemAudit,finalItemSource,"La evidencia final de 52 objetos publicada no coincide con GitHub");
+assert.equal(finalItemAudit.entries.length,52);
+assert.equal(new Set([...publishedItemAudit.entries,...finalItemAudit.entries].map(x=>x.id)).size,104);
+for(const item of finalItemAudit.entries){
+ assert.equal(dictionary.items[item.id],item.es,"La traducción final no está publicada: "+item.id);
+ assert.ok(item.spanishSource?.startsWith("https://nether.wowhead.com/"));
+ assert.ok(item.englishSource?.endsWith("?locale=0"));
+}
+assert.equal(dictionary.items["1529"],"Jade");
+assert.equal(dictionary.items["227855"],"Disfraz de ogro Gordok sintético");
+assert.equal(dictionary.items["252948"],"Brotevil purificado");
 const wowheadAudit=JSON.parse(await read(root+"locales/wowhead-checked-recipes.json?verify="+Date.now()));
 const checkedInWowheadAudit=JSON.parse(fs.readFileSync(path.join(sourceDir,"locales/wowhead-checked-recipes.json"),"utf8"));
 assert.deepEqual(wowheadAudit,checkedInWowheadAudit,"La referencia de Wowhead publicada no coincide con main.");
