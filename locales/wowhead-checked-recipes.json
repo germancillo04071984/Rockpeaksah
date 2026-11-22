@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "date": "2026-11-22",
-  "note": "Los ID 49957/49958/49959 son los identificadores de recetas del catálogo comercial; no son los ID de hechizo de Wowhead. Se contrastan profesión, ID de producto, cantidad fabricada y todos los reactivos por ID y cantidad. Wowhead Classic SoD no demuestra que la receta esté aprendida ni disponible actualmente en Forever.",
+  "note": "Los ID de recetas del catálogo de mercado no son los ID de hechizo de Wowhead. Validación por profesión, ID del objeto producido, cantidad e ingredientes por ID/cantidad. Fuentes de Wowhead Classic SoD (primeras 3) y Forever ES (siguientes 3). No implica recetas aprendidas ni disponibles dentro del juego.",
   "entries": [
     {
       "id": 49957,
@@ -82,6 +82,134 @@
       "wowheadUrl": "https://www.wowhead.com/classic/spell=439114/guardian-pants",
       "wowheadSpanishSource": "https://www.wowhead.com/classic/es/guide/season-of-discovery/profession-changes-phase-2",
       "wowheadItemUrl": "https://www.wowhead.com/classic/mx/items/armor/leather/class:11/quality:2"
+    },
+    {
+      "id": 49861,
+      "profession": "Leatherworking",
+      "name": "Cuero de tenue resplandor",
+      "nameEn": "Faintly Glowing Leather",
+      "item": 213369,
+      "qty": 1,
+      "r": [
+        [
+          8172,
+          1
+        ],
+        [
+          213370,
+          5
+        ]
+      ],
+      "wowheadSpell": 435819,
+      "wowheadUrl": "https://www.wowhead.com/forever/es/spell=435819/cuero-de-tenue-resplandor",
+      "wowheadItemUrl": "https://www.wowhead.com/forever/es/item=213369",
+      "wowheadEdition": "Forever",
+      "wowheadMaterials": [
+        [
+          8172,
+          1
+        ],
+        [
+          213370,
+          5
+        ]
+      ]
+    },
+    {
+      "id": 49867,
+      "profession": "Leatherworking",
+      "name": "Caperuza de canalizador gneuroconductora",
+      "nameEn": "Gneuro-Conductive Channeler's Hood",
+      "item": 215381,
+      "qty": 1,
+      "r": [
+        [
+          213372,
+          1
+        ],
+        [
+          8172,
+          5
+        ],
+        [
+          213369,
+          5
+        ],
+        [
+          213379,
+          1
+        ]
+      ],
+      "wowheadSpell": 435951,
+      "wowheadUrl": "https://www.wowhead.com/forever/es/spell=435951/caperuza-de-canalizador-gneuroconductora",
+      "wowheadItemUrl": "https://www.wowhead.com/forever/es/item=215381",
+      "wowheadEdition": "Forever",
+      "wowheadMaterials": [
+        [
+          213372,
+          1
+        ],
+        [
+          8172,
+          5
+        ],
+        [
+          213369,
+          5
+        ],
+        [
+          213379,
+          1
+        ]
+      ]
+    },
+    {
+      "id": 49868,
+      "profession": "Leatherworking",
+      "name": "Almófar de escamas hiperconductoras brillante",
+      "nameEn": "Glowing Hyperconductive Scale Coif",
+      "item": 215114,
+      "qty": 1,
+      "r": [
+        [
+          213376,
+          1
+        ],
+        [
+          5785,
+          10
+        ],
+        [
+          213369,
+          5
+        ],
+        [
+          213372,
+          1
+        ]
+      ],
+      "wowheadSpell": 435949,
+      "wowheadUrl": "https://www.wowhead.com/forever/es/spell=435949/almofar-de-escamas-hiperconductoras-brillante",
+      "wowheadItemUrl": "https://www.wowhead.com/forever/es/item=215114",
+      "wowheadEdition": "Forever",
+      "wowheadMaterials": [
+        [
+          213376,
+          1
+        ],
+        [
+          5785,
+          10
+        ],
+        [
+          213369,
+          5
+        ],
+        [
+          213372,
+          1
+        ]
+      ]
     }
   ]
 }
