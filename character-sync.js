@@ -67,6 +67,10 @@
    const latest=file.lastModified+":"+file.size;
    if(!force&&latest===signature)return;
    const snapshot=core.parse(await file.text());
+   if(snapshot.character.name.toLocaleLowerCase()!=="rockpeaks"){
+    label("La última captura corresponde a "+snapshot.character.name+", no a Rockpeaks. No se han sustituido sus datos.");
+    signature=latest;return;
+   }
    if(!bridge.importSnapshot(snapshot)){
     label("La captura del archivo es anterior a la que ya tienes guardada. No se ha sobrescrito.");
    }else{
@@ -91,7 +95,6 @@
    if(!/^RockpeaksBridge\.(lua|json)$/i.test(next.name)){
     label("Selecciona RockpeaksBridge.lua dentro de la carpeta SavedVariables del juego.");return;
    }
-   const previous=handle;
    handle=next;signature=null;refreshButtons(await permission());
    // A saved handle is stored in IndexedDB. If that fails, the active session still works.
    try{await store(handle)}
