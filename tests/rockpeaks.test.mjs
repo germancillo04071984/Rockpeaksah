@@ -6,7 +6,7 @@ import vm from 'node:vm';
 import path from 'node:path';
 const root=path.resolve(process.cwd());
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
-const paths=['business.js','catalog-tools.js','recipes.js','scout-core.js','scout.js','catalog-ui.js'];
+const paths=['business.js','catalog-tools.js','recipes.js','scout-core.js','scout.js','catalog-ui.js','recipe-tabs.js'];
 const html=read('index.html');
 const coreCtx={window:{}};
 vm.runInNewContext(read('scout-core.js'),coreCtx);
@@ -31,6 +31,16 @@ test('All script references exist and load in dependency order',()=>{
  assert.ok(references.indexOf('catalog-tools.js')<references.indexOf('recipes.js'));
  assert.ok(references.indexOf('scout-core.js')<references.indexOf('scout.js'));
  assert.ok(references.indexOf('scout.js')<references.indexOf('catalog-ui.js'));
+ assert.ok(references.indexOf('catalog-ui.js')<references.indexOf('recipe-tabs.js'));
+});
+test('Recipe workspace exposes three accessible subtabs with market scanner as default',()=>{
+ const tabs=read('recipe-tabs.js');
+ assert.match(tabs,/role","tablist"/);
+ assert.match(tabs,/opportunities/);
+ assert.match(tabs,/catalogue/);
+ assert.match(tabs,/translations/);
+ assert.match(tabs,/select\("opportunities"\)/);
+ assert.match(html,/#panel-recipes>\.card\[hidden\]/);
 });
 test('NPC profit uses real vendor value and no auction fee',()=>{
  const result=core.scan(sampleRecipes,market,{channel:'npc',fee:5});
