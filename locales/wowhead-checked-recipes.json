@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "note": "Los ID 49957/49958/49959 son los identificadores de recetas del catálogo comercial; no son los ID de hechizo de Wowhead. Se contrastan profesión, ID de producto, cantidad fabricada y todos los reactivos por ID y cantidad. Wowhead Classic SoD no demuestra que la receta esté aprendida ni disponible actualmente en Forever.",
+  "entries": [
+    {
+      "id": 49957,
+      "profession": "Leatherworking",
+      "name": "Brazales de cuero de guardián",
+      "nameEn": "Guardian Leather Bracers",
+      "item": 217263,
+      "qty": 1,
+      "r": [
+        [
+          4234,
+          6
+        ],
+        [
+          4236,
+          2
+        ],
+        [
+          4291,
+          1
+        ]
+      ],
+      "wowheadSpell": 439110,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=439110/brazales-de-cuero-de-guardi%C3%A1n",
+      "wowheadItemUrl": "https://www.wowhead.com/classic/es/item=217263/brazales-de-cuero-de-guardi%C3%A1n"
+    },
+    {
+      "id": 49958,
+      "profession": "Leatherworking",
+      "name": "Cinturón de guardián",
+      "nameEn": "Guardian Belt",
+      "item": 217265,
+      "qty": 1,
+      "r": [
+        [
+          4236,
+          2
+        ],
+        [
+          4234,
+          4
+        ],
+        [
+          2321,
+          1
+        ],
+        [
+          7071,
+          1
+        ]
+      ],
+      "wowheadSpell": 439112,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=439112/cintur%C3%B3n-de-guardi%C3%A1n",
+      "wowheadItemUrl": "https://www.wowhead.com/classic/es/item=217265/cintur%C3%B3n-de-guardi%C3%A1n"
+    },
+    {
+      "id": 49959,
+      "profession": "Leatherworking",
+      "name": "Pantalones de guardián",
+      "nameEn": "Guardian Pants",
+      "item": 217267,
+      "qty": 1,
+      "r": [
+        [
+          4234,
+          12
+        ],
+        [
+          4305,
+          2
+        ],
+        [
+          2321,
+          2
+        ]
+      ],
+      "wowheadSpell": 439114,
+      "wowheadUrl": "https://www.wowhead.com/classic/spell=439114/guardian-pants",
+      "wowheadSpanishSource": "https://www.wowhead.com/classic/es/guide/season-of-discovery/profession-changes-phase-2",
+      "wowheadItemUrl": "https://www.wowhead.com/classic/mx/items/armor/leather/class:11/quality:2"
+    }
+  ]
+}
