@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "date": "2026-11-22",
-  "note": "Los identificadores de recetas comerciales y de hechizos Wowhead son independientes. Todas las entradas están verificadas por profesión, nombre inglés, producto, cantidad y reactivos. Los últimos 25 nombres proceden de las respuestas independientes de las fichas españolas (locale=6) e inglesas (locale=0) de Wowhead Classic, comparadas automáticamente con el catálogo de Forever. Esto no implica que Rockpeaks tenga esas recetas aprendidas ni que estén disponibles para fabricarlas.",
+  "note": "The market recipe ID and Wowhead spell ID are not equivalent. Each stored entry matches the live crafting recipe's profession, product item ID, output quantity, all reagent IDs and quantities; the newest 50 additionally use independent Wowhead ES and EN JSON tooltips. These mappings do not imply the recipe is available or learned in the user's WoW Forever client.",
   "entries": [
     {
       "id": 49957,
@@ -1787,6 +1787,2389 @@
       ],
       "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/435953?locale=6",
       "validation": "Independent Spanish/English Wowhead localized spell tooltips: name, product ID and full reagent identity+quantity checked against live market catalogue"
+    },
+    {
+      "id": 51674,
+      "profession": "Alchemy",
+      "name": "Frasco de pesar implacable",
+      "nameEn": "Flask of Unyielding Sorrow",
+      "item": 233966,
+      "qty": 1,
+      "r": [
+        [
+          16203,
+          1
+        ],
+        [
+          234012,
+          1
+        ],
+        [
+          13511,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSpell": 1213544,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213544",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          16203,
+          1
+        ],
+        [
+          234012,
+          1
+        ],
+        [
+          13511,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213544?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213544?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51676,
+      "profession": "Alchemy",
+      "name": "Frasco de conocimiento ancestral",
+      "nameEn": "Flask of Ancient Knowledge",
+      "item": 233964,
+      "qty": 1,
+      "r": [
+        [
+          16203,
+          1
+        ],
+        [
+          234011,
+          1
+        ],
+        [
+          13512,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSpell": 1213546,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213546",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          16203,
+          1
+        ],
+        [
+          234011,
+          1
+        ],
+        [
+          13512,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213546?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213546?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51677,
+      "profession": "Alchemy",
+      "name": "Frasco de locura",
+      "nameEn": "Flask of Madness",
+      "item": 233962,
+      "qty": 1,
+      "r": [
+        [
+          16203,
+          1
+        ],
+        [
+          234010,
+          1
+        ],
+        [
+          13513,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSpell": 1213552,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213552",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          16203,
+          1
+        ],
+        [
+          234010,
+          1
+        ],
+        [
+          13513,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213552?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213552?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51675,
+      "profession": "Alchemy",
+      "name": "Frasco de los dioses antiguos",
+      "nameEn": "Flask of the Old Gods",
+      "item": 233965,
+      "qty": 1,
+      "r": [
+        [
+          16203,
+          1
+        ],
+        [
+          234006,
+          1
+        ],
+        [
+          13510,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSpell": 1213548,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213548",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          16203,
+          1
+        ],
+        [
+          234006,
+          1
+        ],
+        [
+          13510,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213548?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213548?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51678,
+      "profession": "Alchemy",
+      "name": "Elixir de tejón",
+      "nameEn": "Elixir of the Honey Badger",
+      "item": 233967,
+      "qty": 1,
+      "r": [
+        [
+          13465,
+          2
+        ],
+        [
+          234012,
+          2
+        ],
+        [
+          234011,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSpell": 1213559,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213559",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          13465,
+          2
+        ],
+        [
+          234012,
+          2
+        ],
+        [
+          234011,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213559?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213559?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51680,
+      "profession": "Alchemy",
+      "name": "Elixir de brazo de hierro",
+      "nameEn": "Elixir of the Ironside",
+      "item": 233969,
+      "qty": 1,
+      "r": [
+        [
+          13467,
+          2
+        ],
+        [
+          234012,
+          2
+        ],
+        [
+          234011,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSpell": 1213565,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213565",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          13467,
+          2
+        ],
+        [
+          234012,
+          2
+        ],
+        [
+          234011,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213565?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213565?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51679,
+      "profession": "Alchemy",
+      "name": "Elixir del señor de la magia",
+      "nameEn": "Elixir of the Mage-Lord",
+      "item": 233968,
+      "qty": 1,
+      "r": [
+        [
+          13466,
+          2
+        ],
+        [
+          234012,
+          2
+        ],
+        [
+          234011,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSpell": 1213563,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213563",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          13466,
+          2
+        ],
+        [
+          234012,
+          2
+        ],
+        [
+          234011,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213563?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213563?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51681,
+      "profession": "Alchemy",
+      "name": "Elixir de prontitud",
+      "nameEn": "Elixir of Alacrity",
+      "item": 233977,
+      "qty": 1,
+      "r": [
+        [
+          13463,
+          2
+        ],
+        [
+          234012,
+          2
+        ],
+        [
+          234011,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSpell": 1213571,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213571",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          13463,
+          2
+        ],
+        [
+          234012,
+          2
+        ],
+        [
+          234011,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213571?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213571?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51641,
+      "profession": "Leatherworking",
+      "name": "Brazales acecharenas",
+      "nameEn": "Sandstalker Bracers",
+      "item": 234294,
+      "qty": 1,
+      "r": [
+        [
+          20501,
+          2
+        ],
+        [
+          20498,
+          20
+        ],
+        [
+          18512,
+          4
+        ],
+        [
+          19726,
+          4
+        ]
+      ],
+      "wowheadSpell": 1213717,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213717",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          20501,
+          2
+        ],
+        [
+          20498,
+          20
+        ],
+        [
+          18512,
+          4
+        ],
+        [
+          19726,
+          4
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213717?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213717?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51643,
+      "profession": "Leatherworking",
+      "name": "Peto acecharenas",
+      "nameEn": "Sandstalker Breastplate",
+      "item": 234298,
+      "qty": 1,
+      "r": [
+        [
+          20501,
+          5
+        ],
+        [
+          20498,
+          40
+        ],
+        [
+          18512,
+          4
+        ],
+        [
+          15407,
+          4
+        ],
+        [
+          19726,
+          8
+        ]
+      ],
+      "wowheadSpell": 1213723,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213723",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          20501,
+          5
+        ],
+        [
+          20498,
+          40
+        ],
+        [
+          18512,
+          4
+        ],
+        [
+          15407,
+          4
+        ],
+        [
+          19726,
+          8
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213723?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213723?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51644,
+      "profession": "Leatherworking",
+      "name": "Brazales escupefuego",
+      "nameEn": "Spitfire Bracers",
+      "item": 234300,
+      "qty": 1,
+      "r": [
+        [
+          20500,
+          2
+        ],
+        [
+          20498,
+          20
+        ],
+        [
+          7078,
+          2
+        ],
+        [
+          19726,
+          4
+        ]
+      ],
+      "wowheadSpell": 1213726,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213726",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          20500,
+          2
+        ],
+        [
+          20498,
+          20
+        ],
+        [
+          7078,
+          2
+        ],
+        [
+          19726,
+          4
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213726?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213726?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51642,
+      "profession": "Leatherworking",
+      "name": "Guanteletes acecharenas",
+      "nameEn": "Sandstalker Gauntlets",
+      "item": 234296,
+      "qty": 1,
+      "r": [
+        [
+          20501,
+          4
+        ],
+        [
+          20498,
+          30
+        ],
+        [
+          18512,
+          4
+        ],
+        [
+          15407,
+          2
+        ],
+        [
+          19726,
+          6
+        ]
+      ],
+      "wowheadSpell": 1213720,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213720",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          20501,
+          4
+        ],
+        [
+          20498,
+          30
+        ],
+        [
+          18512,
+          4
+        ],
+        [
+          15407,
+          2
+        ],
+        [
+          19726,
+          6
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213720?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213720?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51646,
+      "profession": "Leatherworking",
+      "name": "Peto escupefuego",
+      "nameEn": "Spitfire Breastplate",
+      "item": 234304,
+      "qty": 1,
+      "r": [
+        [
+          20500,
+          4
+        ],
+        [
+          20498,
+          40
+        ],
+        [
+          7078,
+          2
+        ],
+        [
+          15407,
+          4
+        ],
+        [
+          19726,
+          8
+        ]
+      ],
+      "wowheadSpell": 1213731,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213731",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          20500,
+          4
+        ],
+        [
+          20498,
+          40
+        ],
+        [
+          7078,
+          2
+        ],
+        [
+          15407,
+          4
+        ],
+        [
+          19726,
+          8
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213731?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213731?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51645,
+      "profession": "Leatherworking",
+      "name": "Guanteletes escupefuego",
+      "nameEn": "Spitfire Gauntlets",
+      "item": 234302,
+      "qty": 1,
+      "r": [
+        [
+          20500,
+          3
+        ],
+        [
+          20498,
+          30
+        ],
+        [
+          7078,
+          2
+        ],
+        [
+          15407,
+          2
+        ],
+        [
+          19726,
+          6
+        ]
+      ],
+      "wowheadSpell": 1213728,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213728",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          20500,
+          3
+        ],
+        [
+          20498,
+          30
+        ],
+        [
+          7078,
+          2
+        ],
+        [
+          15407,
+          2
+        ],
+        [
+          19726,
+          6
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213728?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213728?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51648,
+      "profession": "Leatherworking",
+      "name": "Botas zarzal",
+      "nameEn": "Bramblewood Boots",
+      "item": 234308,
+      "qty": 1,
+      "r": [
+        [
+          12810,
+          6
+        ],
+        [
+          18512,
+          3
+        ],
+        [
+          12803,
+          4
+        ],
+        [
+          15407,
+          4
+        ],
+        [
+          19726,
+          6
+        ]
+      ],
+      "wowheadSpell": 1213736,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213736",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          12810,
+          6
+        ],
+        [
+          18512,
+          3
+        ],
+        [
+          12803,
+          4
+        ],
+        [
+          15407,
+          4
+        ],
+        [
+          19726,
+          6
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213736?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213736?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51647,
+      "profession": "Leatherworking",
+      "name": "Cinturón zarzal",
+      "nameEn": "Bramblewood Belt",
+      "item": 234306,
+      "qty": 1,
+      "r": [
+        [
+          12810,
+          6
+        ],
+        [
+          12803,
+          4
+        ],
+        [
+          15407,
+          2
+        ],
+        [
+          19726,
+          4
+        ]
+      ],
+      "wowheadSpell": 1213734,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213734",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          12810,
+          6
+        ],
+        [
+          12803,
+          4
+        ],
+        [
+          15407,
+          2
+        ],
+        [
+          19726,
+          4
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213734?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213734?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51649,
+      "profession": "Leatherworking",
+      "name": "Yelmo zarzal",
+      "nameEn": "Bramblewood Helm",
+      "item": 234310,
+      "qty": 1,
+      "r": [
+        [
+          12810,
+          14
+        ],
+        [
+          19726,
+          7
+        ],
+        [
+          12803,
+          4
+        ],
+        [
+          15407,
+          4
+        ]
+      ],
+      "wowheadSpell": 1213738,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213738",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          12810,
+          14
+        ],
+        [
+          19726,
+          7
+        ],
+        [
+          12803,
+          4
+        ],
+        [
+          15407,
+          4
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213738?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213738?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51871,
+      "profession": "Leatherworking",
+      "name": "Coraza de escamas heladas",
+      "nameEn": "Icy Scale Breastplate",
+      "item": 236699,
+      "qty": 1,
+      "r": [
+        [
+          236656,
+          7
+        ],
+        [
+          15408,
+          24
+        ],
+        [
+          7080,
+          2
+        ],
+        [
+          15407,
+          4
+        ],
+        [
+          14227,
+          4
+        ]
+      ],
+      "wowheadSpell": 1223774,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1223774",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          236656,
+          7
+        ],
+        [
+          15408,
+          24
+        ],
+        [
+          7080,
+          2
+        ],
+        [
+          15407,
+          4
+        ],
+        [
+          14227,
+          4
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1223774?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1223774?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51872,
+      "profession": "Leatherworking",
+      "name": "Guanteletes de escamas heladas",
+      "nameEn": "Icy Scale Gauntlets",
+      "item": 236700,
+      "qty": 1,
+      "r": [
+        [
+          236656,
+          5
+        ],
+        [
+          15408,
+          16
+        ],
+        [
+          7080,
+          2
+        ],
+        [
+          15407,
+          3
+        ],
+        [
+          14227,
+          4
+        ]
+      ],
+      "wowheadSpell": 1223776,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1223776",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          236656,
+          5
+        ],
+        [
+          15408,
+          16
+        ],
+        [
+          7080,
+          2
+        ],
+        [
+          15407,
+          3
+        ],
+        [
+          14227,
+          4
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1223776?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1223776?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51873,
+      "profession": "Leatherworking",
+      "name": "Brazales de escamas heladas",
+      "nameEn": "Icy Scale Bracers",
+      "item": 236698,
+      "qty": 1,
+      "r": [
+        [
+          236656,
+          4
+        ],
+        [
+          15408,
+          16
+        ],
+        [
+          7080,
+          2
+        ],
+        [
+          15407,
+          2
+        ],
+        [
+          14227,
+          4
+        ]
+      ],
+      "wowheadSpell": 1223778,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1223778",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          236656,
+          4
+        ],
+        [
+          15408,
+          16
+        ],
+        [
+          7080,
+          2
+        ],
+        [
+          15407,
+          2
+        ],
+        [
+          14227,
+          4
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1223778?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1223778?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51874,
+      "profession": "Leatherworking",
+      "name": "Guerrera polar",
+      "nameEn": "Polar Tunic",
+      "item": 236702,
+      "qty": 1,
+      "r": [
+        [
+          236656,
+          7
+        ],
+        [
+          12810,
+          16
+        ],
+        [
+          7080,
+          2
+        ],
+        [
+          15407,
+          4
+        ],
+        [
+          14227,
+          4
+        ]
+      ],
+      "wowheadSpell": 1223780,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1223780",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          236656,
+          7
+        ],
+        [
+          12810,
+          16
+        ],
+        [
+          7080,
+          2
+        ],
+        [
+          15407,
+          4
+        ],
+        [
+          14227,
+          4
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1223780?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1223780?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51875,
+      "profession": "Leatherworking",
+      "name": "Guantes polares",
+      "nameEn": "Polar Gloves",
+      "item": 236703,
+      "qty": 1,
+      "r": [
+        [
+          236656,
+          5
+        ],
+        [
+          12810,
+          12
+        ],
+        [
+          7080,
+          2
+        ],
+        [
+          15407,
+          3
+        ],
+        [
+          14227,
+          4
+        ]
+      ],
+      "wowheadSpell": 1223782,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1223782",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          236656,
+          5
+        ],
+        [
+          12810,
+          12
+        ],
+        [
+          7080,
+          2
+        ],
+        [
+          15407,
+          3
+        ],
+        [
+          14227,
+          4
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1223782?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1223782?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51876,
+      "profession": "Leatherworking",
+      "name": "Brazales polares",
+      "nameEn": "Polar Bracers",
+      "item": 236701,
+      "qty": 1,
+      "r": [
+        [
+          236656,
+          4
+        ],
+        [
+          12810,
+          12
+        ],
+        [
+          7080,
+          2
+        ],
+        [
+          15407,
+          2
+        ],
+        [
+          14227,
+          4
+        ]
+      ],
+      "wowheadSpell": 1223784,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1223784",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          236656,
+          4
+        ],
+        [
+          12810,
+          12
+        ],
+        [
+          7080,
+          2
+        ],
+        [
+          15407,
+          2
+        ],
+        [
+          14227,
+          4
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1223784?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1223784?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51891,
+      "profession": "Leatherworking",
+      "name": "Bandana de infiltrado Escarlata",
+      "nameEn": "Scarlet Infiltrator's Bandana",
+      "item": 238272,
+      "qty": 1,
+      "r": [
+        [
+          12938,
+          1
+        ],
+        [
+          12811,
+          2
+        ],
+        [
+          8170,
+          12
+        ]
+      ],
+      "wowheadSpell": 1224615,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1224615",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          12938,
+          1
+        ],
+        [
+          12811,
+          2
+        ],
+        [
+          8170,
+          12
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1224615?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1224615?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51892,
+      "profession": "Leatherworking",
+      "name": "Hombreras de infiltrado Escarlata",
+      "nameEn": "Scarlet Infiltrator's Shoulderpads",
+      "item": 238273,
+      "qty": 1,
+      "r": [
+        [
+          12811,
+          1
+        ],
+        [
+          8170,
+          10
+        ]
+      ],
+      "wowheadSpell": 1224616,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1224616",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          12811,
+          1
+        ],
+        [
+          8170,
+          10
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1224616?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1224616?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51893,
+      "profession": "Leatherworking",
+      "name": "Jubón de infiltrado Escarlata",
+      "nameEn": "Scarlet Infiltrator's Vest",
+      "item": 238274,
+      "qty": 1,
+      "r": [
+        [
+          12938,
+          1
+        ],
+        [
+          12811,
+          1
+        ],
+        [
+          8170,
+          12
+        ]
+      ],
+      "wowheadSpell": 1224617,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1224617",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          12938,
+          1
+        ],
+        [
+          12811,
+          1
+        ],
+        [
+          8170,
+          12
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1224617?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1224617?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51896,
+      "profession": "Leatherworking",
+      "name": "Cinturón de infiltrado Escarlata",
+      "nameEn": "Scarlet Infiltrator's Belt",
+      "item": 238277,
+      "qty": 1,
+      "r": [
+        [
+          12811,
+          1
+        ],
+        [
+          8170,
+          10
+        ]
+      ],
+      "wowheadSpell": 1224620,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1224620",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          12811,
+          1
+        ],
+        [
+          8170,
+          10
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1224620?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1224620?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51897,
+      "profession": "Leatherworking",
+      "name": "Pantalones de infiltrado Escarlata",
+      "nameEn": "Scarlet Infiltrator's Trousers",
+      "item": 238278,
+      "qty": 1,
+      "r": [
+        [
+          12938,
+          1
+        ],
+        [
+          12811,
+          1
+        ],
+        [
+          8170,
+          12
+        ]
+      ],
+      "wowheadSpell": 1224621,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1224621",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          12938,
+          1
+        ],
+        [
+          12811,
+          1
+        ],
+        [
+          8170,
+          12
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1224621?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1224621?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51904,
+      "profession": "Leatherworking",
+      "name": "Cinto de cazador Escarlata",
+      "nameEn": "Scarlet Huntsman's Clasp",
+      "item": 238285,
+      "qty": 1,
+      "r": [
+        [
+          12811,
+          1
+        ],
+        [
+          15408,
+          10
+        ]
+      ],
+      "wowheadSpell": 1224628,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1224628",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          12811,
+          1
+        ],
+        [
+          15408,
+          10
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1224628?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1224628?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51894,
+      "profession": "Leatherworking",
+      "name": "Brazales de infiltrado Escarlata",
+      "nameEn": "Scarlet Infiltrator's Bracers",
+      "item": 238275,
+      "qty": 1,
+      "r": [
+        [
+          8170,
+          8
+        ]
+      ],
+      "wowheadSpell": 1224618,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1224618",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          8170,
+          8
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1224618?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1224618?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51895,
+      "profession": "Leatherworking",
+      "name": "Guantes de infiltrado Escarlata",
+      "nameEn": "Scarlet Infiltrator's Gloves",
+      "item": 238276,
+      "qty": 1,
+      "r": [
+        [
+          12811,
+          1
+        ],
+        [
+          8170,
+          10
+        ]
+      ],
+      "wowheadSpell": 1224619,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1224619",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          12811,
+          1
+        ],
+        [
+          8170,
+          10
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1224619?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1224619?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51900,
+      "profession": "Leatherworking",
+      "name": "Espaldares de cazador Escarlata",
+      "nameEn": "Scarlet Huntsman's Pauldrons",
+      "item": 238281,
+      "qty": 1,
+      "r": [
+        [
+          12811,
+          1
+        ],
+        [
+          15408,
+          10
+        ]
+      ],
+      "wowheadSpell": 1224624,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1224624",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          12811,
+          1
+        ],
+        [
+          15408,
+          10
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1224624?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1224624?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51905,
+      "profession": "Leatherworking",
+      "name": "Musleras de cazador Escarlata",
+      "nameEn": "Scarlet Huntsman's Legguards",
+      "item": 238286,
+      "qty": 1,
+      "r": [
+        [
+          12938,
+          1
+        ],
+        [
+          12811,
+          1
+        ],
+        [
+          15408,
+          12
+        ]
+      ],
+      "wowheadSpell": 1224629,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1224629",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          12938,
+          1
+        ],
+        [
+          12811,
+          1
+        ],
+        [
+          15408,
+          12
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1224629?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1224629?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51902,
+      "profession": "Leatherworking",
+      "name": "Guardamuñecas de cazador Escarlata",
+      "nameEn": "Scarlet Huntsman's Wristguards",
+      "item": 238283,
+      "qty": 1,
+      "r": [
+        [
+          15408,
+          8
+        ]
+      ],
+      "wowheadSpell": 1224626,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1224626",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          15408,
+          8
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1224626?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1224626?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51898,
+      "profession": "Leatherworking",
+      "name": "Zapatos de infiltrado Escarlata",
+      "nameEn": "Scarlet Infiltrator's Shoes",
+      "item": 238279,
+      "qty": 1,
+      "r": [
+        [
+          12811,
+          1
+        ],
+        [
+          8170,
+          10
+        ]
+      ],
+      "wowheadSpell": 1224622,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1224622",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          12811,
+          1
+        ],
+        [
+          8170,
+          10
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1224622?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1224622?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 52107,
+      "profession": "Leatherworking",
+      "name": "Carcaj Escarlata",
+      "nameEn": "Scarlet Quiver",
+      "item": 238925,
+      "qty": 1,
+      "r": [
+        [
+          12811,
+          1
+        ],
+        [
+          8170,
+          24
+        ],
+        [
+          15407,
+          2
+        ]
+      ],
+      "wowheadSpell": 1226689,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1226689",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          12811,
+          1
+        ],
+        [
+          8170,
+          24
+        ],
+        [
+          15407,
+          2
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1226689?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1226689?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 49956,
+      "profession": "Leatherworking",
+      "name": "Toga de gran vudú",
+      "nameEn": "Big Voodoo Robe",
+      "item": 217261,
+      "qty": 1,
+      "r": [
+        [
+          4304,
+          10
+        ],
+        [
+          8151,
+          4
+        ],
+        [
+          8343,
+          1
+        ]
+      ],
+      "wowheadSpell": 439108,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=439108",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          4304,
+          10
+        ],
+        [
+          8151,
+          4
+        ],
+        [
+          8343,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/439108?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/439108?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 49960,
+      "profession": "Leatherworking",
+      "name": "Coraza de escamas de tortuga",
+      "nameEn": "Turtle Scale Breastplate",
+      "item": 217268,
+      "qty": 1,
+      "r": [
+        [
+          4304,
+          6
+        ],
+        [
+          8167,
+          12
+        ],
+        [
+          8343,
+          1
+        ]
+      ],
+      "wowheadSpell": 439116,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=439116",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          4304,
+          6
+        ],
+        [
+          8167,
+          12
+        ],
+        [
+          8343,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/439116?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/439116?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 49961,
+      "profession": "Leatherworking",
+      "name": "Guantes de escamas de tortuga",
+      "nameEn": "Turtle Scale Gloves",
+      "item": 217270,
+      "qty": 1,
+      "r": [
+        [
+          4304,
+          6
+        ],
+        [
+          8167,
+          8
+        ],
+        [
+          8343,
+          1
+        ]
+      ],
+      "wowheadSpell": 439118,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=439118",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          4304,
+          6
+        ],
+        [
+          8167,
+          8
+        ],
+        [
+          8343,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/439118?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/439118?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51365,
+      "profession": "Leatherworking",
+      "name": "Sobrehombros de escamas de dragón azul pulidos",
+      "nameEn": "Honed Blue Dragonscale Shoulders",
+      "item": 227873,
+      "qty": 1,
+      "r": [
+        [
+          8170,
+          28
+        ],
+        [
+          15415,
+          30
+        ],
+        [
+          12810,
+          2
+        ],
+        [
+          15407,
+          1
+        ],
+        [
+          14341,
+          1
+        ]
+      ],
+      "wowheadSpell": 461645,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=461645",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          8170,
+          28
+        ],
+        [
+          15415,
+          30
+        ],
+        [
+          12810,
+          2
+        ],
+        [
+          15407,
+          1
+        ],
+        [
+          14341,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/461645?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/461645?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51382,
+      "profession": "Leatherworking",
+      "name": "Disfraz de ogro Gordok sintético",
+      "nameEn": "Synthetic Gordok Ogre Suit",
+      "item": 227855,
+      "qty": 1,
+      "r": [
+        [
+          8170,
+          4
+        ],
+        [
+          14048,
+          2
+        ],
+        [
+          18240,
+          1
+        ],
+        [
+          14341,
+          1
+        ]
+      ],
+      "wowheadSpell": 461692,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=461692",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          8170,
+          4
+        ],
+        [
+          14048,
+          2
+        ],
+        [
+          18240,
+          1
+        ],
+        [
+          14341,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/461692?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/461692?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51384,
+      "profession": "Leatherworking",
+      "name": "Avambrazos de vuelo presto",
+      "nameEn": "Swift Flight Vambraces",
+      "item": 227883,
+      "qty": 1,
+      "r": [
+        [
+          8170,
+          12
+        ],
+        [
+          18512,
+          8
+        ],
+        [
+          15420,
+          60
+        ],
+        [
+          15407,
+          4
+        ],
+        [
+          14341,
+          4
+        ]
+      ],
+      "wowheadSpell": 461706,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=461706",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          8170,
+          12
+        ],
+        [
+          18512,
+          8
+        ],
+        [
+          15420,
+          60
+        ],
+        [
+          15407,
+          4
+        ],
+        [
+          14341,
+          4
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/461706?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/461706?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51070,
+      "profession": "Alchemy",
+      "name": "Frasco de Sueños Inquietos",
+      "nameEn": "Flask of Restless Dreams",
+      "item": 222952,
+      "qty": 1,
+      "r": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSpell": 448085,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=448085",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/448085?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/448085?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51661,
+      "profession": "Leatherworking",
+      "name": "Refuerzo para armadura de quitina resplandeciente",
+      "nameEn": "Glowing Chitin Armor Kit",
+      "item": 233802,
+      "qty": 1,
+      "r": [
+        [
+          234007,
+          5
+        ],
+        [
+          14342,
+          3
+        ],
+        [
+          18251,
+          1
+        ]
+      ],
+      "wowheadSpell": 1213513,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213513",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          234007,
+          5
+        ],
+        [
+          14342,
+          3
+        ],
+        [
+          18251,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213513?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213513?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 51662,
+      "profession": "Leatherworking",
+      "name": "Refuerzo para armadura de quitina afilada",
+      "nameEn": "Sharpened Chitin Armor Kit",
+      "item": 233803,
+      "qty": 1,
+      "r": [
+        [
+          234007,
+          5
+        ],
+        [
+          15407,
+          3
+        ],
+        [
+          18251,
+          1
+        ]
+      ],
+      "wowheadSpell": 1213519,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=1213519",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          234007,
+          5
+        ],
+        [
+          15407,
+          3
+        ],
+        [
+          18251,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/1213519?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/1213519?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 49255,
+      "profession": "Alchemy",
+      "name": "Elixir de arrepentimiento fusionado",
+      "nameEn": "Elixir of Coalesced Regret",
+      "item": 210708,
+      "qty": 1,
+      "r": [
+        [
+          3820,
+          5
+        ],
+        [
+          3372,
+          1
+        ],
+        [
+          3369,
+          5
+        ],
+        [
+          11083,
+          1
+        ]
+      ],
+      "wowheadSpell": 426607,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=426607",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          3820,
+          5
+        ],
+        [
+          3372,
+          1
+        ],
+        [
+          3369,
+          5
+        ],
+        [
+          11083,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/426607?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/426607?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 50555,
+      "profession": "Alchemy",
+      "name": "Frasco de pesadillas perpetuas",
+      "nameEn": "Flask of Everlasting Nightmares",
+      "item": 221024,
+      "qty": 1,
+      "r": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSpell": 446226,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=446226",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/446226?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/446226?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 49326,
+      "profession": "Leatherworking",
+      "name": "Guantes de cuero tocados por el Vacío",
+      "nameEn": "Void-Touched Leather Gloves",
+      "item": 211423,
+      "qty": 1,
+      "r": [
+        [
+          211422,
+          1
+        ],
+        [
+          4253,
+          1
+        ]
+      ],
+      "wowheadSpell": 429354,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=429354",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          211422,
+          1
+        ],
+        [
+          4253,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/429354?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/429354?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 49330,
+      "profession": "Leatherworking",
+      "name": "Guanteletes de cuero tocados por el Vacío",
+      "nameEn": "Void-Touched Leather Gauntlets",
+      "item": 211502,
+      "qty": 1,
+      "r": [
+        [
+          211422,
+          1
+        ],
+        [
+          4253,
+          1
+        ]
+      ],
+      "wowheadSpell": 429869,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=429869",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          211422,
+          1
+        ],
+        [
+          4253,
+          1
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/429869?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/429869?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
+    },
+    {
+      "id": 50560,
+      "profession": "Leatherworking",
+      "name": "Guardahombros de anillas cacofónicas",
+      "nameEn": "Cacophonous Chain Shoulderguards",
+      "item": 220743,
+      "qty": 1,
+      "r": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          15416,
+          4
+        ],
+        [
+          8170,
+          10
+        ]
+      ],
+      "wowheadSpell": 446186,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=446186",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          221021,
+          10
+        ],
+        [
+          220688,
+          1
+        ],
+        [
+          15416,
+          4
+        ],
+        [
+          8170,
+          10
+        ]
+      ],
+      "wowheadSource": "https://nether.wowhead.com/classic/tooltip/spell/446186?locale=6",
+      "wowheadEnglishSource": "https://nether.wowhead.com/classic/tooltip/spell/446186?locale=0",
+      "validation": "Exact localized WoW Classic spell name in ES/EN, matching market English name, profession, product ID, output quantity and all reagent IDs and counts",
+      "batch": "wowhead-50-2026-11-22"
     }
-  ]
+  ],
+  "updatedAt": "2026-11-22"
 }
