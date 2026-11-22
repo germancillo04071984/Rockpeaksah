@@ -207,10 +207,10 @@ test('Recipe translation is joined by full manufacturing identity, never collidi
  const notMatched=validatedNames(market,[client[0]]);
  assert.equal(Object.keys(notMatched.names).length,0);
 });
-test('Forty-one verified Wowhead recipes include independently matched batch of 25',()=>{
+test('Ninety-one sourced Wowhead translations include the 25- and 50-recipe batches',()=>{
  const dictionary=JSON.parse(read('locales/esES.json'));
  const provenance=JSON.parse(read('locales/wowhead-checked-recipes.json'));
- assert.equal(provenance.entries.length,41);
+ assert.equal(provenance.entries.length,91);
  const expected=new Map([
   [49957,"Brazales de cuero de guardián"],
   [49958,"Cinturón de guardián"],
@@ -229,14 +229,17 @@ test('Forty-one verified Wowhead recipes include independently matched batch of 
   [49866,"Capucha gneurovinculada brillante"],
   [51368,"Coraza de escamas de dragón verde viviente"]
  ]);
- const last25=provenance.entries.slice(16);
+ const last25=provenance.entries.slice(16,41);
+ const last50=provenance.entries.slice(41);
+ assert.equal(last50.length,50);
+ assert.equal(new Set(last50.map(e=>e.id)).size,50);
  assert.equal(last25.length,25);
  const ids=[51367,51369,51371,51373,51372,51364,51366,51393,51394,
   51376,51375,51377,51383,51379,51380,49955,51663,51664,51665,
   51906,51901,51899,51903,52108,49865];
  assert.deepEqual(last25.map(e=>e.id),ids);
  assert.deepEqual([...new Set(provenance.entries.map(e=>e.id))].sort((a,b)=>a-b),
-  [...expected.keys(),...ids].sort((a,b)=>a-b));
+  [...expected.keys(),...ids,...last50.map(e=>e.id)].sort((a,b)=>a-b));
  for(const entry of provenance.entries){
   assert.equal(dictionary.recipes[entry.id],expected.has(entry.id)?expected.get(entry.id):entry.name);
   assert.notEqual(entry.id,entry.wowheadSpell);
@@ -262,6 +265,18 @@ test('Forty-one verified Wowhead recipes include independently matched batch of 
   assert.equal(entry.wowheadSource,"https://nether.wowhead.com/classic/tooltip/spell/"+entry.wowheadSpell+"?locale=6");
   assert.ok(typeof entry.validation==="string"&&entry.validation.includes("reagent"));
  }
+ for(const entry of last50){
+  assert.equal(entry.batch,"wowhead-50-2026-11-22");
+  assert.equal(entry.wowheadEdition,"Classic");
+  assert.equal(dictionary.recipes[entry.id],entry.name);
+  assert.equal(entry.qty,1);
+  assert.deepEqual(entry.r,entry.wowheadMaterials);
+  assert.equal(entry.wowheadUrl,"https://www.wowhead.com/classic/es/spell="+entry.wowheadSpell);
+  assert.equal(entry.wowheadSource,"https://nether.wowhead.com/classic/tooltip/spell/"+entry.wowheadSpell+"?locale=6");
+  assert.equal(entry.wowheadEnglishSource,"https://nether.wowhead.com/classic/tooltip/spell/"+entry.wowheadSpell+"?locale=0");
+ }
+ assert.equal(last50.filter(e=>e.profession==="Alchemy").length,11);
+ assert.equal(last50.filter(e=>e.profession==="Leatherworking").length,39);
 });
 test('Published locale dictionary contains only structure-checked names',()=>{
  const data=JSON.parse(read('locales/esES.json'));
@@ -274,13 +289,14 @@ test('Published locale dictionary contains only structure-checked names',()=>{
  assert.equal(data.items[238639],"Tortilla del alba");
  assert.equal(data.items[213370],"Restos de cuero irradiado");
  assert.equal(Object.keys(data.items).length,1108);
- assert.equal(Object.keys(data.recipes).length,859);
+ assert.equal(Object.keys(data.recipes).length,909);
  assert.equal(data.source.coverage.translatedItems,1108);
- assert.equal(data.source.coverage.translatedRecipes,859);
+ assert.equal(data.source.coverage.translatedRecipes,909);
  assert.ok(data.source.updates.some(x=>x.itemsAdded===19));
  assert.ok(data.source.updates.some(x=>x.recipesAdded===3));
  assert.ok(data.source.updates.some(x=>x.recipesAdded===10));
  assert.ok(data.source.updates.some(x=>x.recipesAdded===25));
+ assert.ok(data.source.updates.some(x=>x.recipesAdded===50));
  assert.notEqual(data.recipes[3928],"Ardilla mecánica");
  assert.ok(Object.keys(data.recipes).length>0);
 });
