@@ -1,4 +1,4 @@
--- Rockpeaks Bridge 0.1.0 for WoW Forever (Interface 16001).
+-- Rockpeaks Bridge 0.2.0 for WoW Forever (Interface 16001).
 -- Read-only. Never sends data over the network, automates auctions or changes game data.
 RockpeaksBridgeRecipes = RockpeaksBridgeRecipes or {}
 
@@ -78,7 +78,23 @@ local function bags()
  return result
 end
 
+local function characterKey()
+ local name=type(UnitName)=="function" and UnitName("player") or ""
+ local realm=type(GetRealmName)=="function" and GetRealmName() or ""
+ if type(name)~="string" or name=="" then return nil end
+ return (type(realm)=="string" and realm or "").."|"..name
+end
+
+local function recipesForCharacter()
+ local key=characterKey()
+ if not key then return nil end
+ if type(RockpeaksBridgeRecipes[key])~="table" then RockpeaksBridgeRecipes[key]={} end
+ return RockpeaksBridgeRecipes[key]
+end
+
 local function gatherKnown()
+ local records=recipesForCharacter()
+ if not records then return end
  local api=C_TradeSkillUI
  if not api or type(api.GetAllRecipeIDs)~="function" or type(api.GetRecipeInfo)~="function" then return end
  local ok,ids=pcall(api.GetAllRecipeIDs)
@@ -87,14 +103,15 @@ local function gatherKnown()
   if type(id)=="number" then
    local success,info=pcall(api.GetRecipeInfo,id)
    if success and type(info)=="table" and info.learned==true then
-    RockpeaksBridgeRecipes[id]={id=id,name=type(info.name)=="string" and info.name or ""}
+    records[id]={id=id,name=type(info.name)=="string" and info.name or ""}
    end
   end
  end
 end
 local function knownList()
  local result={}
- for id,record in pairs(RockpeaksBridgeRecipes) do
+ local records=recipesForCharacter() or {}
+ for id,record in pairs(records) do
   if type(id)=="number" and type(record)=="table" then
    result[#result+1]={id=id,name=type(record.name)=="string" and record.name or ""}
   end
@@ -119,8 +136,13 @@ end
 local frame=CreateFrame("Frame")
 frame:RegisterEvent("TRADE_SKILL_SHOW")
 frame:RegisterEvent("TRADE_SKILL_LIST_UPDATE")
+frame:RegisterEvent("PLAYER_LOGOUT")
 frame:SetScript("OnEvent",function(_,event)
- if event=="TRADE_SKILL_SHOW" or event=="TRADE_SKILL_LIST_UPDATE" then
+ if event=="PLAYER_LOGOUT" then
+  -- SavedVariables are written immediately after PLAYER_LOGOUT.
+  -- The latest capture is therefore persisted without a chat command.
+  pcall(capture)
+ elseif event=="TRADE_SKILL_SHOW" or event=="TRADE_SKILL_LIST_UPDATE" then
   pcall(gatherKnown)
  end
 end)
@@ -134,11 +156,11 @@ SlashCmdList.ROCKPEAKSBRIDGE=function(command)
   say("Captura preparada: "..snapshot.character.name..
    " · profesiones "..#snapshot.professions.." · objetos "..#snapshot.bagItems..
    " · recetas del cliente "..#snapshot.knownRecipes..".")
-  say("Escribe /reload o cierra sesión para guardar RockpeaksBridge.lua.")
+  say("La captura también se guarda automáticamente al cerrar sesión o recargar la interfaz.")
  elseif command=="status" then
   say(type(RockpeaksBridgePayload)=="string" and
-   "Hay una captura guardada en la memoria del addon." or "Todavía no hay captura. Usa /rpbridge export.")
+   "Hay una captura preparada. Al salir del juego se actualizará automáticamente." or "La captura se generará automáticamente al salir del juego.")
  else
-  say("Abre las profesiones al menos una vez. Usa /rpbridge export y después /reload.")
+  say("Captura automática al salir. Abre las profesiones para recopilar recetas. Comando opcional: /rpbridge export.")
  end
 end
