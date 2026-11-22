@@ -238,7 +238,7 @@ test('Forty-one verified Wowhead recipes include independently matched batch of 
  assert.deepEqual([...new Set(provenance.entries.map(e=>e.id))].sort((a,b)=>a-b),
   [...expected.keys(),...ids].sort((a,b)=>a-b));
  for(const entry of provenance.entries){
-  assert.equal(dictionary.recipes[entry.id],expected.get(entry.id));
+  assert.equal(dictionary.recipes[entry.id],expected.has(entry.id)?expected.get(entry.id):entry.name);
   assert.notEqual(entry.id,entry.wowheadSpell);
   assert.ok(entry.wowheadUrl.startsWith("https://www.wowhead.com/"));
   assert.ok(signature({prof:entry.profession,item:entry.item,qty:entry.qty,r:entry.r},"market"));
