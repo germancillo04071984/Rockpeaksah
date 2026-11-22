@@ -39,11 +39,20 @@
   if(knownRecipes.some(r=>!r||!validInt(r.id,1,100000000)||
    (r.name!=null&&(typeof r.name!=="string"||r.name.length>180))))
    throw Error("Recetas del cliente inválidas.");
+  const diagnostics={};
+  const allowedStates=["available","partial","unavailable","unobserved"];
+  for(const field of ["professions","bags","recipes"]){
+   const report=value.diagnostics?.[field];
+   const state=allowedStates.includes(report?.state)?report.state:null;
+   const reason=typeof report?.reason==="string"?report.reason.slice(0,180):"";
+   if(state)diagnostics[field]={state,reason};
+  }
   return {schema,version:1,capturedAt:value.capturedAt,
    character:{name:c.name.trim(),realm:(c.realm||"").trim(),gold:c.gold,level:c.level},
    professions:professions.map(p=>({name:p.name,rank:p.rank,max:p.max,id:validInt(p.id,1,100000000)?p.id:null})),
    bagItems:bagItems.map(item=>({id:item.id,count:item.count})),
-   knownRecipes:knownRecipes.map(r=>({id:r.id,name:r.name||""}))};
+   knownRecipes:knownRecipes.map(r=>({id:r.id,name:r.name||""})),
+   diagnostics};
  }
  function parse(text){return validate(decode(text))}
  g.RockpeaksCharacterCore={schema,decode,validate,parse};
