@@ -101,6 +101,7 @@ try{
  assert.equal(backup.schema,1);
  assert.ok(backup.learned.includes(718));
  await page.locator("#catalog-restore").setInputFiles({name:"learned.json",mimeType:"application/json",buffer:Buffer.from(backupText)});
+ await page.waitForFunction(()=>document.querySelector("#catalog-backup-status")?.textContent.includes("Copia restaurada"),null,{timeout:10000});
  assert.match(await page.locator("#catalog-backup-status").innerText(),/Copia restaurada/);
  await page.locator("#scout-known").check();
  assert.equal(await page.locator(".scout-opportunity").count(),1);
