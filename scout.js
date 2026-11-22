@@ -104,10 +104,13 @@
     const knownButton=document.createElement("button");knownButton.type="button";
     knownButton.textContent=learned?"✓ Ya la aprendí":"Marcar como aprendida";
     knownButton.className="scout-learned";
+    knownButton.dataset.recipeId=String(r.id);
+    knownButton.setAttribute("aria-pressed",String(learned));
     knownButton.onclick=()=>{
      const ok=window.RockpeaksCatalog.setLearned(r.id,!window.RockpeaksCatalog.learned(r.id));
      if(!ok)e("scout-status").textContent="No se pudo guardar en este navegador.";
-     render();
+     // setLearned dispatches rockpeaks:learned-change, which redraws once.
+     // Calling render() here as well replaces the clicked element twice on WebKit.
     };item.append(knownButton);
    }
    item.append(child("p","Materiales "+coins(r.cost)+" · Ingreso neto "+coins(r.revenue)+" · "+r.yieldCount+" unidades"+
