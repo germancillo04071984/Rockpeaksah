@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "date": "2026-11-22",
-  "note": "Los ID de recetas del catálogo de mercado no son los ID de hechizo de Wowhead. Validación por profesión, ID del objeto producido, cantidad e ingredientes por ID/cantidad. Fuentes de Wowhead Classic SoD (primeras 3) y Forever ES (siguientes 3). No implica recetas aprendidas ni disponibles dentro del juego.",
+  "note": "Los ID de recetas del mercado no equivalen a IDs de hechizos de Wowhead. Se contrastan profesión, producto, cantidad fabricada y todos los ingredientes. El lote de diez incluye fuentes Wowhead Forever ES y Classic ES cuando las recetas son equivalentes. Ni el catálogo ni Wowhead demuestran que Rockpeaks haya aprendido o pueda aprender una receta.",
   "entries": [
     {
       "id": 49957,
@@ -210,6 +210,382 @@
           1
         ]
       ]
+    },
+    {
+      "id": 51732,
+      "profession": "Cooking",
+      "name": "Sopa de Garranegra",
+      "nameEn": "Darkclaw Bisque",
+      "item": 232436,
+      "qty": 1,
+      "r": [
+        [
+          13888,
+          1
+        ],
+        [
+          227813,
+          1
+        ]
+      ],
+      "wowheadSpell": 470359,
+      "wowheadUrl": "https://www.wowhead.com/forever/es/spell=470359/sopa-de-garranegra",
+      "wowheadEdition": "Forever",
+      "wowheadMaterials": [
+        [
+          13888,
+          1
+        ],
+        [
+          227813,
+          1
+        ]
+      ],
+      "validation": "Wowhead ES: nombre del hechizo, ingredientes y cantidades; catálogo de mercado: profesión, item ID, producción y reactivos; la equivalencia no prueba disponibilidad en la partida."
+    },
+    {
+      "id": 51733,
+      "profession": "Cooking",
+      "name": "Branquirrojo ahumado",
+      "nameEn": "Smoked Redgill",
+      "item": 232438,
+      "qty": 1,
+      "r": [
+        [
+          13758,
+          1
+        ]
+      ],
+      "wowheadSpell": 470370,
+      "wowheadUrl": "https://www.wowhead.com/forever/es/spell=470370/branquirrojo-ahumado",
+      "wowheadEdition": "Forever",
+      "wowheadMaterials": [
+        [
+          13758,
+          1
+        ]
+      ],
+      "validation": "Wowhead ES: nombre del hechizo, ingredientes y cantidades; catálogo de mercado: profesión, item ID, producción y reactivos; la equivalencia no prueba disponibilidad en la partida."
+    },
+    {
+      "id": 52010,
+      "profession": "Cooking",
+      "name": "Filete de merodeador",
+      "nameEn": "Prowler Steak",
+      "item": 238637,
+      "qty": 2,
+      "r": [
+        [
+          12202,
+          2
+        ],
+        [
+          239016,
+          1
+        ]
+      ],
+      "wowheadSpell": 1225758,
+      "wowheadUrl": "https://www.wowhead.com/forever/es/spell=1225758/filete-de-merodeador",
+      "wowheadEdition": "Forever",
+      "wowheadMaterials": [
+        [
+          12202,
+          2
+        ],
+        [
+          239016,
+          1
+        ]
+      ],
+      "validation": "Wowhead ES: nombre del hechizo, ingredientes y cantidades; catálogo de mercado: profesión, item ID, producción y reactivos; la equivalencia no prueba disponibilidad en la partida."
+    },
+    {
+      "id": 52012,
+      "profession": "Cooking",
+      "name": "Tortilla del alba",
+      "nameEn": "Sunrise Omelette",
+      "item": 238639,
+      "qty": 2,
+      "r": [
+        [
+          12207,
+          2
+        ],
+        [
+          239016,
+          1
+        ]
+      ],
+      "wowheadSpell": 1225760,
+      "wowheadUrl": "https://www.wowhead.com/forever/es/spell=1225760/tortilla-del-alba",
+      "wowheadEdition": "Forever",
+      "wowheadMaterials": [
+        [
+          12207,
+          2
+        ],
+        [
+          239016,
+          1
+        ]
+      ],
+      "validation": "Wowhead ES: nombre del hechizo, ingredientes y cantidades; catálogo de mercado: profesión, item ID, producción y reactivos; la equivalencia no prueba disponibilidad en la partida."
+    },
+    {
+      "id": 52014,
+      "profession": "Cooking",
+      "name": "Festín de pez moteado",
+      "nameEn": "Specklefin Feast",
+      "item": 238641,
+      "qty": 1,
+      "r": [
+        [
+          4603,
+          12
+        ],
+        [
+          12184,
+          4
+        ],
+        [
+          6362,
+          3
+        ],
+        [
+          239017,
+          1
+        ]
+      ],
+      "wowheadSpell": 1225762,
+      "wowheadUrl": "https://www.wowhead.com/forever/es/spell=1225762/festin-de-pez-moteado",
+      "wowheadEdition": "Forever",
+      "wowheadMaterials": [
+        [
+          4603,
+          12
+        ],
+        [
+          12184,
+          4
+        ],
+        [
+          6362,
+          3
+        ],
+        [
+          239017,
+          1
+        ]
+      ],
+      "validation": "Wowhead ES: nombre del hechizo, ingredientes y cantidades; catálogo de mercado: profesión, item ID, producción y reactivos; la equivalencia no prueba disponibilidad en la partida."
+    },
+    {
+      "id": 52015,
+      "profession": "Cooking",
+      "name": "Gran festín de langostas",
+      "nameEn": "Grand Lobster Banquet",
+      "item": 238642,
+      "qty": 1,
+      "r": [
+        [
+          13888,
+          12
+        ],
+        [
+          3712,
+          4
+        ],
+        [
+          3404,
+          3
+        ],
+        [
+          239017,
+          1
+        ]
+      ],
+      "wowheadSpell": 1225763,
+      "wowheadUrl": "https://www.wowhead.com/forever/es/spell=1225763/gran-festin-de-langostas",
+      "wowheadEdition": "Forever",
+      "wowheadMaterials": [
+        [
+          13888,
+          12
+        ],
+        [
+          3712,
+          4
+        ],
+        [
+          3404,
+          3
+        ],
+        [
+          239017,
+          1
+        ]
+      ],
+      "validation": "Wowhead ES: nombre del hechizo, ingredientes y cantidades; catálogo de mercado: profesión, item ID, producción y reactivos; la equivalencia no prueba disponibilidad en la partida."
+    },
+    {
+      "id": 50023,
+      "profession": "Alchemy",
+      "name": "Elixir Arcano inferior",
+      "nameEn": "Lesser Arcane Elixir",
+      "item": 217398,
+      "qty": 1,
+      "r": [
+        [
+          3356,
+          1
+        ],
+        [
+          3821,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "wowheadSpell": 439960,
+      "wowheadUrl": "https://www.wowhead.com/forever/es/spell=439960/elixir-arcano-inferior",
+      "wowheadEdition": "Forever",
+      "wowheadMaterials": [
+        [
+          3356,
+          1
+        ],
+        [
+          3821,
+          1
+        ],
+        [
+          8925,
+          1
+        ]
+      ],
+      "validation": "Wowhead ES: nombre del hechizo, ingredientes y cantidades; catálogo de mercado: profesión, item ID, producción y reactivos; la equivalencia no prueba disponibilidad en la partida."
+    },
+    {
+      "id": 49863,
+      "profession": "Alchemy",
+      "name": "Gniodina aislante",
+      "nameEn": "Insulating Gniodine",
+      "item": 213372,
+      "qty": 1,
+      "r": [
+        [
+          3372,
+          1
+        ],
+        [
+          213371,
+          5
+        ]
+      ],
+      "wowheadSpell": 435969,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=435969/gniodina-aislante",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          3372,
+          1
+        ],
+        [
+          213371,
+          5
+        ]
+      ],
+      "validation": "Wowhead ES: nombre del hechizo, ingredientes y cantidades; catálogo de mercado: profesión, item ID, producción y reactivos; la equivalencia no prueba disponibilidad en la partida."
+    },
+    {
+      "id": 49866,
+      "profession": "Leatherworking",
+      "name": "Capucha gneurovinculada brillante",
+      "nameEn": "Glowing Gneuro-Linked Cowl",
+      "item": 215166,
+      "qty": 1,
+      "r": [
+        [
+          213379,
+          1
+        ],
+        [
+          8172,
+          5
+        ],
+        [
+          4291,
+          2
+        ],
+        [
+          213369,
+          5
+        ]
+      ],
+      "wowheadSpell": 435904,
+      "wowheadUrl": "https://www.wowhead.com/classic-ptr/es/spell=435904/capucha-gneurovinculada-brillante",
+      "wowheadEdition": "Classic PTR",
+      "wowheadMaterials": [
+        [
+          213379,
+          1
+        ],
+        [
+          8172,
+          5
+        ],
+        [
+          4291,
+          2
+        ],
+        [
+          213369,
+          5
+        ]
+      ],
+      "validation": "Wowhead ES: nombre del hechizo, ingredientes y cantidades; catálogo de mercado: profesión, item ID, producción y reactivos; la equivalencia no prueba disponibilidad en la partida."
+    },
+    {
+      "id": 51368,
+      "profession": "Leatherworking",
+      "name": "Coraza de escamas de dragón verde viviente",
+      "nameEn": "Living Green Dragonscale Breastplate",
+      "item": 227879,
+      "qty": 1,
+      "r": [
+        [
+          8170,
+          20
+        ],
+        [
+          15412,
+          25
+        ],
+        [
+          14341,
+          2
+        ]
+      ],
+      "wowheadSpell": 461720,
+      "wowheadUrl": "https://www.wowhead.com/classic/es/spell=461720/coraza-de-escamas-de-dragon-verde-viviente",
+      "wowheadEdition": "Classic",
+      "wowheadMaterials": [
+        [
+          8170,
+          20
+        ],
+        [
+          15412,
+          25
+        ],
+        [
+          14341,
+          2
+        ]
+      ],
+      "validation": "Wowhead ES: nombre del hechizo, ingredientes y cantidades; catálogo de mercado: profesión, item ID, producción y reactivos; la equivalencia no prueba disponibilidad en la partida."
     }
   ]
 }
