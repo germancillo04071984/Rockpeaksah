@@ -50,7 +50,21 @@ assert.equal(dictionary.items["6358"],"Bocanegra graso");
 assert.equal(dictionary.items["217398"],"Elixir Arcano inferior");
 assert.equal(dictionary.items["238639"],"Tortilla del alba");
 assert.ok(Object.keys(dictionary.items).length>=1108);
-assert.ok(Object.keys(dictionary.recipes).length>=824);
+assert.ok(Object.keys(dictionary.recipes).length>=834);
+const latestTen={
+ "51732":"Sopa de Garranegra",
+ "51733":"Branquirrojo ahumado",
+ "52010":"Filete de merodeador",
+ "52012":"Tortilla del alba",
+ "52014":"Festín de pez moteado",
+ "52015":"Gran festín de langostas",
+ "50023":"Elixir Arcano inferior",
+ "49863":"Gniodina aislante",
+ "49866":"Capucha gneurovinculada brillante",
+ "51368":"Coraza de escamas de dragón verde viviente"
+};
+for(const [id,spanish] of Object.entries(latestTen))
+ assert.equal(dictionary.recipes[id],spanish,"La receta nueva "+id+" no aparece traducida");
 assert.equal(dictionary.recipes["49861"],"Cuero de tenue resplandor");
 assert.equal(dictionary.recipes["49867"],"Caperuza de canalizador gneuroconductora");
 assert.equal(dictionary.recipes["49868"],"Almófar de escamas hiperconductoras brillante");
@@ -63,8 +77,10 @@ assert.ok(Object.keys(dictionary.recipes).length>0);
 const wowheadAudit=JSON.parse(await read(root+"locales/wowhead-checked-recipes.json?verify="+Date.now()));
 const checkedInWowheadAudit=JSON.parse(fs.readFileSync(path.join(sourceDir,"locales/wowhead-checked-recipes.json"),"utf8"));
 assert.deepEqual(wowheadAudit,checkedInWowheadAudit,"La referencia de Wowhead publicada no coincide con main.");
-assert.equal(wowheadAudit.entries.length,6);
-assert.deepEqual(wowheadAudit.entries.slice(3).map(r=>r.wowheadSpell),[435819,435951,435949]);
+assert.equal(wowheadAudit.entries.length,16);
+assert.deepEqual(wowheadAudit.entries.slice(3,6).map(r=>r.wowheadSpell),[435819,435951,435949]);
+assert.deepEqual(wowheadAudit.entries.slice(6).map(r=>r.id),
+ [51732,51733,52010,52012,52014,52015,50023,49863,49866,51368]);
 const packagePath="downloads/RockpeaksBridge-0.3.0.zip";
 const download=await fetch(root+packagePath+"?verify="+Date.now(),{signal:AbortSignal.timeout(15000)});
 assert.equal(download.ok,true,"No se puede descargar Rockpeaks Bridge desde la web.");
