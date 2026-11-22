@@ -214,6 +214,13 @@ test('Published locale dictionary contains only structure-checked names',()=>{
  assert.match(data.source?.coverage?.matchMethod||"",/profession.*product.*output count.*reagent/i);
  assert.equal(data.items[6358],"Bocanegra graso");
  assert.equal(data.items[3371],"Vial vacío");
+ assert.equal(data.items[217398],"Elixir Arcano inferior");
+ assert.equal(data.items[238639],"Tortilla del alba");
+ assert.equal(data.items[213370],"Restos de cuero irradiado");
+ assert.equal(Object.keys(data.items).length,1108);
+ assert.equal(Object.keys(data.recipes).length,818);
+ assert.equal(data.source.coverage.translatedItems,1108);
+ assert.equal(data.source.updates.at(-1).itemsAdded,19);
  assert.notEqual(data.recipes[3928],"Ardilla mecánica");
  assert.ok(Object.keys(data.recipes).length>0);
 });
