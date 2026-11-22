@@ -24,6 +24,8 @@ jobs:
         env:
           ROCKPEAKS_LIVE: '1'
         run: node --test tests/rockpeaks.test.mjs
+      - name: Audit all 920 live recipe profit calculations for NPC and auction house
+        run: node tools/audit-economics.mjs
       - name: Probe Spanish client data SDK
         run: node tools/probe-sdk.mjs
       - name: Compare client and auction-house recipe identities
