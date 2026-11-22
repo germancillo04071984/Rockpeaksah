@@ -5,7 +5,7 @@ const dictionary=JSON.parse(fs.readFileSync("locales/esES.json","utf8"));
 const checks=JSON.parse(fs.readFileSync("locales/wowhead-checked-recipes.json","utf8"));
 assert.equal(checks.schema,1);
 assert.equal(checks.entries.length,6,"Se esperaban seis recetas verificadas en dos lotes de tres");
-assert.equal(new Set(checks.entries.map(r=>r.id)).size,3,"ID de receta duplicado");
+assert.equal(new Set(checks.entries.map(r=>r.id)).size,checks.entries.length,"ID de receta duplicado");
 const response=await fetch("https://auctionhouse.tk.gg/api/recipes",{signal:AbortSignal.timeout(35000)});
 assert.ok(response.ok,"Catálogo comercial no disponible: HTTP "+response.status);
 const catalog=await response.json();
