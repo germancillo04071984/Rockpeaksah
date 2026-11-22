@@ -30,7 +30,7 @@
    stats.total++;stats.professions[prof]++;
    const id=pos(r?.id),productId=pos(r?.item),yieldCount=pos(r?.qty),reagents=Array.isArray(r?.r)?r.r:null;
    if(!id||!productId||!yieldCount||!reagents?.length){stats.invalid++;continue}
-   let cost=0,bad=false;const materials=[];
+   let cost=0,bad=false,overflow=false;const materials=[];
    for(const pair of reagents){
     const ingredientId=Array.isArray(pair)?pos(pair[0]):null,qty=Array.isArray(pair)?pos(pair[1]):null;
     if(!ingredientId||!qty){bad=true;break}
@@ -38,14 +38,20 @@
     if(ah===null&&vendor===null){bad=true;break}
     const chosen=ah!==null&&vendor!==null?(ah<=vendor?{price:ah,source:"subasta"}:{price:vendor,source:"NPC"}):
      ah!==null?{price:ah,source:"subasta"}:{price:vendor,source:"NPC"};
-    cost+=chosen.price*qty;
+    const lineCost=chosen.price*qty;
+    if(!Number.isSafeInteger(lineCost)||!Number.isSafeInteger(cost+lineCost)){overflow=true;break}
+    cost+=lineCost;
     materials.push({id:ingredientId,name:String(item(ingredientId).name||"ID "+ingredientId),count:qty,
       unitPrice:chosen.price,source:chosen.source,market:ah,vendor});
    }
+   if(overflow){stats.invalid++;continue}
    if(bad){stats.missingMaterials++;continue}
    const unitSale=channel==="npc"?sell(productId):ask(productId);
    if(unitSale===null){stats.missingSale++;continue}
-   const gross=unitSale*yieldCount,revenue=channel==="ah"?Math.floor(gross*(1-fee/100)):gross,profit=revenue-cost;
+   const gross=unitSale*yieldCount;
+   if(!Number.isSafeInteger(gross)){stats.invalid++;continue}
+   const revenue=channel==="ah"?Math.floor(gross*(1-fee/100)):gross,profit=revenue-cost;
+   if(!Number.isSafeInteger(revenue)||!Number.isSafeInteger(profit)){stats.invalid++;continue}
    const breakEvenUnit=channel==="ah"&&fee<100?Math.ceil(cost/(yieldCount*(1-fee/100))):null;
    const breakEvenAfterRelist=channel==="ah"&&fee<100&&deposit!==null?
     Math.ceil((cost+deposit)/(yieldCount*(1-fee/100))):null;
