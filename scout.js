@@ -106,12 +106,32 @@
     knownButton.className="scout-learned";
     knownButton.dataset.recipeId=String(r.id);
     knownButton.setAttribute("aria-pressed",String(learned));
-    knownButton.onclick=()=>{
+    const toggleLearned=()=>{
      const ok=window.RockpeaksCatalog.setLearned(r.id,!window.RockpeaksCatalog.learned(r.id));
      if(!ok)e("scout-status").textContent="No se pudo guardar en este navegador.";
-     // setLearned dispatches rockpeaks:learned-change, which redraws once.
-     // Calling render() here as well replaces the clicked element twice on WebKit.
-    };item.append(knownButton);
+     // setLearned emits rockpeaks:learned-change; redraw happens there once.
+    };
+    knownButton.onclick=toggleLearned;
+    // Mobile WebKit can emit touchstart/touchend without synthesizing a click.
+    // Handle a short tap directly, then suppress a duplicate synthetic click.
+    let touchStart=null;
+    knownButton.addEventListener("touchstart",event=>{
+     const touch=event.changedTouches?.[0];
+     if(touch)touchStart={id:touch.identifier,x:touch.clientX,y:touch.clientY};
+    },{passive:true});
+    knownButton.addEventListener("touchcancel",()=>{touchStart=null},{passive:true});
+    knownButton.addEventListener("touchend",event=>{
+     if(!touchStart)return;
+     const touch=[...event.changedTouches].find(t=>t.identifier===touchStart.id);
+     const within=touch&&Math.hypot(touch.clientX-touchStart.x,touch.clientY-touchStart.y)<=12;
+     touchStart=null;
+     if(!within)return;
+     const hit=document.elementFromPoint(touch.clientX,touch.clientY);
+     if(hit!==knownButton&&!knownButton.contains(hit))return;
+     if(event.cancelable)event.preventDefault();
+     toggleLearned();
+    },{passive:false});
+    item.append(knownButton);
    }
    item.append(child("p","Materiales "+coins(r.cost)+" · Ingreso neto "+coins(r.revenue)+" · "+r.yieldCount+" unidades"+
     (r.roi===null?"":" · Rentabilidad "+r.roi.toFixed(1)+"%"),"scout-stats"));
