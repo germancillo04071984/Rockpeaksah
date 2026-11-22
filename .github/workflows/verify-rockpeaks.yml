@@ -43,8 +43,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Check Wowhead localized tooltips
-        run: node tools/probe-wowhead-tooltips.mjs
+      - name: Validate 25+ localized Wowhead recipes against market
+        run: node tools/validate-25-wowhead.mjs
 
   spanish-audit:
     runs-on: ubuntu-latest
