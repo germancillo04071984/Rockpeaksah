@@ -10,7 +10,7 @@
  '<p><button id="bridge-demo" type="button">Probar con datos de ejemplo</button></p>'+ 
  '<p id="bridge-status" role="status" aria-live="polite">Sin captura importada.</p>'+
  '<div id="bridge-summary"></div>'+
- '<p><a href="./downloads/RockpeaksBridge-0.2.0.zip" download="RockpeaksBridge-0.2.0.zip">Descargar addon Rockpeaks Bridge (ZIP)</a> · <a href="https://github.com/germancillo04071984/Rockpeaksah/tree/main/addons/RockpeaksBridge" target="_blank" rel="noopener noreferrer">Instrucciones y código</a></p>'+
+ '<p><a href="./downloads/RockpeaksBridge-0.3.0.zip" download="RockpeaksBridge-0.3.0.zip">Descargar addon Rockpeaks Bridge (ZIP)</a> · <a href="https://github.com/germancillo04071984/Rockpeaksah/tree/main/addons/RockpeaksBridge" target="_blank" rel="noopener noreferrer">Instrucciones y código</a></p>'+
  '<small>Datos locales, sin subida al servidor. El inventario importado es una fotografía de las bolsas, no movimientos de compra o venta. Nunca modifica la contabilidad ni marca automáticamente recetas como aprendidas: los ID de hechizo del cliente pueden ser distintos de los ID del catálogo.</small>';
  host.prepend(panel);
  const $=id=>document.getElementById(id),summary=$("bridge-summary"),status=$("bridge-status");
