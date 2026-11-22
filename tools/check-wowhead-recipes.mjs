@@ -4,7 +4,7 @@ import {signature} from "./recipe-match.mjs";
 const dictionary=JSON.parse(fs.readFileSync("locales/esES.json","utf8"));
 const checks=JSON.parse(fs.readFileSync("locales/wowhead-checked-recipes.json","utf8"));
 assert.equal(checks.schema,1);
-assert.equal(checks.entries.length,16,"Se esperaban dieciséis recetas verificadas, incluyendo el último lote de diez");
+assert.equal(checks.entries.length,41,"Se esperaban cuarenta y una recetas de Wowhead, incluidas las últimas 25 verificadas");
 assert.equal(new Set(checks.entries.map(r=>r.id)).size,checks.entries.length,"ID de receta duplicado");
 const response=await fetch("https://auctionhouse.tk.gg/api/recipes",{signal:AbortSignal.timeout(35000)});
 assert.ok(response.ok,"Catálogo comercial no disponible: HTTP "+response.status);
@@ -51,5 +51,9 @@ assert.ok(dictionary.source?.updates?.some(entry=>entry.recipesAdded===10&&
  entry.provenanceFile==="locales/wowhead-checked-recipes.json"&&
  entry.ids?.length===10&&entry.ids.includes(52015)&&entry.ids.includes(51368)),
  "No consta la procedencia íntegra del lote de diez recetas");
+assert.ok(dictionary.source?.updates?.some(entry=>entry.recipesAdded===25&&
+ entry.provenanceFile==="locales/wowhead-checked-recipes.json"&&
+ entry.ids?.length===25&&entry.ids.every(id=>checks.entries.slice(16).some(c=>c.id===id))),
+ "Falta la procedencia íntegra del lote nuevo de 25");
 assert.equal(dictionary.source.coverage.translatedRecipes,Object.keys(dictionary.recipes).length);
 console.log("WOWHEAD_RECIPE_MATCHES",JSON.stringify(report));
