@@ -4,7 +4,7 @@ import {signature} from "./recipe-match.mjs";
 const dictionary=JSON.parse(fs.readFileSync("locales/esES.json","utf8"));
 const checks=JSON.parse(fs.readFileSync("locales/wowhead-checked-recipes.json","utf8"));
 assert.equal(checks.schema,1);
-assert.equal(checks.entries.length,3,"Se esperaban exactamente tres recetas");
+assert.equal(checks.entries.length,6,"Se esperaban seis recetas verificadas en dos lotes de tres");
 assert.equal(new Set(checks.entries.map(r=>r.id)).size,3,"ID de receta duplicado");
 const response=await fetch("https://auctionhouse.tk.gg/api/recipes",{signal:AbortSignal.timeout(35000)});
 assert.ok(response.ok,"Catálogo comercial no disponible: HTTP "+response.status);
@@ -16,6 +16,13 @@ for(const check of checks.entries){
  assert.ok(check.wowheadSpell>0&&check.id!==check.wowheadSpell,"ID de receta comercial no puede confundirse con spell ID");
  assert.ok(check.wowheadUrl.startsWith("https://www.wowhead.com/"));
  assert.ok(typeof check.name==="string"&&check.name.length>5);
+ if(check.wowheadEdition==="Forever"){
+  assert.ok(check.wowheadUrl.startsWith("https://www.wowhead.com/forever/es/spell="),
+   "El nuevo lote debe basarse en Wowhead Forever ES");
+  const matSignature=[...(check.wowheadMaterials||[])].map(([id,qty])=>id+"x"+qty).sort().join(",");
+  const realSignature=[...check.r].map(([id,qty])=>id+"x"+qty).sort().join(",");
+  assert.equal(matSignature,realSignature,"Los ingredientes de Wowhead difieren de la receta "+check.id);
+ }
  assert.equal(dictionary.recipes[check.id],check.name,"El nombre publicado no coincide con Wowhead");
  const exact=catalog.recipes.filter(r=>r.id===check.id);
  assert.equal(exact.length,1,"Receta ausente o ID ambiguo "+check.id);
@@ -32,5 +39,9 @@ for(const check of checks.entries){
 assert.ok(dictionary.source?.updates?.some(entry=>entry.recipesAdded===3&&
   entry.provenanceFile==="locales/wowhead-checked-recipes.json"),
  "La versión no documenta la procedencia de las tres recetas");
+assert.ok(dictionary.source?.updates?.some(entry=>entry.recipesAdded===3&&
+ entry.provenanceFile==="locales/wowhead-checked-recipes.json"&&
+ entry.ids?.includes(49861)&&entry.ids?.includes(49868)),
+ "Falta el origen de las tres recetas de Forever");
 assert.equal(dictionary.source.coverage.translatedRecipes,Object.keys(dictionary.recipes).length);
 console.log("WOWHEAD_RECIPE_MATCHES",JSON.stringify(report));
