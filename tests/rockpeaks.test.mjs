@@ -186,7 +186,7 @@ test('No fractional copper, out-of-range price, or unearned profit is accepted',
  const npc=core.scan(catalog,listings,{channel:"npc"}).records[0];
  assert.equal(npc.revenue,1);
  assert.equal(npc.profit,0);
- const huge={...catalog,recipes:[{...catalog.recipes[0],r:[[200,Number.MAX_SAFE_INTEGER]]}]};
+ const huge={...catalog,items:{...catalog.items,200:{name:"Reagent",buy:2}},recipes:[{...catalog.recipes[0],r:[[200,Number.MAX_SAFE_INTEGER]]}]};
  assert.equal(core.scan(huge,listings,{channel:"npc"}).records.length,0);
 });
 
