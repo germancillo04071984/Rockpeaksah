@@ -49,7 +49,7 @@ assert.ok(dictionary.source.coverage.matchMethod.includes("profession"));
 assert.equal(dictionary.items["6358"],"Bocanegra graso");
 assert.notEqual(dictionary.recipes["3928"],"Ardilla mecánica");
 assert.ok(Object.keys(dictionary.recipes).length>0);
-const packagePath="downloads/RockpeaksBridge-0.2.0.zip";
+const packagePath="downloads/RockpeaksBridge-0.3.0.zip";
 const download=await fetch(root+packagePath+"?verify="+Date.now(),{signal:AbortSignal.timeout(15000)});
 assert.equal(download.ok,true,"No se puede descargar Rockpeaks Bridge desde la web.");
 const zip=Buffer.from(await download.arrayBuffer());
