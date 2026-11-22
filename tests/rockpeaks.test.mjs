@@ -6,7 +6,7 @@ import vm from 'node:vm';
 import path from 'node:path';
 const root=path.resolve(process.cwd());
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
-const paths=['business.js','catalog-tools.js','recipes.js','scout-core.js','scout.js','catalog-ui.js','recipe-tabs.js','character-core.js','character-bridge.js'];
+const paths=['business.js','catalog-tools.js','recipes.js','scout-core.js','scout.js','catalog-ui.js','recipe-tabs.js','character-core.js','character-bridge.js','character-sync.js'];
 const html=read('index.html');
 const coreCtx={window:{}};
 vm.runInNewContext(read('scout-core.js'),coreCtx);
@@ -62,6 +62,25 @@ test('Rockpeaks Bridge imports local JSON and escaped Lua without executing code
  assert.throws(()=>bridge.parse(JSON.stringify({...sample,character:{...sample.character,gold:-1}})),/personaje/i);
  assert.throws(()=>bridge.parse(JSON.stringify({...sample,schema:"other"})),/exportador/i);
  assert.throws(()=>bridge.parse(JSON.stringify({...sample,bagItems:null})),/Listas/);
+});
+test('Rockpeaks Bridge captures on character logout without requiring a chat command',()=>{
+ const addon=read('addons/RockpeaksBridge/RockpeaksBridge.lua');
+ assert.match(addon,/RegisterEvent\("PLAYER_LOGOUT"\)/);
+ assert.match(addon,/if event=="PLAYER_LOGOUT" then[\s\S]*?pcall\(capture\)/);
+ assert.match(addon,/local function recipesForCharacter\(/);
+ assert.match(addon,/GetRealmName/);
+});
+test('PC file sync only reads explicitly linked local files and supports permission renewal',()=>{
+ const source=read('character-sync.js');
+ assert.match(source,/showOpenFilePicker\(/);
+ assert.match(source,/queryPermission/);
+ assert.match(source,/requestPermission/);
+ assert.match(source,/getFile\(\)/);
+ assert.match(source,/rockpeaks-local-file-handles-v1/);
+ assert.match(source,/RockpeaksBridge\\\.\(lua\|json\)/);
+ assert.match(source,/setInterval/);
+ assert.doesNotMatch(source,/createWritable\(/);
+ assert.doesNotMatch(source,/fetch\(/);
 });
 test('Snapshot import never overwrites business history or declares client IDs to be market IDs',()=>{
  const app=read('character-bridge.js');
