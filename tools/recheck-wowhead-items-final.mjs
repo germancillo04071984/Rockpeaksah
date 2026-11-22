@@ -77,6 +77,6 @@ async function worker(){
   verified++;
  }
 }
-await Promise.all(Array.from({length:8},worker()));
+await Promise.all(Array.from({length:8},()=>worker()));
 assert.equal(verified,52);
 console.log("VERIFIED_WOWHEAD_FINAL_ITEMS_52",JSON.stringify({verified,translated:Object.keys(dictionary.items).length,recipes:Object.keys(dictionary.recipes).length,exceptions:source.entries.filter(x=>x.method!=="id-and-market-english").map(x=>({id:x.id,method:x.method,name:x.es}))}));
