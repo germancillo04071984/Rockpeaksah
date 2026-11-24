@@ -9,6 +9,6 @@ assert.throws(()=>parseTSM("wrong,header\n1,2"));assert.throws(()=>parseTSM(h+'"
 const stamp=Date.parse("2026-11-24T18:00:00Z");assert.equal(isFresh(stamp,stamp+3600000),true);assert.equal(isFresh(stamp,stamp+10800000),false);
 assert.equal(coherentBooks(new Map([[1,{t:stamp}],[2,{t:stamp-3600000}]]),stamp,stamp+1000).size,1);
 const d=normalizeDetail({house:{key:"eu-2-113",region:"eu",faction:"horde",grp:1},item:{id:3685},book:[],bookT:null,series:{t:[stamp],ask:[90]}},3685);assert.equal(d.historyEnd,stamp);assert.equal(d.tiers.length,0);assert.equal(d.t,null);
-const m=await fetchTSM(async url=>{assert.equal(url,TSM_URL);return {ok:true,text:async()=>text}});assert.equal(m.size,2);
+const m=await fetchTSM(async url=>{assert.equal(url,"/api/tsm");return {ok:true,text:async()=>text}});assert.equal(m.size,2);
 await assert.rejects(fetchTSM(async()=>({ok:false,status:403})),/403/);
 console.log("V2_SOURCES_PASS");
