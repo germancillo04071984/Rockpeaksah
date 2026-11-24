@@ -1,4 +1,4 @@
-import {rankRecipes,filterRanking,PROF} from "./ranking.mjs?v=20261124-times1";
+import {rankRecipes,filterRanking,PROF} from "./ranking.mjs?v=20261124-times2";
 export function initRanking(ctx){
  const $=id=>document.getElementById(id),el=(tag,t,c)=>{const x=document.createElement(tag);if(t!=null)x.textContent=t;if(c)x.className=c;return x};
  const key="rockpeaks-v2-rank-settings-v1",settings={levels:{},recipes:{},vendors:{}};let visible=20,analysis=null,timingStatus="Cargando tiempos…";
@@ -8,7 +8,7 @@ export function initRanking(ctx){
  for(const p of Object.keys(PROF)){const input=$("rank-"+p);input.value=settings.levels[p]??"";input.onchange=()=>{const n=integer(input.value,0,999);if(n===null)delete settings.levels[p];else settings.levels[p]=n;save();refresh()}}
  $("rank-spice").checked=settings.vendors[2692]===40;$("rank-spice").onchange=()=>{if($("rank-spice").checked)settings.vendors[2692]=40;else delete settings.vendors[2692];save();refresh()};
  for(const k of ["rank-prof","rank-channel","rank-known","rank-positive","rank-order"])$(k).onchange=()=>{visible=20;render()};$("rank-search").oninput=()=>{visible=20;render()};$("rank-more").onclick=()=>{visible+=20;render()};
- fetch("./craft-times.json?v=1").then(r=>{if(!r.ok)throw Error("HTTP "+r.status);return r.json()}).then(t=>{if(!t.rows||typeof t.build!=="string")throw Error("Tabla inválida");settings.timings=t;timingStatus="Tiempos del cliente "+t.build;refresh()}).catch(()=>{timingStatus="Tiempos automáticos no disponibles; se pueden introducir manualmente.";refresh()});
+ fetch("./craft-times.json?v=2").then(r=>{if(!r.ok)throw Error("HTTP "+r.status);return r.json()}).then(t=>{if(!t.rows||typeof t.build!=="string")throw Error("Tabla inválida");settings.timings=t;timingStatus="Tiempos del cliente "+t.build;refresh()}).catch(()=>{timingStatus="Tiempos automáticos no disponibles; se pueden introducir manualmente.";refresh()});
  const label={learned:"Aprendida",unlearned:"No aprendida",low:"Nivel insuficiente",unknown:"Sin verificar"};
  const rn=r=>ctx.recipeName(r.recipe);
  const money=v=>ctx.money(v===null?null:Math.round(v));

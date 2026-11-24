@@ -3,10 +3,18 @@ import {isFresh} from "./market-core.mjs";
 export const PROF={cooking:"Cocina",alchemy:"Alquimia",leatherworking:"Peletería"};
 export function profession(v){const s=String(v??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();return s.includes("cooking")||s.includes("cocina")?"cooking":s.includes("alchemy")||s.includes("alquimia")?"alchemy":s.includes("leatherworking")||s.includes("peleter")?"leatherworking":null}
 const pos=x=>Number.isSafeInteger(x)&&x>0;
+const timingIndexes=new WeakMap();
+function signature(prof,item,qty,reagents){try{const p=profession(prof);if(!p||!pos(item)||!pos(qty))return null;return JSON.stringify([p,item,qty,materials({r:reagents}).sort((a,b)=>a.id-b.id)])}catch{return null}}
 export function timing(r,table){
- const t=table?.rows?.[r.id];if(!Array.isArray(t)||t[0]!==r.item||t[1]!==r.qty||!pos(t[2])||!Number.isSafeInteger(t[3])||t[3]<0)return null;
- try{const sig=m=>JSON.stringify(materials({r:m}).sort((a,b)=>a.id-b.id));if(sig(r.r)!==sig(t[4]))return null}catch{return null}
- return {seconds:Math.max(t[2],t[3])/1000,castSeconds:t[2]/1000,cooldownSeconds:t[3]/1000};
+ if(!table?.rows)return null;
+ let index=timingIndexes.get(table);
+ if(!index){index=new Map();for(const t of Object.values(table.rows)){
+  if(!Array.isArray(t)||!pos(t[2])||!Number.isSafeInteger(t[3])||t[3]<0)continue;
+  const key=signature(t[5],t[0],t[1],t[4]);if(!key)continue;
+  const value={seconds:Math.max(t[2],t[3])/1000,castSeconds:t[2]/1000,cooldownSeconds:t[3]/1000};
+  if(!index.has(key))index.set(key,value);else{const old=index.get(key);if(!old||old.castSeconds!==value.castSeconds||old.cooldownSeconds!==value.cooldownSeconds)index.set(key,null)}
+ }timingIndexes.set(table,index)}
+ return index.get(signature(r.prof,r.item,r.qty,r.r))??null;
 }
 export function rankRecipes(catalog,overview,settings={},now=Date.now()){
  if(!Array.isArray(catalog?.recipes)||!catalog.items||!Array.isArray(overview?.items))throw Error("Catálogo o mercado no disponible");
