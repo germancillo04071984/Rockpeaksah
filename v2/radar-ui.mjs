@@ -1,7 +1,7 @@
-import {shortlist,assess,netUnit} from "./radar.mjs?v=1";
+import {shortlist,assess,netUnit} from "./radar.mjs?v=2";
 export function initRadar(ctx){
  const $=id=>document.getElementById(id),el=(tag,t,c)=>{const x=document.createElement(tag);if(t!=null)x.textContent=t;if(c)x.className=c;return x};
- let rows=[],results=new Map(),running=false,stamp=null;
+ let rows=[],results=new Map(),running=false,stamp=null,generation=0;
  const budget=()=>{const v=$("radar-budget").value.trim();return v===""?null:Math.round(Number(v)*10000)};
  const money=v=>ctx.money(v===null||v===undefined?null:Math.round(v));
  const norm=s=>String(s??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
@@ -17,18 +17,18 @@ export function initRadar(ctx){
    card.append(g,el("small","TSM: "+new Date(x.referenceTime).toLocaleString("es-ES")));if(r){card.append(el("p",r.reason,r.state==="candidate"?"green":"orange"));if(r.hist)card.append(el("small","Histórico: "+r.hist.samples+" muestras · "+r.hist.days+" días. Lote limitado al 10 % del volumen estimado. IOR sin recuperación real; no es probabilidad de venta."));if(r.rows?.length){const d=el("details");d.append(el("summary","Tramos del lote simulado"));for(const t of r.rows)d.append(el("p",t.quantity+" × "+money(t.price)));card.append(d)}}
    const b=el("button","Comprobar histórico y tramos");b.disabled=running;b.onclick=()=>verify([x]);const open=el("button","Abrir objeto");open.onclick=()=>ctx.open(x.id);const actions=el("div",null,"radar-actions");actions.append(b,open);card.append(actions);o.append(card)}
   if(filtered.length>50)o.append(el("p","Mostrando 50 resultados. Busca por nombre o ID para localizar los demás."));
-  $("radar-scan").disabled=running;$("radar-verify").disabled=running||!rows.length;
+  $("radar-budget").disabled=running;$("radar-scan").disabled=running;$("radar-verify").disabled=running||!rows.some(x=>!results.has(x.id));
  }
  async function scan(){
   if(running)return;const cap=budget();if(!Number.isSafeInteger(cap)||cap<=0){$("radar-status").textContent="Introduce un capital mayor que cero.";return}
-  running=true;$("radar-status").textContent="Consultando referencias TSM…";render();
-  try{const t=await ctx.tsm();const data=ctx.data();if(!data||!t.size)throw Error("No hay datos de mercado o TSM");rows=shortlist(data,t,cap);results.clear();stamp=data.t;$("radar-status").textContent="Instantánea: "+new Date(stamp).toLocaleString("es-ES")+" · señales sin validar. Comprueba los históricos antes de comprar."}catch(e){rows=[];results.clear();$("radar-status").textContent="No se pudo analizar: "+e.message}finally{running=false;render()}
+  running=true;const token=++generation;$("radar-status").textContent="Consultando referencias TSM…";render();
+  try{const t=await ctx.tsm();const data=ctx.data();if(token!==generation)return;if(!data||!t.size)throw Error("No hay datos de mercado o TSM");rows=shortlist(data,t,cap);results.clear();stamp=data.t;$("radar-status").textContent="Instantánea: "+new Date(stamp).toLocaleString("es-ES")+" · señales sin validar. Comprueba los históricos antes de comprar."}catch(e){rows=[];results.clear();$("radar-status").textContent="No se pudo analizar: "+e.message}finally{running=false;render()}
  }
  async function verify(list){
   if(running)return;const cap=budget(),data=ctx.data();if(!Number.isSafeInteger(cap)||cap<=0||data?.t!==stamp){$("radar-status").textContent="Capital o instantánea modificados. Vuelve a buscar señales.";return}
-  running=true;render();let done=0;
-  try{for(const x of list){$("radar-status").textContent="Comprobando "+(done+1)+"/"+list.length+" · "+ctx.name(x.id);try{const detail=await ctx.book(x.id);results.set(x.id,assess(x,detail,data,cap))}catch(e){results.set(x.id,{state:"unknown",reason:"No se pudo cargar el detalle: "+e.message})}done++;render()}}finally{running=false;$("radar-status").textContent="Comprobación terminada: "+done+" objetos. Referencias de precios, no ventas confirmadas.";render()}
+  running=true;const token=generation;render();let done=0;
+  try{for(const x of list){$("radar-status").textContent="Comprobando "+(done+1)+"/"+list.length+" · "+ctx.name(x.id);try{const detail=await ctx.book(x.id);if(token!==generation||ctx.data()?.t!==stamp)return;results.set(x.id,assess(x,detail,data,cap))}catch(e){if(token!==generation)return;results.set(x.id,{state:"unknown",reason:"No se pudo cargar el detalle: "+e.message})}done++;render()}}finally{running=false;if(token===generation)$("radar-status").textContent="Comprobación terminada: "+done+" objetos. Referencias de precios, no ventas confirmadas.";render()}
  }
- $("radar-scan").onclick=scan;$("radar-verify").onclick=()=>verify(rows.filter(x=>!results.has(x.id)).slice(0,10));$("radar-search").oninput=render;$("radar-budget").oninput=()=>{rows=[];results.clear();stamp=null;$("radar-status").textContent="Capital actualizado. Vuelve a buscar señales.";render()};
- return {invalidate(){rows=[];results.clear();stamp=null;$("radar-status").textContent="Instantánea actualizada. Busca nuevas señales.";render()}};
+ $("radar-scan").onclick=scan;$("radar-verify").onclick=()=>verify(rows.filter(x=>!results.has(x.id)).slice(0,10));$("radar-search").oninput=render;$("radar-budget").oninput=()=>{generation++;rows=[];results.clear();stamp=null;$("radar-status").textContent="Capital actualizado. Vuelve a buscar señales.";render()};
+ return {invalidate(){generation++;rows=[];results.clear();stamp=null;$("radar-status").textContent="Instantánea actualizada. Busca nuevas señales.";render()}};
 }

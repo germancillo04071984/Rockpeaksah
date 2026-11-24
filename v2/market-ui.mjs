@@ -1,4 +1,4 @@
-import {initRadar} from "./radar-ui.mjs?v=1";
+import {initRadar} from "./radar-ui.mjs?v=2";
 import {initRanking} from "./ranking-ui.mjs?v=20261124-firstaid-es1";
 import {fetchOverview,fetchDetail} from "./market-client.mjs";
 import {coherentBooks,isFresh} from "./market-core.mjs";

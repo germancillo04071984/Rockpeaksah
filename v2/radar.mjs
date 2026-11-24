@@ -28,7 +28,7 @@ export function assess(item,detail,overview,budget,now=Date.now(),margin=.2){
  const hist=historyReference(detail,overview.t);
  if(!hist)return {state:"unknown",reason:"Histórico insuficiente (24 muestras y 3 días anteriores)"};
  const target=hist.price,net=netUnit(target),maxPrice=Math.floor(net/(1+margin));
- const cheap=detail.tiers.filter(t=>t.price<=maxPrice);
+ const cheap=detail.tiers.filter(t=>t.price<=maxPrice).sort((a,b)=>a.price-b.price);
  const volume=Number.isSafeInteger(item.estimatedSales)&&item.estimatedSales>=0?item.estimatedSales:null;
  // no suggested quantity if no evidence of turnover; cap at 10% of estimated daily volume
  const cap=volume===null?0:Math.floor(volume*.1);
