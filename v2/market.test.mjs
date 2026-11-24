@@ -1,0 +1,25 @@
+import assert from "node:assert/strict";
+import {MARKET,normalizeOverview,normalizeDetail,quote,limits,chooseLatest} from "./market-core.mjs";
+import {fetchOverview,fetchDetail} from "./market-client.mjs";
+const house={"key":"eu-2-113","region":"eu","faction":"horde","grp":1};
+const checks=[];function check(n,ok){assert.ok(ok,n);checks.push(n)}
+const a=normalizeOverview({house,t:1000,f:["listed","ask","vol24"],items:[{id:3685,name:"Raptor Egg",o:[230,88,null]},{id:1,o:[4,null,0]}]});
+check("campos por nombre",a.items[0].ask===88&&a.items[0].listed===230);
+check("desconocido no es cero",a.items[0].estimatedSales===null&&a.items[1].ask===null);
+assert.throws(()=>normalizeOverview({house:{...house,grp:2}}));
+const raw={house,item:{id:3685},bookT:1000,book:[[89,200,1],[88,30,1]],bookMore:0,series:{t:[1,2,3],ask:[88,null,89]},daily:{f:["close","d"],rows:[[88,1]]}};
+const d=normalizeDetail(raw,3685);
+check("tramos ordenados",d.tiers[0].price===88);
+check("huecos históricos",d.hourly[1].price===null&&d.daily[0].price===88);
+const q=quote(d.tiers,100);
+check("30 huevos a 88 y 70 a 89",q.cost===8870&&q.average===88.7&&q.complete);
+check("stock insuficiente",quote(d.tiers,300).remaining===70);
+check("especias NPC y AH",quote([{price:39,quantity:30},{price:50,quantity:200}],100,{price:40,unlimited:true}).cost===3970);
+check("límite NPC",limits({outputQuantity:1,unitSale:150,otherCost:40,ingredientQuantity:1,marginBp:1000}).recommended===96);
+const ah=limits({outputQuantity:1,unitSale:200,otherCost:40,ingredientQuantity:1,commissionBp:500,marginBp:2000});
+check("límite AH neto",ah.recommended===118&&ah.breakEven===150);
+check("rendimiento múltiple",limits({outputQuantity:2,unitSale:100,otherCost:40,ingredientQuantity:1}).breakEven===160);
+check("prioridad por antigüedad",chooseLatest({market:MARKET,id:1,t:200,source:"addon"},{market:MARKET,id:1,t:100,source:"tk.gg"}).source==="addon");
+await assert.rejects(fetchOverview(async()=>({ok:false,status:503})),/503/);
+const detail=await fetchDetail(3685,168,async url=>{assert.ok(url.includes("/eu-2-113/item/3685?hours=168"));return {ok:true,json:async()=>raw}});assert.equal(detail.tiers[0].price,88);
+console.log("ROCKPEAKS_V2_MARKET_PASS",checks.length+3);
