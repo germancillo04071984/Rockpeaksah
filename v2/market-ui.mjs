@@ -1,4 +1,4 @@
-import {initRanking} from "./ranking-ui.mjs?v=20261124-times2";
+import {initRanking} from "./ranking-ui.mjs?v=20261124-firstaid1";
 import {fetchOverview,fetchDetail} from "./market-client.mjs";
 import {coherentBooks,isFresh} from "./market-core.mjs";
 import {fetchTSM} from "./tsm.mjs";

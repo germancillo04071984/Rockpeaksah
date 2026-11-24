@@ -1,7 +1,7 @@
 import {materials} from "./economy.mjs";
 import {isFresh} from "./market-core.mjs";
-export const PROF={cooking:"Cocina",alchemy:"Alquimia",leatherworking:"Peletería"};
-export function profession(v){const s=String(v??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();return s.includes("cooking")||s.includes("cocina")?"cooking":s.includes("alchemy")||s.includes("alquimia")?"alchemy":s.includes("leatherworking")||s.includes("peleter")?"leatherworking":null}
+export const PROF={cooking:"Cocina",alchemy:"Alquimia",leatherworking:"Peletería",firstaid:"Primeros auxilios"};
+export function profession(v){const s=String(v??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();return s.includes("cooking")||s.includes("cocina")?"cooking":s.includes("alchemy")||s.includes("alquimia")?"alchemy":s.includes("leatherworking")||s.includes("peleter")?"leatherworking":/first[\s_-]*aid|primeros[\s_-]*auxilios/.test(s)||s==="129"?"firstaid":null}
 const pos=x=>Number.isSafeInteger(x)&&x>0;
 const timingIndexes=new WeakMap();
 function signature(prof,item,qty,reagents){try{const p=profession(prof);if(!p||!pos(item)||!pos(qty))return null;return JSON.stringify([p,item,qty,materials({r:reagents}).sort((a,b)=>a.id-b.id)])}catch{return null}}
