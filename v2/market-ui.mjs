@@ -2,7 +2,7 @@ import {initRanking} from "./ranking-ui.mjs?v=20261124-firstaid-es1";
 import {fetchOverview,fetchDetail} from "./market-client.mjs";
 import {coherentBooks,isFresh} from "./market-core.mjs";
 import {fetchTSM} from "./tsm.mjs";
-import {materials,batch,thresholds,advise} from "./economy.mjs";
+import {materials,batch,thresholds,advise,purchaseStatus} from "./economy.mjs?v=20261124-status1";
 const $=id=>document.getElementById(id),el=(tag,t,c)=>{const x=document.createElement(tag);if(t!=null)x.textContent=t;if(c)x.className=c;return x};
 const money=c=>c==null?"—":(c<0?"−":"")+[Math.floor(Math.abs(c)/10000)?Math.floor(Math.abs(c)/10000)+"o":"",Math.floor(Math.abs(c)%10000/100)?Math.floor(Math.abs(c)%10000/100)+"p":"",Math.abs(c)%100||c===0?Math.abs(c)%100+"c":""].filter(Boolean).join(" ");
 const norm=s=>String(s??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
@@ -53,16 +53,21 @@ function calculate(){
   if(!isFresh(overview?.t)){a.append(el("p","Sin instantánea reciente: consulta no apta para recomendar compras.","orange"));return}
   const current=usableBooks(),npc=sell(recipe.item),ah=usableSale(recipe.item),sale=channel==="npc"?npc:ah,fee=channel==="npc"?0:500;
   const one=batch(recipe,current,vendors,1,sale,fee);
-  if(one.complete){row(a,"Resultado por fabricación",money(one.profit),one.profit<0?"red":one.profit>0?"green":"");row(a,"Coste por fabricación",money(one.cost));row(a,"Ingreso neto por fabricación",money(one.net))}
+  if(one.complete){row(a,"Resultado por fabricación",money(one.profit),one.profit<0?"red":one.profit>0?"green":"");row(a,"Coste por fabricación",money(one.cost));row(a,"Ingreso neto por fabricación",money(one.net));row(a,"Rentabilidad actual",one.roi===null?"—":(one.roi*100).toFixed(2)+" %",purchaseStatus(one,margin)==="recommended"?"green":one.profit>0?"orange":"red")}
   else a.append(el("p",one.reason,"orange"));
   const ms=materials(recipe),selected=ms.find(m=>m.id===id);
   const materialList=selected?[selected]:ms;
   for(const m of materialList){const t=thresholds(recipe,m.id,current,vendors,npc,ah)?.[channel];row(a,"Compra objetivo · "+name(m.id),t?.recommended==null?"No calculable o sin margen":money(t.recommended),channel==="npc"?"green":"purple");row(a,"Límite sin pérdidas · "+name(m.id),t?.breakEven==null?"No calculable o no rentable":money(t.breakEven),channel==="npc"?"red":"orange")}
+  const status=purchaseStatus(one,margin);
+  if(status==="low")a.append(el("p","RENTABLE CON MARGEN BAJO · "+target+": hay beneficio en la primera fabricación, pero no alcanza el objetivo. Puede interesar para subir profesión.","decision orange"));
+  else if(status==="loss")a.append(el("p","NO COMPRAR · "+target+": la primera fabricación no genera beneficio.","decision red"));
+  else if(status==="recommended")a.append(el("p",(budget!==null&&one.cost>budget?"MARGEN OBJETIVO ALCANZADO · CAPITAL INSUFICIENTE":"COMPRA RECOMENDADA · "+target)+": la primera fabricación alcanza el objetivo de rentabilidad.","decision "+(budget!==null&&one.cost>budget?"orange":"green")));
+  else a.append(el("p","SIN RECOMENDACIÓN · faltan datos o existencias.","decision orange"));
   if(budget===null)a.append(el("p","Introduce tu capital real para calcular la compra máxima."));
   else{
    const q=advise(recipe,current,vendors,budget,sale,fee,margin);
    if(q){row(a,"Fabricaciones recomendadas",q.n);row(a,"Unidades producidas",q.units);row(a,"Inversión",money(q.cost));row(a,"Capital sin gastar",money(q.remainingCapital));row(a,"Beneficio previsto",money(q.profit),"green");row(a,"Rentabilidad prevista",(q.roi*100).toFixed(1)+" %");if(q.capReached)a.append(el("p","Límite de simulación: 100.000 fabricaciones."));for(const l of q.lines)for(const x of l.rows)row(a,name(l.id)+" · "+x.source,x.quantity+" × "+money(x.price))}
-   else{a.append(el("p",!one.complete?"Sin recomendación: faltan datos o existencias.":one.cost>budget?"Capital insuficiente para una fabricación.":one.profit<=0?"NO COMPRAR · "+target+": la primera fabricación no genera beneficio.":"NO COMPRAR · "+target+": no alcanza el objetivo de rentabilidad.","decision orange"))}
+   else if(one.complete&&one.cost>budget){a.append(el("p","Capital insuficiente para una fabricación.","orange"))}else if(status==="low"){a.append(el("small","No se propone un lote automático por debajo del margen objetivo. Consulta la comparativa del lote para decidir si te compensa."))}
   }
   a.append(el("small","Límites por fabricación, con los demás materiales a su precio conocido. Subasta: comisión estimada del 5 %, redondeada por fabricación. No incluye depósitos perdidos ni garantiza ventas."));
   o.append(el("h3","Comparativa de ambos canales"));
