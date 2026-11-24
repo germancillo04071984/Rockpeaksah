@@ -3,6 +3,11 @@ import {isFresh} from "./market-core.mjs";
 export const PROF={cooking:"Cocina",alchemy:"Alquimia",leatherworking:"Peletería"};
 export function profession(v){const s=String(v??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();return s.includes("cooking")||s.includes("cocina")?"cooking":s.includes("alchemy")||s.includes("alquimia")?"alchemy":s.includes("leatherworking")||s.includes("peleter")?"leatherworking":null}
 const pos=x=>Number.isSafeInteger(x)&&x>0;
+export function timing(r,table){
+ const t=table?.rows?.[r.id];if(!Array.isArray(t)||t[0]!==r.item||t[1]!==r.qty||!pos(t[2])||!Number.isSafeInteger(t[3])||t[3]<0)return null;
+ try{const sig=m=>JSON.stringify(materials({r:m}).sort((a,b)=>a.id-b.id));if(sig(r.r)!==sig(t[4]))return null}catch{return null}
+ return {seconds:Math.max(t[2],t[3])/1000,castSeconds:t[2]/1000,cooldownSeconds:t[3]/1000};
+}
 export function rankRecipes(catalog,overview,settings={},now=Date.now()){
  if(!Array.isArray(catalog?.recipes)||!catalog.items||!Array.isArray(overview?.items))throw Error("Catálogo o mercado no disponible");
  const fresh=isFresh(overview.t,now),market=new Map(overview.items.map(x=>[x.id,x])),records=[],stats={recipes:0,invalid:0,estimated:0,incomplete:0};
@@ -11,7 +16,7 @@ export function rankRecipes(catalog,overview,settings={},now=Date.now()){
   const prof=profession(r.prof);if(!prof)continue;stats.recipes++;
   if(!pos(r.id)||!pos(r.item)||!pos(r.qty)){stats.invalid++;continue}
   let ms;try{ms=materials(r)}catch{stats.invalid++;continue}
-  const saved=settings.recipes?.[r.id]||{},level=settings.levels?.[prof]??null,required=pos(saved.required)?saved.required:null,seconds=Number.isFinite(saved.seconds)&&saved.seconds>0?saved.seconds:null;
+  const saved=settings.recipes?.[r.id]||{},level=settings.levels?.[prof]??null,required=pos(saved.required)?saved.required:null,auto=timing(r,settings.timings),manual=Number.isFinite(saved.seconds)&&saved.seconds>0?saved.seconds:null,seconds=manual===null?auto?.seconds??null:Math.max(manual,auto?.cooldownSeconds??0),timeSource=manual!==null?"manual":auto?"client":null;
   const learned=["yes","no"].includes(saved.learned)?saved.learned:"unknown";
   const availability=required!==null&&Number.isSafeInteger(level)&&level<required?"low":learned==="yes"?"learned":learned==="no"?"unlearned":"unknown";
   const lines=ms.map(m=>{const x=market.get(m.id),ah=fresh&&pos(x?.ask)&&pos(x?.listed)&&x.listed>=m.count?x.ask:null;const v=settings.vendors?.[m.id];const npc=pos(v)?v:null;const unit=ah!==null&&npc!==null?Math.min(ah,npc):ah??npc;return {...m,unit,source:unit===null?null:unit===npc?"npc":"ah",total:unit===null?null:unit*m.count}});
@@ -23,7 +28,7 @@ export function rankRecipes(catalog,overview,settings={},now=Date.now()){
    const profit=net===null||safeCost===null||!fresh?null:net-safeCost;
    const roi=profit===null?null:profit/safeCost;
    const perHour=profit===null||seconds===null?null:profit*3600/seconds;
-   records.push({recipe:r,prof,channel,cost:safeCost,net,profit,roi,seconds,perHour,learned,availability,level,required,lines,volume:market.get(r.item)?.estimatedSales??null,missing:!fresh?"Datos antiguos":safeCost===null?"Faltan precios o existencias":sale===null?"Sin precio de venta":null});
+   records.push({recipe:r,prof,channel,cost:safeCost,net,profit,roi,seconds,perHour,timeSource,cooldownSeconds:auto?.cooldownSeconds??null,learned,availability,level,required,lines,volume:market.get(r.item)?.estimatedSales??null,missing:!fresh?"Datos antiguos":safeCost===null?"Faltan precios o existencias":sale===null?"Sin precio de venta":null});
    if(profit===null)stats.incomplete++;else stats.estimated++;
   }
  }
