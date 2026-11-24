@@ -1,0 +1,12 @@
+import assert from "node:assert/strict";import {batch,thresholds,advise,materials} from "./economy.mjs";
+const r={qty:1,item:1,r:[[2,1],[3,1]]},books=new Map([[2,{tiers:[{price:88,quantity:30},{price:89,quantity:200}]}],[3,{tiers:[{price:39,quantity:30}]}]]),vendors=new Map([[3,{price:40,unlimited:true}]]);
+assert.equal(batch(r,books,vendors,100,150).cost,12840);
+assert.equal(batch(r,books,vendors,100,150).profit,2160);
+assert.equal(batch(r,books,vendors,100,200,500).profit,6160);
+assert.equal(batch(r,books,new Map(),100,150).complete,false);
+assert.equal(batch(r,books,vendors,231,150).complete,false);
+assert.equal(thresholds(r,2,books,vendors,150,200).npc.recommended,97);
+assert.equal(advise(r,books,vendors,10000,150).n,77);
+assert.equal(advise(r,books,vendors,0,150),null);
+assert.deepEqual(materials({r:[[2,1],[2,2]]}),[{id:2,count:3}]);
+console.log("V2_ECONOMY_PASS");
