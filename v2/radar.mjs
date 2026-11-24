@@ -23,7 +23,7 @@ export function historyReference(detail,stamp){
  const mad=median(values.map(p=>Math.abs(p-price)));
  return {price,samples:values.length,days:days.size,regularity:clamp(100*(1-mad/price)),mad};
 }
-export function assess(item,detail,overview,budget,now=Date.now(),margin=.2){
+export function assess(item,detail,overview,budget,now=Date.now(),margin=.2,recovery=null){
  if(!isFresh(overview?.t,now)||detail?.t!==overview.t||detail?.id!==item.id||!pos(budget))return {state:"unknown",reason:"Detalle sin instantánea coincidente"};
  const hist=historyReference(detail,overview.t);
  if(!hist)return {state:"unknown",reason:"Histórico insuficiente (24 muestras y 3 días anteriores)"};
@@ -41,7 +41,7 @@ export function assess(item,detail,overview,budget,now=Date.now(),margin=.2){
  const profit=quantity?quantity*net-cost:null,roi=cost?profit/cost:null;
  const demand=volume===null?null:clamp(volume/100*100);
  // recovery proxy is NOT a prediction of sell-through; no recovery score without real transactions
- const components={profit:roi===null?null:clamp(roi/.5*100),demand,regularity:hist.regularity,recovery:null,capital:cost?clamp(100*(1-cost/budget)):null};
+ const components={profit:roi===null?null:clamp(roi/.5*100),demand,regularity:hist.regularity,recovery:Number.isFinite(recovery)?clamp(recovery):null,capital:cost?clamp(100*(1-cost/budget)):null};
  const weights={profit:30,demand:30,regularity:20,recovery:15,capital:5};
  let weighted=0,coverage=0;for(const k of Object.keys(weights))if(components[k]!==null){weighted+=components[k]*weights[k];coverage+=weights[k]}
  const score=quantity&&coverage?Math.round(weighted/coverage):null;

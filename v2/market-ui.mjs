@@ -1,5 +1,6 @@
-import {initLedger} from "./ledger-ui.mjs?v=1";
-import {initRadar} from "./radar-ui.mjs?v=2";
+import {initLedger} from "./ledger-ui.mjs?v=2";
+import {recoveryScore} from "./ledger.mjs?v=2";
+import {initRadar} from "./radar-ui.mjs?v=3";
 import {initRanking} from "./ranking-ui.mjs?v=20261124-firstaid-es1";
 import {fetchOverview,fetchDetail} from "./market-client.mjs";
 import {coherentBooks,isFresh} from "./market-core.mjs";
@@ -86,8 +87,8 @@ function calculate(){
 function viewTab(tab){for(const [key,panel] of [["market","market-panel"],["rank","rank-panel"],["radar","radar-panel"],["ledger","ledger-panel"]]){$(panel).hidden=key!==tab;$("nav-"+key).setAttribute("aria-pressed",String(key===tab))}if(tab==="rank")ranking.refresh();if(tab==="ledger")ledger.refresh()}
 function viewRank(show){viewTab(show?"rank":"market")}
 const ranking=initRanking({data:()=>({catalog,overview}),money,recipeName:rname,itemName:name,open:async(r,channel,confirmed)=>{viewRank(false);$("channel").value=channel;for(const m of materials(r))if(Number.isSafeInteger(confirmed[m.id])&&confirmed[m.id]>0)vendors.set(m.id,{price:confirmed[m.id],unlimited:true});await choose(r.item,r.id);$("recipe").scrollIntoView({block:"start",behavior:"smooth"})}});
-const radar=initRadar({data:()=>overview,name,money,tsm:async()=>{if(!tsm.size||Date.now()-tsmAttempt>=3600000){if(tsmLoading)throw Error("TSM se está consultando; vuelve a intentarlo.");await loadTSM()}return tsm},book,open:async i=>{viewTab("market");await choose(i)}});
-const ledger=initLedger({money,name,recipeName:rname,items:()=>[...all.keys()],recipes:()=>catalog?.recipes||[]});
+const radar=initRadar({data:()=>overview,name,money,recovery:i=>recoveryScore(ledger.getState().recovery.get(i)),tsm:async()=>{if(!tsm.size||Date.now()-tsmAttempt>=3600000){if(tsmLoading)throw Error("TSM se está consultando; vuelve a intentarlo.");await loadTSM()}return tsm},book,open:async i=>{viewTab("market");await choose(i)}});
+const ledger=initLedger({money,name,recipeName:rname,items:()=>[...all.keys()],recipes:()=>catalog?.recipes||[],changed:()=>radar.invalidate()});
 $("nav-ledger").onclick=()=>viewTab("ledger");$("nav-radar").onclick=()=>viewTab("radar");$("nav-market").onclick=()=>viewRank(false);$("nav-rank").onclick=()=>viewRank(true);
 $("tsm-load").onclick=loadTSM;$("search").oninput=search;$("reload").onclick=load;$("recipe").onchange=selectRecipe;for(const b of $("period").querySelectorAll("button"))b.onclick=()=>{days=Number(b.dataset.days);for(const x of $("period").querySelectorAll("button"))x.setAttribute("aria-pressed",String(x===b));draw()};for(const k of ["quantity","budget"])$(k).oninput=calculate;$("channel").onchange=calculate;load();
 
