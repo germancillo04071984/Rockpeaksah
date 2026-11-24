@@ -1,0 +1,14 @@
+import assert from "node:assert/strict";
+import {parseTSM,TSM_URL,fetchTSM} from "./tsm.mjs";
+import {normalizeDetail,coherentBooks,isFresh} from "./market-core.mjs";
+const h="itemId,name,marketValue,minBuyout,recent,historical,updatedAt\r\n";
+const text=h+'3685,"Raptor, Egg",99,88,,120,2026-11-24T18:00:00Z\r\n3685,Old,1,1,1,1,2026-11-24T17:00:00Z\r\n2692,Spice,,39,,40,2026-11-24T18:00:00Z';
+const p=parseTSM(text);
+assert.equal(p.size,2);assert.equal(p.get(3685).name,"Raptor, Egg");assert.equal(p.get(3685).minBuyout,88);assert.equal(p.get(3685).recent,null);assert.equal(p.get(2692).marketValue,null);
+assert.throws(()=>parseTSM("wrong,header\n1,2"));assert.throws(()=>parseTSM(h+'"unfinished'));
+const stamp=Date.parse("2026-11-24T18:00:00Z");assert.equal(isFresh(stamp,stamp+3600000),true);assert.equal(isFresh(stamp,stamp+10800000),false);
+assert.equal(coherentBooks(new Map([[1,{t:stamp}],[2,{t:stamp-3600000}]]),stamp,stamp+1000).size,1);
+const d=normalizeDetail({house:{key:"eu-2-113",region:"eu",faction:"horde",grp:1},item:{id:3685},book:[],bookT:null,series:{t:[stamp],ask:[90]}},3685);assert.equal(d.historyEnd,stamp);assert.equal(d.tiers.length,0);assert.equal(d.t,null);
+const m=await fetchTSM(async url=>{assert.equal(url,TSM_URL);return {ok:true,text:async()=>text}});assert.equal(m.size,2);
+await assert.rejects(fetchTSM(async()=>({ok:false,status:403})),/403/);
+console.log("V2_SOURCES_PASS");
